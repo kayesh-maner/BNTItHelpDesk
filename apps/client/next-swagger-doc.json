@@ -4,7 +4,7 @@
     "definition": {
       "openapi": "3.0.0",
       "info": {
-        "title": "Peppermint Swagger api docs",
+        "title": "BNT Swagger api docs",
         "version": "1.0"
       }
     }

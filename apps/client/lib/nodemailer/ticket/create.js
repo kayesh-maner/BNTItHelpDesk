@@ -63,7 +63,7 @@ export async function sendTicketCreate(ticket) {
           <p style="font-size:14px;margin:16px 0;color:#000">
           Kind regards, 
           <br>
-          Peppermint ticket management
+          BNT ticket management
           </p>
           
           <table align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
@@ -71,8 +71,8 @@ export async function sendTicketCreate(ticket) {
               <tr>
                 <td>
                   <a target="_blank" style="color:#b7b7b7;text-decoration:underline" href="https://slackhq.com" rel="noopener noreferrer">Our blog</a>   |   <a target="_blank" style="color:#b7b7b7;text-decoration:underline" href="https://slack.com/legal" rel="noopener noreferrer">Documentation</a>   |   <a target="_blank" style="color:#b7b7b7;text-decoration:underline" href="https://slack.com/help" rel="noopener noreferrer">Discord</a> </a>
-                  <p style="font-size:12px;line-height:15px;margin:16px 0;color:#b7b7b7;text-align:left">This was an automated message sent by peppermint.sh -> An open source helpdesk solution</p>
-                  <p style="font-size:12px;line-height:15px;margin:16px 0;color:#b7b7b7;text-align:left;margin-bottom:50px">©2022 Peppermint Ticket Management, a Peppermint Labs product.<br />All rights reserved.</p>
+                  <p style="font-size:12px;line-height:15px;margin:16px 0;color:#b7b7b7;text-align:left">This was an automated message sent by BNT IT Helpdesk -> An open source helpdesk solution</p>
+                  <p style="font-size:12px;line-height:15px;margin:16px 0;color:#b7b7b7;text-align:left;margin-bottom:50px">©2022 BNT Ticket Management, a BNT  product.<br />All rights reserved.</p>
                 </td>
               </tr>
             </tbody>

@@ -19,7 +19,7 @@ export default function Login({ csrfToken }) {
             <img
               className="mx-auto h-36 w-auto"
               src="/login.svg"
-              alt="peppermint.sh logo"
+              alt="BNT logo"
             />
           </Link>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

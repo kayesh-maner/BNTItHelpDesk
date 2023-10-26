@@ -329,7 +329,7 @@ export default function NewLayout({ children }) {
         <div className="flex grow flex-col gap-y-5 overflow-y-auto  bg-gray-900 px-6 pb-4">
           <div className="flex align-middle flex-row h-16 items-center">
             <img className="h-8 w-auto" src="/bnt.png" alt="Workflow" />
-            <Link href="#">
+            <Link href="/">
               <h1 className="text-4xl ml-2 mt-5 hover:text-green-600 font-extrabold text-white">
                 Helpdesk
               </h1>

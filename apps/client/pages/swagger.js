@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Peppermint Swagger API",
+        title: "BNT Swagger API",
         version: "1.0",
       },
     },

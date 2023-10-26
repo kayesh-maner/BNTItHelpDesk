@@ -342,9 +342,9 @@ export default function SideLayout({ children }) {
                       src="/logo.svg"
                       alt="Workflow"
                     />
-                    <Link href="https://peppermint.sh">
+                    <Link href="#">
                       <h1 className="text-2xl ml-2 mt-1 hover:text-green-600 font-extrabold text-white">
-                        Peppermint
+                        BNTSOFT
                       </h1>
                     </Link>
                   </div>

@@ -176,7 +176,7 @@ export default function Login({ csrfToken, providers }) {
         )}
 
         <div className="mt-8 text-center">
-          <span className="font-bold">Built with 💚 by Peppermint Labs</span>
+          <span className="font-bold">Built with 💚 by BNT SOFT</span>
         </div>
       </div>
     </div>

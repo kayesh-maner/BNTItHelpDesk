@@ -1,0 +1,37 @@
+Peppermint
+
+
+
+Software needed
+
+node version = 16.13.0
+
+
+1. Download Zip file
+
+2. rename example.env to .env 
+
+3. Change DB credentials in the .env file 
+ 
+4. cd to client folder
+
+5. Run command to initialize Prisma
+	npx prisma generate
+
+6. run command to create tables
+	npx prisma migrate dev
+
+7. run command to insert sample data
+	npx prisma db seed
+
+8. run project by using the below command in the client folder
+	
+	npm run dev 
+
+
+
+
+
+
+
+	

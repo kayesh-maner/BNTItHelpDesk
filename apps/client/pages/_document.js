@@ -15,11 +15,11 @@ export default function Document() {
           content="Ticket management system selfhosted open source"
         />
         <meta name="keywords" content="Keywords" />
-        <title>Peppermint</title>
+        <title>BNT-SOFT</title>
 
-        <link href="/favicon/favicon.ico" rel="icon" />
+        <link href="/favicon/bntfavicon.ico" rel="icon" />
         <link
-          href="/favicon/favicon-16x16.png"
+          href="/favicon/bntfavicon.png"
           rel="icon"
           type="image/png"
           sizes="16x16"

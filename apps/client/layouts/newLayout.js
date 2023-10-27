@@ -68,13 +68,13 @@ export default function NewLayout({ children }) {
       current: location.pathname === "/" ? true : false,
       initial: "h",
     },
-    {
-      name: t("sl_notebook"),
-      href: `/notebook`,
-      icon: FolderIcon,
-      current: location.pathname === "/notebook" ? true : false,
-      initial: "n",
-    },
+    // {
+    //   name: t("sl_notebook"),
+    //   href: `/notebook`,
+    //   icon: FolderIcon,
+    //   current: location.pathname === "/notebook" ? true : false,
+    //   initial: "n",
+    // },
     {
       name: t("sl_tickets"),
       current: location.pathname.includes("/ticket") ? true : false,

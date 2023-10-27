@@ -9,7 +9,7 @@ export default async function getTodo(req, res) {
 
   try {
     const todos = await prisma.todos.findMany({
-      where: { userId: session.id },
+      where: { userId: session.user.user.id },
       select: {
         id: true,
         text: true,

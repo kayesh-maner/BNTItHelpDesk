@@ -1,11 +1,15 @@
 const { prisma } = require("../../../../prisma/prisma");
+import { getSession } from "next-auth/react";
 
 export default async function allTickets(req, res) {
+  const session = await getSession({ req });
+
   try {
     await prisma.ticket
       .findMany({
         where: {
           isComplete: false,
+          userId : session.user.id
         },
         orderBy: [{
           createdAt: 'desc'

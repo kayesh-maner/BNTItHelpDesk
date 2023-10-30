@@ -13,15 +13,16 @@ export async function sendTicketCreate(ticket) {
       if (process.env.NODE_ENV === "development") {
         let testAccount = await nodeMailer.createTestAccount();
         mail = nodeMailer.createTransport({
-          port: 1025,
-          secure: false, // true for 465, false for other ports
+          host: emails[0].host,
+          port: emails[0].port, 
+          secure: emails[0].secure, 
           auth: {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass, // generated ethereal password
+            user: emails[0].user,
+            pass: emails[0].pass,
           },
         });
       } else {
-        console.log('\n\n\n else ');
+
         const email = emails[0];
         mail = nodeMailer.createTransport({
           host: email.host,
@@ -31,6 +32,7 @@ export async function sendTicketCreate(ticket) {
             user: email.user, // generated ethereal user
             pass: email.pass, // generated ethereal password
           },
+          
         });
       }
       console.log('\n\n\n 36 ticket', ticket);

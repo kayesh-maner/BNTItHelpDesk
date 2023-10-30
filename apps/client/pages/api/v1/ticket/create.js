@@ -32,7 +32,7 @@ export default async function createTicket(req, res) {
         },
       })
       .then((ticket) => {
-        console.log('\n\n\n ticket', ticket)
+
         sendTicketCreate(ticket);
       });
 

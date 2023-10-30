@@ -52,6 +52,8 @@ model Ticket {
   linked     Json?
   fromImap   Boolean
   Number     Int      @default(autoincrement())
+  creator    String?  
+
 
   TicketFile TicketFile[]
 

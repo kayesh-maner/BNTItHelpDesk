@@ -7,13 +7,16 @@ export default async function handler(req, res) {
   try {
     await prisma.ticket
       .findMany({
-        where: { 
+        where: {
           isComplete: true,
-          userId : session.user.id
+          OR: [
+            { userId: session.user.id },
+            { creator: session.user.id },
+          ],
         },
-        orderBy: [{
-          createdAt: 'desc'
-        }],
+        orderBy: {
+          createdAt: 'desc',
+        },
         include: {
           team: {
             select: { id: true, name: true },

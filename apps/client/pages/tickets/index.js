@@ -24,18 +24,18 @@ export default function Tickets() {
       //   count: "",
       current: router.asPath === "/tickets",
     },
-    {
-      name: "Assigned to me",
-      href: "?filter=assigned",
-      //   count: "6",
-      current: router.asPath === "/tickets?filter=assigned",
-    },
-    {
-      name: "Unassigned",
-      href: "?filter=unassigned",
-      //   count: "4",
-      current: router.asPath === "/tickets?filter=unassigned",
-    },
+    // {
+    //   name: "Assigned to me",
+    //   href: "?filter=assigned",
+    //   //   count: "6",
+    //   current: router.asPath === "/tickets?filter=assigned",
+    // },
+    // {
+    //   name: "Unassigned",
+    //   href: "?filter=unassigned",
+    //   //   count: "4",
+    //   current: router.asPath === "/tickets?filter=unassigned",
+    // },
     {
       name: "Closed",
       href: "?filter=closed",

@@ -9,7 +9,10 @@ export default async function allTickets(req, res) {
       .findMany({
         where: {
           isComplete: false,
-          userId : session.user.id
+          OR: [
+            { userId: session.user.id },
+            { creator: session.user.id },
+          ],
         },
         orderBy: [{
           createdAt: 'desc'

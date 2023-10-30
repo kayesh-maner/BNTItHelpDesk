@@ -105,6 +105,7 @@ model Ticket {
   fromImap   Boolean
   Number     Int          @default(autoincrement())
   status     TicketStatus @default(needs_support)
+  creator    String?  
 
   TicketFile   TicketFile[]
   Comment      Comment[]

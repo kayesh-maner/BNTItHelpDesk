@@ -18,6 +18,7 @@
   "ticket_new": "New Ticket",
   "ticket_name_here": "Name",
   "ticket_email_here": "Email",
+  "ticket_email_manager": "Enter Your Manager Mail",
   "ticket_details": "Title",
   "ticket_select_client": "Select a client",
   "ticket_select_eng": "Select an engineer",

@@ -170,7 +170,7 @@ export default function CreateTicketModal() {
         <input
           type="text"
           name="email"
-          placeholder={t("ticket_email_here")}
+          placeholder={t("ticket_email_manager")}
           onChange={(e) => setEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
           // value={process.env.ADMIN_EMAIL}

@@ -8,7 +8,13 @@ export default async function handler(req, res) {
 
   try {
     const result = await prisma.ticket.count({
-      where: { isComplete: true, userId: session.user.id },
+      where: {
+        isComplete: true,
+        OR: [
+          { userId: session.user.id },
+          { creator: session.user.id },
+        ],
+      },
     });
 
     res.status(200).json({ result });

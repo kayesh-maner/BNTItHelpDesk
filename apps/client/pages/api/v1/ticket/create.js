@@ -35,7 +35,7 @@ export default async function createTicket(req, res) {
       })
       .then((ticket) => {
 
-        sendTicketCreate(ticket);
+        sendTicketCreate(ticket, session);
       });
 
     const webhook = await prisma.webhooks.findMany({

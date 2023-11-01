@@ -2,7 +2,7 @@ import nodeMailer from "nodemailer";
 import { prisma } from "../../../prisma/prisma";
 
 
-export async function sendTicketCreate(ticket, req) {
+export async function sendTicketCreate(ticket, session) {
   try {
     let mail;
     const emails = await prisma.email.findMany();
@@ -26,7 +26,7 @@ export async function sendTicketCreate(ticket, req) {
         // to: ticket.email,
         // to: 'ml.itteam@bnt-soft.com',
         to: 'ashok.bhambare@bnt-soft.com',
-        cc:['shweta.mane@bnt-soft.com', ticket.email],
+        cc:[session.user.email, ticket.email],
         subject: `Ticket ${ticket.id} has just been created & logged`, // Subject line
         text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
         html: `

@@ -23,10 +23,8 @@ export async function sendTicketCreate(ticket, session) {
       } 
       let info = await mail.sendMail({
         from: `noreply@bnt-soft.com`, // sender address
-        // to: ticket.email,
-        // to: 'ml.itteam@bnt-soft.com',
-        to: 'ashok.bhambare@bnt-soft.com',
-        cc:[session.user.email, ticket.email],
+        to:  ['ml.itteam@bnt-soft.com', ticket.email],
+        // cc:[session.user.email, ticket.email],
         subject: `Ticket ${ticket.id} has just been created & logged`, // Subject line
         text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
         html: `
@@ -50,7 +48,13 @@ export async function sendTicketCreate(ticket, session) {
                       </tr>
                     </tbody>
                   </table>
-                  <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">Ticket Created: ${ticket.id}</h1>
+
+                  <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">
+                    <a href="http://localhost:3000/tickets/${ticket.id}">
+                      Ticket Created: ${ticket.id}
+                    </a>
+                  </h1>
+                  
                   <p style="font-size:20px;line-height:28px;margin:4px 0">
                   <p>Hello, <br>Your ticket has now been created and logged.</p>
                   <p style="font-size:14px;margin:16px 0;color:#000">

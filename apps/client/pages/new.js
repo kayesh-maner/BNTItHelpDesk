@@ -22,7 +22,7 @@ export default function CreateTicketModal() {
   const [name, setName] = useState("");
   const [company, setCompany] = useState();
   const [engineer, setEngineer] = useState();
-  const [email, setEmail] = useState("admin@admin.com");
+  const [email, setEmail] = useState("");
   const [issue, setIssue] = useState(t("ticket_extra_details"));
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Normal");
@@ -174,7 +174,7 @@ export default function CreateTicketModal() {
           onChange={(e) => setEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
           // value={process.env.ADMIN_EMAIL}
-          value={'admin@admin.com'}
+          // value={'admin@admin.com'}
         />
 
         <RichTextEditor editor={editor}>

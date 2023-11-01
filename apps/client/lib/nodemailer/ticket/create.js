@@ -1,44 +1,32 @@
 import nodeMailer from "nodemailer";
 import { prisma } from "../../../prisma/prisma";
 
-export async function sendTicketCreate(ticket) {
+
+export async function sendTicketCreate(ticket, req) {
   try {
     let mail;
-
     const emails = await prisma.email.findMany();
-    console.log('\n\n\n emails', emails);
 
     if (emails.length > 0) {
-      console.log('\n\n\n inside if');
       if (process.env.NODE_ENV === "development") {
-        let testAccount = await nodeMailer.createTestAccount();
+        const emailConfig = emails[0];
+        const { host, port, secure, user, pass } = emailConfig;
         mail = nodeMailer.createTransport({
-          host: emails[0].host,
-          port: emails[0].port, 
-          secure: emails[0].secure, 
+          host: host,
+          port: port, 
+          secure: secure, 
           auth: {
-            user: emails[0].user,
-            pass: emails[0].pass,
+            user: user,
+            pass: pass,
           },
         });
-      } else {
-
-        const email = emails[0];
-        mail = nodeMailer.createTransport({
-          host: email.host,
-          port: email.port,
-          secure: email.secure, // true for 465, false for other ports
-          auth: {
-            user: email.user, // generated ethereal user
-            pass: email.pass, // generated ethereal password
-          },
-          
-        });
-      }
-      console.log('\n\n\n 36 ticket', ticket);
+      } 
       let info = await mail.sendMail({
         from: `noreply@bnt-soft.com`, // sender address
-        to: ticket.email,
+        // to: ticket.email,
+        // to: 'ml.itteam@bnt-soft.com',
+        to: 'ashok.bhambare@bnt-soft.com',
+        cc:['shweta.mane@bnt-soft.com', ticket.email],
         subject: `Ticket ${ticket.id} has just been created & logged`, // Subject line
         text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
         html: `

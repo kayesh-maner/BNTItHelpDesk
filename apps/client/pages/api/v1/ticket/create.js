@@ -1,10 +1,11 @@
 const { prisma } = require("../../../../prisma/prisma");
 import { sendTicketCreate } from "../../../../lib/nodemailer/ticket/create";
+import { getSession } from "next-auth/react";
 
 export default async function createTicket(req, res) {
+  const session = await getSession({ req });
   const { name, company, detail, title, priority, email, issue, engineer } =
     req.body;
-
   try {
     const ticket = await prisma.ticket
       .create({
@@ -15,6 +16,7 @@ export default async function createTicket(req, res) {
           priority: priority ? priority : "low",
           issue,
           email,
+          creator : session.user.id,
           client:
             company !== undefined
               ? {

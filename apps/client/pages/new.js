@@ -11,7 +11,6 @@ import Underline from "@tiptap/extension-underline";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { notifications } from "@mantine/notifications";
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -23,7 +22,7 @@ export default function CreateTicketModal() {
   const [name, setName] = useState("");
   const [company, setCompany] = useState();
   const [engineer, setEngineer] = useState();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("admin@admin.com");
   const [issue, setIssue] = useState(t("ticket_extra_details"));
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Normal");
@@ -73,8 +72,11 @@ export default function CreateTicketModal() {
       })
         .then((res) => res.json())
         .then((res) => {
+      
+          // Filter only Admins 
+          const filteredUsers = res.users.filter(user => user.isAdmin === true);
           if (res) {
-            setUsers(res.users);
+            setUsers(filteredUsers);
           }
         });
     } catch (error) {
@@ -82,7 +84,19 @@ export default function CreateTicketModal() {
     }
   }
 
+
   async function createTicket() {
+ 
+    if (!name || !title || !engineer) {
+      notifications.show({
+        title: "Error",
+        message: "Please fill in all mandatory fields",
+        color: "red",
+        autoClose: 5000,
+      });
+      return; 
+    }
+
     await fetch("/api/v1/ticket/create", {
       method: "POST",
       headers: {
@@ -91,19 +105,18 @@ export default function CreateTicketModal() {
       body: JSON.stringify({
         name,
         title,
-        company,
         email,
         detail: issue,
         priority,
         engineer,
-      }),
+      })
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.success === true) {
           notifications.show({
             title: "Ticket Created",
-            message: "Ticket created succesfully",
+            message: "Ticket created successfully",
             color: "green",
             autoClose: 5000,
           });
@@ -117,6 +130,8 @@ export default function CreateTicketModal() {
         }
       });
   }
+
+
 
   useEffect(() => {
     fetchClients();
@@ -158,6 +173,8 @@ export default function CreateTicketModal() {
           placeholder={t("ticket_email_here")}
           onChange={(e) => setEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+          // value={process.env.ADMIN_EMAIL}
+          value={'admin@admin.com'}
         />
 
         <RichTextEditor editor={editor}>
@@ -205,79 +222,6 @@ export default function CreateTicketModal() {
         </RichTextEditor>
 
         <div className="flex flex-row space-x-4 pb-2 mt-2">
-          <Listbox value={company} onChange={setCompany}>
-            {({ open }) => (
-              <>
-                <div className="mt-1 relative">
-                  <Listbox.Button className="bg-white relative w-full min-w-[164px] border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-sm">
-                    <span className="block truncate">
-                      {company ? company.name : t("ticket_select_client")}
-                    </span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      {/* <SelectorIcon
-                                  className="h-5 w-5 text-gray-400"
-                                  aria-hidden="true"
-                                /> */}
-                    </span>
-                  </Listbox.Button>
-
-                  <Transition
-                    show={open}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                      {options !== undefined &&
-                        options.map((person) => (
-                          <Listbox.Option
-                            key={person.id}
-                            className={({ active }) =>
-                              classNames(
-                                active
-                                  ? "text-gray-900 bg-gray-100"
-                                  : "text-gray-900",
-                                "cursor-default select-none relative py-2 pl-3 pr-9"
-                              )
-                            }
-                            value={person}
-                          >
-                            {({ company, active }) => (
-                              <>
-                                <span
-                                  className={classNames(
-                                    company ? "font-semibold" : "font-normal",
-                                    "block truncate"
-                                  )}
-                                >
-                                  {person.name}
-                                </span>
-
-                                {company ? (
-                                  <span
-                                    className={classNames(
-                                      active ? "text-white" : "text-indigo-600",
-                                      "absolute inset-y-0 right-0 flex items-center pr-4"
-                                    )}
-                                  >
-                                    <CheckIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </>
-            )}
-          </Listbox>
-
           <Listbox value={engineer} onChange={setEngineer}>
             {({ open }) => (
               <>
@@ -287,10 +231,6 @@ export default function CreateTicketModal() {
                       {engineer ? engineer.name : "Select an Engineer"}
                     </span>
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      {/* <SelectorIcon
-                                  className="h-5 w-5 text-gray-400"
-                                  aria-hidden="true"
-                                /> */}
                     </span>
                   </Listbox.Button>
 
@@ -302,32 +242,7 @@ export default function CreateTicketModal() {
                     leaveTo="opacity-0"
                   >
                     <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                      <Listbox.Option
-                        className={({ active }) =>
-                          classNames(
-                            active
-                              ? "text-gray-900 bg-gray-100"
-                              : "text-gray-900",
-                            "cursor-default select-none relative py-2 pl-3 pr-9"
-                          )
-                        }
-                        value={{
-                          name: "Unassigned",
-                        }}
-                      >
-                        {({ company, active }) => (
-                          <>
-                            <span
-                              className={classNames(
-                                company ? "font-semibold" : "font-normal",
-                                "block truncate"
-                              )}
-                            >
-                              Unassigned
-                            </span>
-                          </>
-                        )}
-                      </Listbox.Option>
+                     
                       {users !== undefined &&
                         users.map((team) => (
                           <Listbox.Option

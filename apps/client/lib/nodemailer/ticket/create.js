@@ -23,8 +23,9 @@ export async function sendTicketCreate(ticket, session) {
       } 
       let info = await mail.sendMail({
         from: `noreply@bnt-soft.com`, // sender address
-        to:  ['ml.itteam@bnt-soft.com', ticket.email],
+        // to:  ['ml.itteam@bnt-soft.com', ticket.email],
         // cc:[session.user.email, ticket.email],
+        to:  [ticket.email],
         subject: `Ticket ${ticket.id} has just been created & logged`, // Subject line
         text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
         html: `

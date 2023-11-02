@@ -28,8 +28,11 @@ export default function CreateTicketModal() {
   const [priority, setPriority] = useState("Normal");
   const [options, setOptions] = useState([]);
   const [users, setUsers] = useState();
-
+  const [category, setCategory] = useState();
   const cancelButtonRef = useRef(null);
+
+  const categoryList =  ['Software', 'Hardware', 'Other']
+  // const categoryList = process.env.CATEGORYLIST
 
   const editor = useEditor({
     extensions: [
@@ -87,7 +90,9 @@ export default function CreateTicketModal() {
 
   async function createTicket() {
  
-    if (!name || !title || !engineer) {
+    console.log('category >>>', category)
+
+    if (!name || !title || !engineer || !category) {
       notifications.show({
         title: "Error",
         message: "Please fill in all mandatory fields",
@@ -109,6 +114,7 @@ export default function CreateTicketModal() {
         detail: issue,
         priority,
         engineer,
+        category
       })
     })
       .then((res) => res.json())
@@ -130,8 +136,6 @@ export default function CreateTicketModal() {
         }
       });
   }
-
-
 
   useEffect(() => {
     fetchClients();
@@ -221,77 +225,119 @@ export default function CreateTicketModal() {
           <RichTextEditor.Content style={{ minHeight: 320 }} />
         </RichTextEditor>
 
-        <div className="flex flex-row space-x-4 pb-2 mt-2">
-          <Listbox value={engineer} onChange={setEngineer}>
-            {({ open }) => (
-              <>
-                <div className="mt-1 relative">
-                  <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 ">
-                    <span className="block truncate">
-                      {engineer ? engineer.name : "Select an Engineer"}
-                    </span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    </span>
-                  </Listbox.Button>
 
-                  <Transition
-                    show={open}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
+<div className="flex flex-row space-x-4 pb-2 mt-2">
+  <Listbox value={engineer} onChange={setEngineer}>
+    {({ open }) => (
+      <div className="relative">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+          <span className="block truncate">
+            {engineer ? engineer.name : "Select an Engineer"}
+          </span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"></span>
+        </Listbox.Button>
+
+        <Transition
+          show={open}
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {users !== undefined &&
+              users.map((team) => (
+                <Listbox.Option
+                  key={team.id}
+                  className={({ active }) =>
+                    classNames(
+                      active ? "text-gray-900 bg-gray-100" : "text-gray-900",
+                      "cursor-default select-none relative py-2 pl-3 pr-9"
+                    )
+                  }
+                  value={team}
+                >
+                  {({ engineer, active }) => (
+                    <>
+                      <span
+                        className={classNames(
+                          engineer ? "font-semibold" : "font-normal",
+                          "block truncate"
+                        )}
+                      >
+                        {team.name}
+                      </span>
+
+                      {engineer ? (
+                        <span
+                          className={classNames(
+                            active ? "text-white" : "text-indigo-600",
+                            "absolute inset-y-0 right-0 flex items-center pr-4"
+                          )}
+                        >
+                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                      ) : null}
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
+          </Listbox.Options>
+        </Transition>
+      </div>
+    )}
+  </Listbox>
+
+  <Listbox value={categoryList} onChange={setCategory}>
+    {({ open }) => (
+      <div className="relative">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+          <span className="block truncate">
+            {category ? category : "Select Category"}
+          </span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"></span>
+        </Listbox.Button>
+
+        <Transition
+          show={open}
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {categoryList.map((category) => (
+              <Listbox.Option
+                key={category}
+                className={({ active }) =>
+                  classNames(
+                    active ? "text-gray-900 bg-gray-100" : "text-gray-900",
+                    "cursor-default select-none relative py-2 pl-3 pr-9"
+                  )
+                }
+                value={category}
+              >
+                <>
+                  <span
+                    className={classNames(
+                      "font-normal",
+                      "block truncate"
+                    )}
                   >
-                    <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                     
-                      {users !== undefined &&
-                        users.map((team) => (
-                          <Listbox.Option
-                            key={team.id}
-                            className={({ active }) =>
-                              classNames(
-                                active
-                                  ? "text-gray-900 bg-gray-100"
-                                  : "text-gray-900",
-                                "cursor-default select-none relative py-2 pl-3 pr-9"
-                              )
-                            }
-                            value={team}
-                          >
-                            {({ engineer, active }) => (
-                              <>
-                                <span
-                                  className={classNames(
-                                    engineer ? "font-semibold" : "font-normal",
-                                    "block truncate"
-                                  )}
-                                >
-                                  {team.name}
-                                </span>
+                    {category}
+                  </span>
+                </>
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </Transition>
+      </div>
+    )}
+  </Listbox>
+</div>
 
-                                {engineer ? (
-                                  <span
-                                    className={classNames(
-                                      active ? "text-white" : "text-indigo-600",
-                                      "absolute inset-y-0 right-0 flex items-center pr-4"
-                                    )}
-                                  >
-                                    <CheckIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </>
-            )}
-          </Listbox>
-        </div>
+
+
         <div className="border-t border-gray-300 ">
           <div className="mt-2 float-right">
             <button

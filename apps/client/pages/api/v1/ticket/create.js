@@ -30,10 +30,10 @@ const ticketsCreatedToday = await prisma.ticket.findMany({
 
 export default async function createTicket(req, res) {
   const session = await getSession({ req });
-  const { name, company, detail, title, priority, email, issue, engineer } =
+  const { name, company, detail, title, priority, email, issue, engineer, category } =
     req.body;
   try {
-   
+    console.log('ct >>>', category)
     // generate unique id for the Ticket
     let uid = await unique();
     uid = uid + 1 
@@ -50,6 +50,7 @@ export default async function createTicket(req, res) {
           issue,
           email,
           creator : session.user.id,
+          category,
           client:
             company !== undefined
               ? {

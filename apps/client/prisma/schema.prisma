@@ -106,6 +106,7 @@ model Ticket {
   Number     Int          @default(autoincrement())
   status     TicketStatus @default(needs_support)
   creator    String?  
+  category   String?  
 
   TicketFile   TicketFile[]
   Comment      Comment[]

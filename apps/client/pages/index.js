@@ -38,7 +38,8 @@ export default function Home() {
   const [unassigned, setUnassigned] = useState(0);
   const [uploaded, setUploaded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [tickets, setTickets] = useState();
+  const [tickets, setTickets] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { t } = useTranslation("peppermint");
 
@@ -49,6 +50,10 @@ export default function Home() {
     const hour = date.getHours();
     setHour(hour);
   }
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   async function getOpenTickets() {
     await fetch(`/api/v1/data/count/open-tickets`, {
@@ -158,6 +163,11 @@ export default function Home() {
     datafetch();
   }, []);
 
+  const filteredTickets = tickets.filter((ticket) =>
+    ticket.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    ticket.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col xl:flex-row min-h-[85vh]">
       <div className="w-full xl:w-[70%]">
@@ -221,7 +231,22 @@ export default function Home() {
             </div>
 
             <div className="flex w-full flex-col ">
-              <span className="font-bold text-2xl">Recent Tickets</span>
+              {/* <span className="font-bold text-2xl">Recent Tickets</span>
+              <input
+                type="text"
+                className="w-40 p-2 border rounded-md"
+                placeholder="Search Tickets"
+              /> */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="font-bold text-2xl">Recent Tickets</div>
+                <input
+                  type="text"
+                  className="w-100 p-2 border rounded-md"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
               <div className="-mx-4 sm:-mx-0 w-full">
                 <table className="min-w-full divide-y divide-gray-300">
                   <thead>
@@ -231,6 +256,12 @@ export default function Home() {
                         className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                       >
                         Title
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                      >
+                        Email
                       </th>
                       <th
                         scope="col"
@@ -266,8 +297,8 @@ export default function Home() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {tickets !== undefined &&
-                      tickets.slice(0, 10).map((item) => (
+                    {filteredTickets !== undefined &&
+                      filteredTickets.slice(0, 10).map((item) => (
                         <tr
                           key={item.id}
                           className="hover:bg-gray-300 hover:cursor-pointer"
@@ -281,6 +312,15 @@ export default function Home() {
                                 {item.email}
                               </dd>
                             </dl>
+                          </td>
+                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                            {item.email}
+                            {/* <dl className="font-normal lg:hidden">
+                              <dt className="sr-only sm:hidden">Email</dt>
+                              <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                                {item.email}
+                              </dd>
+                            </dl> */}
                           </td>
                           <td className="hidden px-3 py-1 text-sm text-gray-500 lg:table-cell w-[64px]">
                             {item.priority === "Low" && (

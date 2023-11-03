@@ -5,7 +5,6 @@ import {
   useSession,
 } from "next-auth/react";
 import Link from "next/link";
-import Loader from "react-spinners/ClipLoader";
 
 export async function getServerSideProps(context) {
   const providers = await getProviders();
@@ -22,7 +21,7 @@ export default function Login({ csrfToken, providers }) {
     required: false,
   });
 
-  console.log(providers);
+  (providers);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -92,7 +91,7 @@ export default function Login({ csrfToken, providers }) {
                 </div>
               </div>
 
-              {/* <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -107,16 +106,7 @@ export default function Login({ csrfToken, providers }) {
                     Remember me
                   </label>
                 </div> 
-
-                 <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-              </div> */}
+              </div>
 
               <div>
                 <button

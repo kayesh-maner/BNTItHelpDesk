@@ -21,7 +21,7 @@ export default function NoteBooksIndex() {
       const res = await fetch(`/api/v1/note/${id}/delete`).then((res) =>
         res.json()
       );
-      console.log(res);
+      (res);
       refetch();
     }
   }

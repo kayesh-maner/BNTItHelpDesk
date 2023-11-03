@@ -83,14 +83,14 @@ export default function CreateTicketModal() {
           }
         });
     } catch (error) {
-      console.log(error);
+      (error);
     }
   }
 
 
   async function createTicket() {
  
-    console.log('category >>>', category)
+    ('category >>>', category)
 
     if (!name || !title || !engineer || !category) {
       notifications.show({

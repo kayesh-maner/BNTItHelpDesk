@@ -78,7 +78,7 @@ export default function CreateTicketModal() {
           }
         });
     } catch (error) {
-      console.log(error);
+      (error);
     }
   }
 

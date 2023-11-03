@@ -33,7 +33,7 @@ export default async function userProfile(req, res) {
       res.status(403).json({ message: "unauthenticated", failed: true });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

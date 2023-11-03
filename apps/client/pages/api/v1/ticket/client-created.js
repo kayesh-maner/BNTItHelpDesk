@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
     // for (let i = 0; i < webhook.length; i++) {
     //   if (webhook[i].active === true) {
-    //     console.log(webhook[i].url);
+    //     (webhook[i].url);
     //     await fetch(`${webhook[i].url}`, {
     //       method: "POST",
     //       headers: {
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
       .status(200)
       .json({ message: "Ticket created correctly", success: true });
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

@@ -11,7 +11,7 @@ const PORT = 5001;
 
 app.use(express.json());
 
-app.listen(PORT, console.log(`Server running on port ${PORT}`));
+app.listen(PORT, (`Server running on port ${PORT}`));
 
 const date = new Date();
 const today = date.getDate();
@@ -20,7 +20,7 @@ const year = date.getFullYear();
 const d = new Date([year, month, today]);
 
 const getEmails = async () => {
-  console.log(date, d);
+  (date, d);
   try {
     const queues = await client.emailQueue.findMany({});
 
@@ -41,24 +41,24 @@ const getEmails = async () => {
         imap.openBox("INBOX", false, () => {
           imap.search(["UNSEEN", ["ON", [date]]], (err, results) => {
             if (err) {
-              console.log(err);
+              (err);
               return;
             }
 
             if (!results || !results.length) {
-              console.log("No new messages");
+              ("No new messages");
               imap.end();
               return;
             }
 
-            console.log(results.length + " num of emails");
+            (results.length + " num of emails");
 
             const f = imap.fetch(results, { bodies: "" });
             f.on("message", (msg) => {
               msg.on("body", (stream) => {
                 simpleParser(stream, async (err, parsed) => {
                   const { from, subject, textAsHtml, text, html } = parsed;
-                  // console.log(from, subject, textAsHtml, text, html);
+                  // (from, subject, textAsHtml, text, html);
 
                   const imap = await client.imap_Email.create({
                     data: {
@@ -82,14 +82,14 @@ const getEmails = async () => {
                     },
                   });
 
-                  console.log(imap, ticket);
+                  (imap, ticket);
                 });
               });
               msg.once("attributes", (attrs) => {
                 const { uid } = attrs;
                 imap.addFlags(uid, ["\\Seen"], () => {
                   // Mark the email as read after reading it
-                  console.log("Marked as read!");
+                  ("Marked as read!");
                 });
               });
             });
@@ -97,7 +97,7 @@ const getEmails = async () => {
               return Promise.reject(ex);
             });
             f.once("end", () => {
-              console.log("Done fetching all messages!");
+              ("Done fetching all messages!");
               imap.end();
             });
           });
@@ -105,17 +105,17 @@ const getEmails = async () => {
       });
 
       imap.once("error", (err) => {
-        console.log(err);
+        (err);
       });
 
       imap.once("end", () => {
-        console.log("Connection ended");
+        ("Connection ended");
       });
     }
 
-    console.log("loop completed");
+    ("loop completed");
   } catch (error) {
-    console.log("an error occurred ", error);
+    ("an error occurred ", error);
   }
 };
 

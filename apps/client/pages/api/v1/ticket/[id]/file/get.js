@@ -9,7 +9,7 @@ export default async function getFiles(req, res) {
     });
     res.status(200).json({ sucess: true, files });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500).json({ message: error, failed: true });
   }
 }

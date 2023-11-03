@@ -18,7 +18,7 @@ export default function UpdateUserModal({ user }) {
     { id: "admin", title: "admin" },
   ];
 
-  console.log(name.length, email);
+  (name.length, email);
 
   async function updateUser() {
     if (name.length > 0 && email.length > 0) {

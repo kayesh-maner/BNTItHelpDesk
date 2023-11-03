@@ -129,7 +129,7 @@ export default function Ticket() {
   }
 
   async function addTime() {
-    console.log("hit");
+    ("hit");
     await fetch(`/api/v1/time/new`, {
       method: "POST",
       headers: {
@@ -160,7 +160,7 @@ export default function Ticket() {
     },
     onChange(info) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        (info.file, info.fileList);
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);

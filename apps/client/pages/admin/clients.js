@@ -210,7 +210,7 @@ export default function Clients() {
   //           refetch;
   //         });
   //     } catch (error) {
-  //       console.log(error);
+  //       (error);
   //     }
   //   }
 

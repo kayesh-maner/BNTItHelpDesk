@@ -31,7 +31,7 @@ const queryClient = new QueryClient();
 function Auth({ children }) {
   const { data: session, status } = useSession({ required: true });
 
-  console.log(session);
+  (session);
 
   const isUser = !!session?.user;
 
@@ -55,7 +55,7 @@ function Auth({ children }) {
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
 
-  console.log(router)
+  (router)
 
   const actions = [
     {

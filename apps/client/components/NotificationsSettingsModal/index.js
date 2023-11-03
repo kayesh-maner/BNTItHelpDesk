@@ -34,7 +34,7 @@ export default function NotificationsSettingsModal() {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        (res);
       });
   }
 

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     res.status(200).json({ success: true, notebooks });
     
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

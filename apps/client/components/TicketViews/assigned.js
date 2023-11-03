@@ -303,7 +303,7 @@ export default function AssignedTickets() {
     //   Header: "",
     //   id: "actions",
     //   Cell: ({ row, value }) => {
-    //     console.log(row)
+    //     (row)
     //     return (
     //       <>
     //         <Link href={`/tickets/${row.original.id}`}>View</Link>

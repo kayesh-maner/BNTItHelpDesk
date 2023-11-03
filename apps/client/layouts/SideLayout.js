@@ -87,8 +87,8 @@ export default function SideLayout({ children }) {
   }, []);
 
   const handleKeyPress = useCallback((event) => {
-    console.log(`Key pressed: ${event.key}`);
-    console.log(document.activeElement.tagName);
+    (`Key pressed: ${event.key}`);
+    (document.activeElement.tagName);
     if (
       document.activeElement.tagName !== "INPUT" &&
       !document.activeElement.className.includes("ProseMirror")

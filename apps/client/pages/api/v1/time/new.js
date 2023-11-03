@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   const { time, id, title } = req.body;
 
-  console.log(time, id, title);
+  (time, id, title);
 
   try {
     if (session) {
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         .json({ message: "Not authorised sorry :) ", success: false });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

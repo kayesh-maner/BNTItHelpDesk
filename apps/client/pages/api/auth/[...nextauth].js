@@ -56,7 +56,6 @@ const options = {
             ticket_assigned: user.notify_ticket_assigned,
           };
         } catch (error) {
-          console.log(error);
           throw new Error(error);
         }
       },
@@ -89,9 +88,9 @@ const options = {
 
       if (!check_user) throw new Error("No user found");
 
-      // console.log("TOKEN: ", token);
-      // console.log("SESSION: ", session);
-      // console.log("USER: ", user);
+      // ("TOKEN: ", token);
+      // ("SESSION: ", session);
+      // ("USER: ", user);
 
       if (!user) {
         session.user = token;

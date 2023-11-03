@@ -31,7 +31,7 @@ export default async function createClient(req, res) {
       res.status(500).json({ message: "You are not an admin" });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

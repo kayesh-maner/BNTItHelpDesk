@@ -27,7 +27,7 @@ async function main() {
     },
   });
 
-  console.log({ admin, internal });
+  ({ admin, internal });
 }
 
 main()

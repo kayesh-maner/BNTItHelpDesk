@@ -21,7 +21,7 @@ export default async function allDone(req, res) {
 
     res.status(201).json({ success: true, message: "Mark all as done" });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

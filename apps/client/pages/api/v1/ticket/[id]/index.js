@@ -52,7 +52,7 @@ export default async function getById(req, res) {
 
     res.status(200).json({ ticket: t });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(404);
   }
 }

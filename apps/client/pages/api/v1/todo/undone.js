@@ -21,7 +21,7 @@ export default async function unDone(req, res) {
 
     res.status(201).json({ success: true, message: "Todo unmarked" });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

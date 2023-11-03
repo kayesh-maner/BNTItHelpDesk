@@ -1,5 +1,4 @@
 const closedTicketTemplate = (ticket) => {
-  console.log('\n\n\n update ticket ', ticket);
     const closedTicket = {
         subject: `Ticket ${ticket.id} status is now Resolved`, // Subject line
         text: `Hello there, Ticket ${ticket.id} is now Resolved"

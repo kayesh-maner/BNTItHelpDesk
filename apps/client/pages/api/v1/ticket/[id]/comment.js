@@ -4,11 +4,9 @@ import { sendTicketComment } from "../../../../../lib/nodemailer/ticket/comment"
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
-  console.log('\n\n session', session);
   const { id } = req.query;
   const { text } = req.body;
 
-  // console.log(session)
 
   try {
     if (session.user) {
@@ -20,14 +18,12 @@ export default async function handler(req, res) {
           userId: session.user.id,
         },
       });
-      console.log('\n\n comment', comment);
         await sendTicketComment(comment, session);
       res.status(200).json({ message: "Status Updated", success: true });
     } else {
       res.status(403).json({ message: "You are logged in", success: false });
     }
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error, success: false });
   }
 }

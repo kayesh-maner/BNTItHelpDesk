@@ -494,6 +494,7 @@ export default function Ticket() {
                               )
                             )}
                           </div>
+                         
                           <div className="border-t border-gray-200">
                             <div className="flex flex-row items-center">
                               <span className="text-sm font-medium text-gray-500 mt-2">
@@ -581,6 +582,9 @@ export default function Ticket() {
                               )}
                             </ul>
                           </div>
+
+
+
                         </div>
                       </aside>
                       <div className="py-3 xl:pb-0 xl:pt-2">
@@ -1470,6 +1474,35 @@ export default function Ticket() {
                         </div>
                       )}
                     </div>
+
+
+            {/* Category  */}
+                  <div className="border-t border-gray-200">
+                    <div className="flex flex-row items-center">
+                      <span className="text-sm font-medium text-gray-500 mt-2">
+                        Category
+                      </span>
+                    </div>
+                    <ul
+                      role="list"
+                      className="mt-2 leading-8 space-x-2"
+                    >
+                        <li className="inline">
+                          <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                            <div className="absolute flex flex-shrink-0 items-center justify-center">
+                              <span
+                                className="h-1.5 w-1.5 rounded-full bg-blue-500"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <div className="ml-3 text-xs font-semibold text-gray-900">
+                                {data.ticket.category}
+                            </div>
+                          </div>
+                        </li>
+                    </ul>
+                  </div>
+          
                   </div>
                 </aside>
               </div>

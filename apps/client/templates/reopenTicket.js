@@ -29,7 +29,7 @@ const reopenTicketTemplate = (ticket) => {
                 <a href="http://localhost:3000/tickets/${ticket.id}">
                   ${ticket.id}
                 </a> 
-                is now Reopened.
+                is now reopened.
              </p>
 
               Kind regards, 

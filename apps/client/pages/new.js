@@ -11,6 +11,8 @@ import Underline from "@tiptap/extension-underline";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { notifications } from "@mantine/notifications";
+import { useSession } from 'next-auth/react'
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -23,6 +25,7 @@ export default function CreateTicketModal() {
   const [company, setCompany] = useState();
   const [engineer, setEngineer] = useState();
   const [email, setEmail] = useState("");
+  const [ccemail, setCcEmail] = useState("");
   const [issue, setIssue] = useState(t("ticket_extra_details"));
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Normal");
@@ -34,6 +37,8 @@ export default function CreateTicketModal() {
   const categoryList =  ['Software', 'Hardware', 'Other']
   // const categoryList = process.env.CATEGORYLIST
 
+  // Get session data
+  const { data: session} = useSession()
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -89,8 +94,6 @@ export default function CreateTicketModal() {
 
 
   async function createTicket() {
- 
-    ('category >>>', category)
 
     if (!name || !title || !engineer || !category) {
       notifications.show({
@@ -110,11 +113,12 @@ export default function CreateTicketModal() {
       body: JSON.stringify({
         name,
         title,
-        email,
+        email: !session.user.isAdmin ? session.user.email : email,
         detail: issue,
         priority,
         engineer,
-        category
+        category,
+        ccemail, // mail sending to cc
       })
     })
       .then((res) => res.json())
@@ -177,9 +181,16 @@ export default function CreateTicketModal() {
           placeholder={t("ticket_email_manager")}
           onChange={(e) => setEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-          // value={process.env.ADMIN_EMAIL}
-          // value={'admin@admin.com'}
+          value={!session.user.isAdmin ? session.user.email : email}
         />
+
+       {!session.user.isAdmin && <input
+          type="text"
+          name="ccemail"
+          placeholder={t("ticket_email_cc")}
+          onChange={(e) => setCcEmail(e.target.value)}
+          className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+        />}
 
         <RichTextEditor editor={editor}>
           <RichTextEditor.Toolbar>

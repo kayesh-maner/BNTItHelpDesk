@@ -25,8 +25,9 @@ const createTicketTemp = (ticket) => {
               </table>
 
               <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">
+              Ticket Created:
                 <a href="http://localhost:3000/tickets/${ticket.id}">
-                  Ticket Created: ${ticket.id}
+                   ${ticket.id}
                 </a>
               </h1>
               

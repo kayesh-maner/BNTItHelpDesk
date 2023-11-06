@@ -1,7 +1,7 @@
 const commentTicketTemplate = (ticket) => {
     const commentTicket = {
-      subject: `Commented on Ticket ${ticket.ticketId}`, // Subject line
-      text: `Hello there, Commented on Ticket ${ticket.ticketId}, which you reported on ${ticket.createdAt}`, // plain text body
+      subject: `Commented on Ticket ${ticket.id}`, // Subject line
+      text: `Hello there, Commented on Ticket ${ticket.id}, which you reported on ${ticket.createdAt}`, // plain text body
       html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -24,18 +24,18 @@ const commentTicketTemplate = (ticket) => {
                   </tbody>
                 </table>
   
-                <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">
-                  <a href="http://localhost:3000/tickets/${ticket.ticketId}">
-                    Commented on this: ${ticket.ticketId}
-                  </a>
+                <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">               
+                    Commented on Ticket
                 </h1>
                 
                 <p style="font-size:20px;line-height:28px;margin:4px 0">
-                <p>Hello, <br>Your ticket has now been created and logged.</p>
+                <p>Hello, <br> Please review the ticket commented here, TicketId: <a href="http://localhost:3000/tickets/${ticket.id}">
+                ${ticket.id}
+                </a></p>
                 <p style="font-size:14px;margin:16px 0;color:#000">
                 Kind regards, 
                 <br>
-                BNT ticket management
+                BNT Ticket Management
                 </p>
               </td>
             </tr>

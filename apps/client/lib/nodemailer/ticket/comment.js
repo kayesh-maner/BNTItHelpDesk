@@ -3,7 +3,7 @@ import { prisma } from "../../../prisma/prisma";
 import { commentTicketTemplate } from '../../../templates/commentTicket';
 
 
-export async function sendTicketComment(ticket, session) {
+export async function sendTicketComment(session, ticketData) {
   let mail;
 
   const emails = await prisma.email.findMany();
@@ -22,15 +22,10 @@ export async function sendTicketComment(ticket, session) {
     
     const mailData = {
        from: 'noreply@bnt-soft.com', // sender address
-      to: [session.user.email],
-     // to:  ['ml.itteam@bnt-soft.com', ticket.email],
-      // cc: [session.user.email, ticket.email],
+       to: [session.user.email, ticketData.email],
+       // to:  ['ml.itteam@bnt-soft.com', ticket.email],
+       // cc: [session.user.email, ticket.email],
     }
-
-      let info = await mail.sendMail({ ...mailData, ...commentTicketTemplate(ticket) });
-
-
-    // Preview only available when sending through an Ethereal account
-   
+     await mail.sendMail({ ...mailData, ...commentTicketTemplate(ticketData) });   
   }
 }

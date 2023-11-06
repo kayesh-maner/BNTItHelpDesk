@@ -18,7 +18,15 @@ export default async function handler(req, res) {
           userId: session.user.id,
         },
       });
-        await sendTicketComment(comment, session);
+
+      // fetch ticket id data
+      const ticketData = await prisma.ticket.findUnique({
+        where: {
+          id: id,
+        },
+      });
+
+        await sendTicketComment(session, ticketData);
       res.status(200).json({ message: "Status Updated", success: true });
     } else {
       res.status(403).json({ message: "You are logged in", success: false });

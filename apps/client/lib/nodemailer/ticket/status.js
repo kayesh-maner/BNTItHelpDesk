@@ -21,10 +21,10 @@ export async function sendTicketStatus(ticket, session) {
       });
     
     const mailData = {
-       from: 'noreply@bnt-soft.com', // sender address
+      from: 'noreply@bnt-soft.com', // sender address
       to: [ticket.email],
-     // to:  ['ml.itteam@bnt-soft.com', ticket.email],
-      // cc: [session.user.email, ticket.email],
+      // to:  ['ml.itteam@bnt-soft.com', ticket.email],
+      cc: [ticket.cc],
     }
 
     let info;
@@ -33,7 +33,6 @@ export async function sendTicketStatus(ticket, session) {
     } else {
       info = await mail.sendMail({ ...mailData, ...reopenTicketTemplate(ticket)});
     }
-  
 
 
   }

@@ -1,8 +1,7 @@
 const closedTicketTemplate = (ticket) => {
     const closedTicket = {
-        subject: `Ticket ${ticket.id} status is now Resolved`, // Subject line
-        text: `Hello there, Ticket ${ticket.id} is now Resolved"
-        }`, // plain text body
+        subject: `Ticket ${ticket.id} status is now Closed`, // Subject line
+        text: `Hello there, Ticket ${ticket.id} is now Closed`, // plain text body
         html: `
         <!DOCTYPE html> 
         <html lang="en">
@@ -32,7 +31,7 @@ const closedTicketTemplate = (ticket) => {
                   <a href="http://localhost:3000/tickets/${ticket.id}">
                   ${ticket.id} 
                 </a> 
-                is resolved 
+                is now closed.
                   </p>
                   Kind regards, 
                   <br>

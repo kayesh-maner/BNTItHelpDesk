@@ -22,14 +22,16 @@ export async function sendTicketCreate(ticket, session) {
           },
         });
       // } 
-      let info = await mail.sendMail(
+        await mail.sendMail(
         { from: 'noreply@bnt-soft.com', // sender address
          to: [ticket.email],
         // to:  ['ml.itteam@bnt-soft.com', ticket.email],
-         cc: [session.user.email, ticket.email],
-         ...createTicketTemp(ticket)});
+         cc: ticket.cc,
+         ...createTicketTemp(ticket)
+        });
 
     }
   } catch (error) {
+    return error
   }
 }

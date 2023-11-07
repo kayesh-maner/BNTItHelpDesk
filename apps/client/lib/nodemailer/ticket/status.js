@@ -22,8 +22,7 @@ export async function sendTicketStatus(ticket, session) {
     
     const mailData = {
       from: 'noreply@bnt-soft.com', // sender address
-      to: [ticket.email],
-      // to:  ['ml.itteam@bnt-soft.com', ticket.email],
+      to: [ticket.email, process.env.ADMIN_EMAIL],
       cc: [ticket.cc],
     }
 
@@ -33,7 +32,5 @@ export async function sendTicketStatus(ticket, session) {
     } else {
       info = await mail.sendMail({ ...mailData, ...reopenTicketTemplate(ticket)});
     }
-
-
   }
 }

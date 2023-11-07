@@ -22,9 +22,8 @@ export async function sendTicketComment(session, ticketData) {
     
     const mailData = {
        from: 'noreply@bnt-soft.com', // sender address
-       to: [session.user.email, ticketData.email],
-       // to:  ['ml.itteam@bnt-soft.com', ticket.email],
-       // cc: [session.user.email, ticket.email],
+       to: [ticketData.email, process.env.ADMIN_EMAIL],
+       cc: [ticketData.cc],
     }
      await mail.sendMail({ ...mailData, ...commentTicketTemplate(ticketData) });   
   }

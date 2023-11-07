@@ -219,13 +219,13 @@ export default function CreateTicketModal() {
           value={!session.user.isAdmin ? session.user.email : email}
         />
 
-       {!session.user.isAdmin && <input
+       <input
           type="text"
           name="ccemail"
           placeholder={t("ticket_email_cc")}
           onChange={(e) => setCcEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-        />}
+        />
 
         <RichTextEditor editor={editor}>
           <RichTextEditor.Toolbar>

@@ -19,7 +19,7 @@ const commentTicketTemplate = (ticket) => {
                 <table style="margin-top:8px" align="center" border="0" cellPadding="0" cellSpacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td><img alt="Slack" src="https://bnt-soft.com/wp-content/uploads/2020/05/logoheader.png" width="130" height="60" style="display:block;outline:none;border:none;text-decoration:none" /></td>
+                      <td><img alt="Slack" src="https://bnt-soft.com/home/images/BNtlogo.jpeg" width="130" height="60" style="display:block;outline:none;border:none;text-decoration:none" /></td>
                     </tr>
                   </tbody>
                 </table>

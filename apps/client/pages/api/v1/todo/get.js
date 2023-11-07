@@ -5,7 +5,7 @@ import { getSession } from "next-auth/react"
 export default async function getTodo(req, res) {
   const session = await getSession({ req })
 
-  (session)
+  // (session)
 
   try {
     const todos = await prisma.todos.findMany({

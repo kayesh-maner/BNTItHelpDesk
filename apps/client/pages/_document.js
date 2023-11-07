@@ -17,7 +17,7 @@ export default function Document() {
         <meta name="keywords" content="Keywords" />
         <title>BNT</title>
 
-        <link href="/favicon/favicon.ico" rel="icon" />
+        <link href="/favicon/bntfavicon.ico" rel="icon" />
         <link
           href="/favicon/favicon-16x16.png"
           rel="icon"

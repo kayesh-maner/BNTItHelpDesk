@@ -36,8 +36,11 @@ export default async function createTicket(req, res) {
     // generate unique id for the Ticket
     let uid = await unique();
     uid = uid + 1 
-    const customId = moment().format('YYYYMMMDD-') + uid;
+    const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
     
+    console.log('id >>>', customId)
+
+
     const ticket = await prisma.ticket
       .create({
         data: {

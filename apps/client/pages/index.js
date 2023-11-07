@@ -231,21 +231,19 @@ export default function Home() {
             </div>
 
             <div className="flex w-full flex-col ">
-              {/* <span className="font-bold text-2xl">Recent Tickets</span>
-              <input
-                type="text"
-                className="w-40 p-2 border rounded-md"
-                placeholder="Search Tickets"
-              /> */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="font-bold text-2xl">Recent Tickets</div>
-                <input
-                  type="text"
-                  className="w-100 p-2 border rounded-md"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
+                {session.user.isAdmin && (
+                  <div className="flex justify-end"> 
+                    <input
+                      type="text"
+                      className="w-60 p-2 border rounded-md"
+                      placeholder="Search"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                    />
+                  </div>
+                )}
               </div>
               <div className="-mx-4 sm:-mx-0 w-full">
                 <table className="min-w-full divide-y divide-gray-300">

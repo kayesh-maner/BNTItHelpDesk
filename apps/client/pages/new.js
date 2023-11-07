@@ -29,6 +29,8 @@ export default function CreateTicketModal() {
   const [options, setOptions] = useState([]);
   const [users, setUsers] = useState();
   const [category, setCategory] = useState();
+  const [fileAttached, setFileAttached] = useState();
+  // const [selectedFileName, setSelectedFileName] = useState(null)
   const cancelButtonRef = useRef(null);
 
   const categoryList =  ['Software', 'Hardware', 'Other']
@@ -87,11 +89,42 @@ export default function CreateTicketModal() {
     }
   }
 
+  const handleFileUpload = async (e) => {
+    // Handle file upload logic here
+    const selectedFile = e.target.files[0];
+    console.log('selectedFile>>>> \n\n\n', selectedFile);
+    if (e.target.files.length > 0) {
+      // const fileName = e.target.files[0].name;
+      setFileAttached(e.target.files[0].name)
+      // setSelectedFileName(fileName);
+    } else {
+      setSelectedFileName(null);
+    }
+    // Do something with the selected file
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await fetch('/api/v1/upload/new', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.status === 200) {
+        const result = await response.json();
+        console.log('File path:', result.filePath);
+        // You can do something with the file path, like storing it in your database or using it in your form.
+      } else {
+        console.error('File upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
+
 
   async function createTicket() {
  
-    console.log('category >>>', category)
-
     if (!name || !title || !engineer || !category) {
       notifications.show({
         title: "Error",
@@ -114,7 +147,8 @@ export default function CreateTicketModal() {
         detail: issue,
         priority,
         engineer,
-        category
+        category,
+        fileAttached
       })
     })
       .then((res) => res.json())
@@ -334,6 +368,25 @@ export default function CreateTicketModal() {
       </div>
     )}
   </Listbox>
+
+  <div className="relative">
+    <input
+      type="file"
+      accept="*"  // Define the accepted file types
+      onChange={handleFileUpload}
+      className="hidden"
+      id="fileInput"
+    />
+    <label
+      htmlFor="fileInput"
+      className="bg-white min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-3 py-1 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+    >
+      Select File
+    </label>
+      {fileAttached && (
+        <p className="mt-2">Selected File: {fileAttached}</p>
+      )}
+  </div>
 </div>
 
 

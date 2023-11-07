@@ -633,9 +633,26 @@ export default function Ticket() {
                               />
                             </RichTextEditor>
                           ) : (
-                            <span className="break-words">
-                              {renderHTML(data.ticket.detail)}
-                            </span>
+                            <>
+                              <span className="break-words">
+                                {renderHTML(data.ticket.detail)}
+                              </span>
+                              {/* <span className="break-words">
+                                {data.ticket.filePath}
+                              </span> */}
+                              <div>
+                                {/* <img src={`/uploads/${data.ticket.filePath}`} 
+                                alt="Ticket Image" 
+                                style={{ width: '200px', height: 'auto' }} /> */}
+                                {data.ticket.filePath ? (
+                                  <img
+                                    src={`/uploads/${data.ticket.filePath}`}
+                                    alt="Ticket Image"
+                                    style={{ width: '200px', height: '140px' }}
+                                  />
+                                ) : null}
+                              </div>
+                            </>
                           )}
                         </div>
                       </div>

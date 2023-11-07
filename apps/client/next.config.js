@@ -29,4 +29,13 @@ module.exports = removeImports({
   //   }
   //   return config;
   // }
+
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/uploads/:path*',
+  //       destination: '/app/client/uploads/:path*',
+  //     },
+  //   ];
+  // },
 });

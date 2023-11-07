@@ -41,6 +41,8 @@ npx prisma generate
 npx prisma migrate dev --name <migration_name>
 npx prisma migrate deploy
 
+npx prisma db seed
+
 ______________
 
 DROP SCHEMA public CASCADE;

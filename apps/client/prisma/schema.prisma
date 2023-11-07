@@ -107,6 +107,7 @@ model Ticket {
   status     TicketStatus @default(needs_support)
   creator    String?  
   category   String?  
+  filePath   String?  
 
   TicketFile   TicketFile[]
   Comment      Comment[]

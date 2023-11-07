@@ -28,7 +28,7 @@ const closedTicketTemplate = (ticket) => {
                   }</h1>
                   <p style="font-size:20px;line-height:28px;margin:4px 0">
                   <p>Hello there, <br>Ticket ID 
-                  <a href="http://localhost:3000/tickets/${ticket.id}">
+                  <a href="${process.env.BASE_URL}/tickets/${ticket.id}">
                   ${ticket.id} 
                 </a> 
                 is now closed.

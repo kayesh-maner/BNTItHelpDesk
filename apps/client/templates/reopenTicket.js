@@ -26,7 +26,7 @@ const reopenTicketTemplate = (ticket) => {
               <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">Ticket Reopened</h1>
               <p style="font-size:20px;line-height:28px;margin:4px 0">
               <p>Hello there, <br>Ticket ID 
-                <a href="http://localhost:3000/tickets/${ticket.id}">
+                <a href="${process.env.BASE_URL}/tickets/${ticket.id}">
                   ${ticket.id}
                 </a> 
                 is now reopened.

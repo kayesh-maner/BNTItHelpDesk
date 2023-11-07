@@ -29,7 +29,7 @@ const commentTicketTemplate = (ticket) => {
                 </h1>
                 
                 <p style="font-size:20px;line-height:28px;margin:4px 0">
-                <p>Hello, <br> Please review the ticket commented here, TicketId: <a href="http://localhost:3000/tickets/${ticket.id}">
+                <p>Hello, <br> Please review the ticket commented here, TicketId: <a href="${process.env.BASE_URL}/tickets/${ticket.id}">
                 ${ticket.id}
                 </a></p>
                 <p style="font-size:14px;margin:16px 0;color:#000">

@@ -16,7 +16,7 @@ export default async function editUser(req, res) {
     });
     return res.status(200).json({ message: "User Updated", failed: false });
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

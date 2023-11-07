@@ -24,7 +24,7 @@ export default async function getAllClients(req, res) {
         .json({ success: false, message: "You do not have permission" });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

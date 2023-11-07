@@ -213,7 +213,7 @@ export default function ClosedTickets() {
       accessor: "title",
       id: "summary",
       Cell: ({ row, value }) => {
-        console.log(row);
+        (row);
         return (
           <>
             <span className="max-w-[240px] truncate">{value}</span>
@@ -226,7 +226,7 @@ export default function ClosedTickets() {
       accessor: "assignedTo.name",
       id: "assignee",
       Cell: ({ row, value }) => {
-        console.log(row);
+        (row);
         return (
           <>
             <span className="w-[80px] truncate">{value ? value : "n/a"}</span>
@@ -309,7 +309,7 @@ export default function ClosedTickets() {
     //   Header: "",
     //   id: "actions",
     //   Cell: ({ row, value }) => {
-    //     console.log(row)
+    //     (row)
     //     return (
     //       <>
     //         <Link href={`/tickets/${row.original.id}`}>View</Link>

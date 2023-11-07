@@ -33,7 +33,7 @@ export default async function UploadFile(req, res) {
 
         fs.rename(`./storage/${f.newFilename}`, u, async function (err) {
           if (err) throw err;
-          console.log("Successfully renamed - AKA moved!");
+          ("Successfully renamed - AKA moved!");
 
           try {
             await prisma.userFile
@@ -44,13 +44,13 @@ export default async function UploadFile(req, res) {
                   path: u,
                 },
               })
-              .then((err) => console.log(err));
+              .then((err) => (err));
 
             return res
               .status(200)
               .json({ message: "File Uploaded", success: true });
           } catch (error) {
-            console.log(error);
+            (error);
             return res.status(500).json({ error, success: false });
           }
         });
@@ -59,7 +59,7 @@ export default async function UploadFile(req, res) {
       res.status(403).json({ message: "unauthenticated", failed: true });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

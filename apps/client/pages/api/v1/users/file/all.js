@@ -14,7 +14,7 @@ export default async function listFiles(req, res) {
       res.status(403).json({ message: "unauthenticated", failed: true });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500).json({ message: error, failed: true });
   }
 }

@@ -34,7 +34,7 @@ export default async function deleteTodo(req, res) {
 
     res.status(201).json({ success: true, message: "Todo deleted" });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

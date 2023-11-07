@@ -27,7 +27,7 @@ export default async function transferTicket(req,res) {
         .json({ success: false, message: "Ticket does not exist" });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ success: false, error });
   }
 }

@@ -24,7 +24,7 @@ export default async function userOpen(req, res) {
         res.json({ tickets });
       });
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

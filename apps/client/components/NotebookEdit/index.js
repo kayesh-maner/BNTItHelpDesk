@@ -24,7 +24,7 @@ export default function ViewNoteBook({ data }) {
     setNote(data.note)
   }, [data])
 
-  console.log(note)
+  (note)
 
   return (
     <>

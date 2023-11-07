@@ -30,14 +30,14 @@ const ticketsCreatedToday = await prisma.ticket.findMany({
 
 export default async function createTicket(req, res) {
   const session = await getSession({ req });
-  const { name, company, detail, title, priority, email, issue, engineer, category, fileAttached } =
+  const { name, company, detail, title, priority, email, issue, engineer, category, ccemail, fileAttached } =
     req.body;
   try {
     // generate unique id for the Ticket
     let uid = await unique();
     uid = uid + 1 
-    const customId = moment().format('YYYYMMMDD-') + uid;
-    
+    const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
+
     const ticket = await prisma.ticket
       .create({
         data: {
@@ -50,6 +50,7 @@ export default async function createTicket(req, res) {
           email,
           creator : session.user.id,
           category,
+          cc : ccemail,
           client:
             company !== undefined
               ? {
@@ -79,7 +80,7 @@ export default async function createTicket(req, res) {
 
     for (let i = 0; i < webhook.length; i++) {
       if (webhook[i].active === true) {
-        console.log(webhook[i].url);
+        (webhook[i].url);
         await fetch(`${webhook[i].url}`, {
           method: "POST",
           headers: {
@@ -97,7 +98,7 @@ export default async function createTicket(req, res) {
       .status(200)
       .json({ message: "Ticket created correctly", success: true, ticket: ticket });
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error, success: false });
   }
 }

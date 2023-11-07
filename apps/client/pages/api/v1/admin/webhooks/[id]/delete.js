@@ -19,7 +19,7 @@ export default async function getAllHooks(req, res) {
       res.status(401).json({ error: "You are not an admin ", success: false });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error, success: false });
   }
 }

@@ -207,7 +207,7 @@ export default function Teams() {
   //           refetch;
   //         });
   //     } catch (error) {
-  //       console.log(error);
+  //       (error);
   //     }
   //   }
 

@@ -208,7 +208,7 @@ export default function Auth() {
           refetch;
         });
     } catch (error) {
-      console.log(error);
+      (error);
     }
   }
 

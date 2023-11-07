@@ -42,7 +42,7 @@ export default async function completeTicket(req, res) {
 
     res.status(200).json({ message: "Status Updated" });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

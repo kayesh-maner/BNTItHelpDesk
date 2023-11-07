@@ -19,7 +19,7 @@ export default async function handler(req,res) {
             res.status(403).json({ error: "Not authorized" });
         }
     } catch (error) {
-        console.log(error);
+        (error);
         res.status(500).json({ message: "Internal Server Error", error: error });
     }
 }

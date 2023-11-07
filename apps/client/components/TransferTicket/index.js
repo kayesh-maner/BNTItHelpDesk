@@ -36,7 +36,7 @@ export default function TransferTicket({ id }) {
   };
 
   async function postData() {
-    console.log(n.id);
+    (n.id);
     await fetch(`/api/v1/ticket/${id}/transfer`, {
       method: "POST",
       headers: {

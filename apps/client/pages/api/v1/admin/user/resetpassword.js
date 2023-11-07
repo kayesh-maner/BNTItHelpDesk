@@ -23,7 +23,7 @@ export default async function getAllClients(req, res) {
       res.status(422).json({ message: "You are not auth'd", failed: true });
     }
   } catch (error) {
-    console.log(error);
+    (error);
     res.status(500).json({ error });
   }
 }

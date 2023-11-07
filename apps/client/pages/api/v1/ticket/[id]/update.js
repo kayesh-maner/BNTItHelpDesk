@@ -21,7 +21,7 @@ export default async function updateTicket(req, res) {
 
     res.status(201).json({ success: true, message: "Ticket saved" });
   } catch (error) {
-    console.log(error);
+    (error);
     return res.status(500);
   }
 }

@@ -43,7 +43,7 @@ export default function Tickets() {
       current: router.asPath === "/tickets?filter=closed",
     },
   ];
-// console.log('tabs>>> \n\n',tabs)
+// ('tabs>>> \n\n',tabs)
   return (
     <div>
       {loading && (

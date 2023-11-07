@@ -64,12 +64,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       onTrigger: () => router.push('/'),
       icon: <HomeIcon className="h-8 w-8 text-gray-900" />,
     },
-    {
-      title: "Notebook",
-      description: "Personal User Notes",
-      onTrigger: () => router.push('/notebook'),
-      icon: <FolderIcon className="h-8 w-8 text-gray-900" />,
-    },
+    // {
+    //   title: "Notebook",
+    //   description: "Personal User Notes",
+    //   onTrigger: () => router.push('/notebook'),
+    //   icon: <FolderIcon className="h-8 w-8 text-gray-900" />,
+    // },
     {
       title: "Tickets",
       description:
@@ -77,18 +77,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       onTrigger: () => router.push('/tickets'),
       icon: <TicketIcon className="h-8 w-8 text-gray-900" />,
     },
-    {
-      title: "Documentation",
-      description: "Documentation for BNT IT Helpdesk",
-      onTrigger: () => router.push('https://docs.peppermint.sh'),
-      icon: <DocumentCheckIcon className="h-8 w-8 text-gray-900" />,
-    },
-    {
-      title: "Github",
-      description: "OSS codebase for BNT",
-      onTrigger: () => router.push('https://github.com/Peppermint-Lab/peppermint'),
-      icon: <img className="h-7 ml-1 w-auto" src="/github.svg" alt="Workflow" />,
-    },
+    // {
+    //   title: "Documentation",
+    //   description: "Documentation for BNT IT Helpdesk",
+    //   onTrigger: () => router.push('https://docs.peppermint.sh'),
+    //   icon: <DocumentCheckIcon className="h-8 w-8 text-gray-900" />,
+    // },
+    // {
+    //   title: "Github",
+    //   description: "OSS codebase for BNT",
+    //   onTrigger: () => router.push('https://github.com/Peppermint-Lab/peppermint'),
+    //   icon: <img className="h-7 ml-1 w-auto" src="/github.svg" alt="Workflow" />,
+    // },
     {
       title: "BNT",
       description: "",

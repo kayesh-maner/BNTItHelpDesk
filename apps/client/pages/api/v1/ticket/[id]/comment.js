@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         },
       });
 
-        await sendTicketComment(session, ticketData);
+      await sendTicketComment(session, comment, ticketData);
       res.status(200).json({ message: "Status Updated", success: true });
     } else {
       res.status(403).json({ message: "You are logged in", success: false });

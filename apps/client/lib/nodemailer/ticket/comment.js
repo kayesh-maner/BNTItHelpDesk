@@ -3,7 +3,7 @@ import { prisma } from "../../../prisma/prisma";
 import { commentTicketTemplate } from '../../../templates/commentTicket';
 
 
-export async function sendTicketComment(session, ticketData) {
+export async function sendTicketComment(session, comment, ticketData) {
   let mail;
 
   const emails = await prisma.email.findMany();
@@ -25,6 +25,6 @@ export async function sendTicketComment(session, ticketData) {
        to: [ticketData.email, process.env.ADMIN_EMAIL],
        cc: [ticketData.cc],
     }
-     await mail.sendMail({ ...mailData, ...commentTicketTemplate(ticketData) });   
+     await mail.sendMail({ ...mailData, ...commentTicketTemplate(session, comment, ticketData) });   
   }
 }

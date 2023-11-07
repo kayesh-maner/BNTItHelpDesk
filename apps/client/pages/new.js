@@ -33,11 +33,8 @@ export default function CreateTicketModal() {
   const [users, setUsers] = useState();
   const [category, setCategory] = useState();
   const [fileAttached, setFileAttached] = useState();
-  // const [selectedFileName, setSelectedFileName] = useState(null)
-  const cancelButtonRef = useRef(null);
 
-  const categoryList =  ['Software', 'Hardware', 'Other']
-  // const categoryList = process.env.CATEGORYLIST
+  const categoryList = process.env.NEXT_PUBLIC_CATEGORYLIST.split(',');
 
   // Get session data
   const { data: session} = useSession()

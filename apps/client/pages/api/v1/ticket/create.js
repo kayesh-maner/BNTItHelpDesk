@@ -28,6 +28,16 @@ const ticketsCreatedToday = await prisma.ticket.findMany({
   return ticketsCreatedToday.length
 }
 
+// Find userId by using email
+const uidFromEmail = async(email) => {
+  const findEmail = await prisma.user.findMany({
+    where: { email: email },
+  });
+  return findEmail[0].id
+}
+
+
+
 export default async function createTicket(req, res) {
   const session = await getSession({ req });
   const { name, company, detail, title, priority, email, issue, engineer, category, ccemail, fileAttached } =
@@ -38,6 +48,13 @@ export default async function createTicket(req, res) {
     uid = uid + 1 
     const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
 
+    let creator
+    if(session.user.isAdmin){
+      creator = await uidFromEmail(email)
+    }else{
+        creator = session.user.id
+    }
+ 
     const ticket = await prisma.ticket
       .create({
         data: {
@@ -48,7 +65,7 @@ export default async function createTicket(req, res) {
           priority: priority ? priority : "low",
           issue,
           email,
-          creator : session.user.id,
+          creator : creator,
           category,
           cc : ccemail,
           client:

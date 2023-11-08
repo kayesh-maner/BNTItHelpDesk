@@ -68,10 +68,10 @@ export default async function createTicket(req, res) {
           filePath:fileAttached
         },
       })
-      .then((ticket) => {
-        sendTicketCreate(ticket, session);
-      });
-
+     
+      if(ticket){
+              sendTicketCreate(ticket, session);
+      }
     const webhook = await prisma.webhooks.findMany({
       where: {
         type: "ticket_created",

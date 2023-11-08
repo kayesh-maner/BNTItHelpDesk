@@ -27,17 +27,22 @@ export default function CreateUser() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.sucess === true) {
-          router.push("/admin/internal/users");
-          notifications.show({
+        if (res.success === true) {
+          notifications.show({ 
             title: "User created sucessfully",
             message: "The action was processed correctly! 💚",
+            color: "green",
+            autoClose: 5000,
           });
+        setTimeout(() => {
+          router.push("/admin/users/internal");
+        }, 2000);
         } else {
           notifications.show({
             title: "There has been an error ",
             message: "Whoops! please wait and try again! 🤥",
-            color: 'red'
+            color: 'red',
+            autoClose: 5000
           });
         }
       });

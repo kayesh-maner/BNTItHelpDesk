@@ -12,7 +12,7 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { notifications } from "@mantine/notifications";
 import { useSession } from 'next-auth/react'
-
+import { useRouter } from "next/router";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -33,6 +33,7 @@ export default function CreateTicketModal() {
   const [users, setUsers] = useState();
   const [category, setCategory] = useState();
   const [fileAttached, setFileAttached] = useState();
+  const router = useRouter();
 
   const categoryList = process.env.NEXT_PUBLIC_CATEGORYLIST.split(',');
 
@@ -162,6 +163,9 @@ export default function CreateTicketModal() {
             color: "green",
             autoClose: 5000,
           });
+          setTimeout(() => {
+            router.push(`/tickets/${res.ticket.id}`);
+          }, 1000);
         } else {
           notifications.show({
             title: "Error",

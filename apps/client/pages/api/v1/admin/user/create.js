@@ -22,12 +22,12 @@ export default async function createUser(req, res) {
 
       res
         .status(200)
-        .json({ message: "User saved successfully", failed: false });
+        .json({ message: "User saved successfully", success: true });
     } else {
-      res.status(400).json({ message: "You are not an admin ", success: true });
+      res.status(400).json({ message: "You are not an admin ", failed: false });
     }
   } catch (error) {
     (error);
-    res.status(500).json({ error, success: false });
+    res.status(500).json({ error, failed: false });
   }
 }

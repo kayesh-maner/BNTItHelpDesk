@@ -320,10 +320,10 @@ export default function Ticket() {
                           {!data.ticket.isComplete ? (
                             <div className="flex items-center space-x-2">
                               <LockOpenIcon
-                                className="h-5 w-5 text-green-500"
+                                className="h-5 w-5 text-blue-500"
                                 aria-hidden="true"
                               />
-                              <span className="text-sm font-medium text-green-700">
+                              <span className="text-sm font-medium text-blue-700">
                                 Open Issue
                               </span>
                             </div>
@@ -528,7 +528,7 @@ export default function Ticket() {
                                   <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                     <div className="absolute flex flex-shrink-0 items-center justify-center">
                                       <span
-                                        className="h-1.5 w-1.5 rounded-full bg-green-500"
+                                        className="h-1.5 w-1.5 rounded-full bg-blue-500"
                                         aria-hidden="true"
                                       />
                                     </div>
@@ -781,7 +781,7 @@ export default function Ticket() {
                                         className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                       >
                                         <CheckCircleIcon
-                                          className="-ml-0.5 h-5 w-5 text-green-500"
+                                          className="-ml-0.5 h-5 w-5 text-blue-500"
                                           aria-hidden="true"
                                         />
                                         Close issue
@@ -810,10 +810,10 @@ export default function Ticket() {
                     {!data.ticket.isComplete ? (
                       <div className="flex items-center space-x-2">
                         <LockOpenIcon
-                          className="h-5 w-5 text-green-500"
+                          className="h-5 w-5 text-blue-500"
                           aria-hidden="true"
                         />
-                        <span className="text-sm font-medium text-green-700">
+                        <span className="text-sm font-medium text-blue-700">
                           Open Issue
                         </span>
                       </div>
@@ -1019,7 +1019,7 @@ export default function Ticket() {
                               <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                 <div className="absolute flex flex-shrink-0 items-center justify-center">
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-green-500"
+                                    className="h-1.5 w-1.5 rounded-full bg-blue-500"
                                     aria-hidden="true"
                                   />
                                 </div>

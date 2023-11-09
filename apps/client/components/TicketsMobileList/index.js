@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function TicketsMobileList({ tickets }) {
   const high = "bg-red-100 text-red-800";
   const low = "bg-blue-100 text-blue-800";
-  const normal = "bg-green-100 text-green-800";
+  const normal = "bg-blue-100 text-blue-800";
 
   const [data, setData] = React.useState(tickets);
   const [searchParam] = useState(["title", "name", "priority"]);

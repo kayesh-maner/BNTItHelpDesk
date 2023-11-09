@@ -46,7 +46,7 @@ function Auth({ children }) {
   // Session is being fetched, or no user.
   // If no user, useEffect() will redirect.
   return (
-    <div className="flex h-screen justify-center items-center text-green-600">
+    <div className="flex h-screen justify-center items-center text-blue-600">
       <ScaleLoader color="green" loading={status} size={100} />
     </div>
   );

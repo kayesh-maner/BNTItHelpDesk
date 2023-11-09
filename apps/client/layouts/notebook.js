@@ -44,7 +44,7 @@ export default function NoteBookLayout({ children }) {
                   <h1 className="text-3xl ml-2 font-bold">
                     Notebooks{" "}
                     <Link
-                      className="inline-flex float-right items-center px-4 py-2 text-sm font-medium text-green-600 mt-1"
+                      className="inline-flex float-right items-center px-4 py-2 text-sm font-medium text-blue-600 mt-1"
                       href="/notebook/new"
                     >
                       <PlusIconMini className="h-5 w-5" aria-hidden="true" />
@@ -57,8 +57,8 @@ export default function NoteBookLayout({ children }) {
                         href={`/notebook/${item.id}`}
                         className={classNames(
                           router.query.id === item.id
-                            ? "bg-green-500 text-white hover:text-white"
-                            : "text-gray-900 hover:bg-green-500 hover:text-white hover:bg-opacity-75",
+                            ? "bg-blue-500 text-white hover:text-white"
+                            : "text-gray-900 hover:bg-blue-500 hover:text-white hover:bg-opacity-75",
                           "group flex text-left px-2 py-2 w-full text-sm font-medium rounded-md "
                         )}
                       >

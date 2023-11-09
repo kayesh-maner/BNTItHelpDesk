@@ -130,7 +130,7 @@ export default function CreateTicketModal() {
           onClick={() => setOpen(true)}
           id="ticket_create"
           type="button"
-          className="group flex items-center w-full rounded-md p-2 text-sm leading-6 font-semibold  hover:bg-green-400 hover:text-white"
+          className="group flex items-center w-full rounded-md p-2 text-sm leading-6 font-semibold  hover:bg-blue-400 hover:text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -287,7 +287,7 @@ export default function CreateTicketModal() {
                       {({ open }) => (
                         <>
                           <div className="mt-1 relative">
-                            <Listbox.Button className="bg-white relative w-full min-w-[164px] border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-sm">
+                            <Listbox.Button className="bg-white relative w-full min-w-[164px] border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm">
                               <span className="block truncate">
                                 {company
                                   ? company.name
@@ -366,7 +366,7 @@ export default function CreateTicketModal() {
                       {({ open }) => (
                         <>
                           <div className="mt-1 relative">
-                            <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 ">
+                            <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 ">
                               <span className="block truncate">
                                 {engineer
                                   ? engineer.name
@@ -478,7 +478,7 @@ export default function CreateTicketModal() {
                           createTicket();
                         }}
                         type="button"
-                        className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none "
+                        className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-blue-600 font-medium text-white hover:bg-blue-700 focus:outline-none "
                       >
                         Create Ticket
                       </button>

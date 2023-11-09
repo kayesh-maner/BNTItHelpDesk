@@ -152,7 +152,7 @@ export default function Notifications() {
                             type="text"
                             name="url"
                             id="url"
-                            className="shadow-sm focus:ring-green\-500 focus:border-green-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-green\-500 focus:border-blue-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
                             required
                             onChange={(e) => setName(e.target.value)}
                           />
@@ -169,7 +169,7 @@ export default function Notifications() {
                             type="text"
                             name="url"
                             id="url"
-                            className="shadow-sm focus:ring-green\-500 focus:border-green-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
+                            className="shadow-sm focus:ring-green\-500 focus:border-blue-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
                             required
                             onChange={(e) => setUrl(e.target.value)}
                           />
@@ -185,7 +185,7 @@ export default function Notifications() {
                   type="text"
                   name="url"
                   id="url"
-                  className="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
+                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:w-1/2 md:w-3/4 sm:text-sm border-gray-300 rounded-md"
                   placeholder=""
                   onChange={(e) => setSecret(e.target.value)}
                 />
@@ -231,8 +231,8 @@ export default function Notifications() {
                                 checked={enabled}
                                 onChange={setEnabled}
                                 className={classNames(
-                                  enabled ? "bg-green-600" : "bg-gray-200",
-                                  "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                  enabled ? "bg-blue-600" : "bg-gray-200",
+                                  "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                 )}
                               >
                                 <span
@@ -253,7 +253,7 @@ export default function Notifications() {
                             setShow("main");
                           }}
                           type="button"
-                          className="mt-8 inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          className="mt-8 inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                           Add Webhook
                         </button>

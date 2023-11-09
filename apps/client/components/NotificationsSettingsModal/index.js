@@ -207,7 +207,7 @@ export default function NotificationsSettingsModal() {
                           postData();
                         }}
                         type="button"
-                        className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none "
+                        className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-blue-600 font-medium text-white hover:bg-blue-700 focus:outline-none "
                       >
                         Save
                       </button>

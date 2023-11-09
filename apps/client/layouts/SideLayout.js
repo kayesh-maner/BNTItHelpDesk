@@ -201,8 +201,8 @@ export default function SideLayout({ children }) {
                               href={item.href}
                               className={classNames(
                                 item.current
-                                  ? "bg-green-400 text-white"
-                                  : "bg-gray-900 text-white hover:bg-green-400 hover:text-white",
+                                  ? "bg-blue-400 text-white"
+                                  : "bg-gray-900 text-white hover:bg-blue-400 hover:text-white",
                                 "group w-full flex items-center pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none"
                               )}
                             >
@@ -222,8 +222,8 @@ export default function SideLayout({ children }) {
                                     <Disclosure.Button
                                       className={classNames(
                                         item.current
-                                          ? "bg-green-400 text-white"
-                                          : "text-white bg-gray-900 hover:bg-green-400 hover:text-white",
+                                          ? "bg-blue-400 text-white"
+                                          : "text-white bg-gray-900 hover:bg-blue-400 hover:text-white",
 
                                         "group w-full flex items-center pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none"
                                       )}
@@ -252,7 +252,7 @@ export default function SideLayout({ children }) {
                                             key={subItem.name}
                                             as="a"
                                             href={subItem.href}
-                                            className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-green-400"
+                                            className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-blue-400"
                                           >
                                             {subItem.name}
                                           </Disclosure.Button>
@@ -289,8 +289,8 @@ export default function SideLayout({ children }) {
                             href={item.href}
                             className={classNames(
                               item.current
-                                ? "bg-green-500 text-white"
-                                : "text-white hover:bg-green-400 hover:text-white",
+                                ? "bg-blue-500 text-white"
+                                : "text-white hover:bg-blue-400 hover:text-white",
                               "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                             )}
                           >
@@ -343,7 +343,7 @@ export default function SideLayout({ children }) {
                       alt="Workflow"
                     />
                     <Link href="#">
-                      <h1 className="text-2xl ml-2 mt-1 hover:text-green-600 font-extrabold text-white">
+                      <h1 className="text-2xl ml-2 mt-1 hover:text-blue-600 font-extrabold text-white">
                         BNTSOFT
                       </h1>
                     </Link>
@@ -357,8 +357,8 @@ export default function SideLayout({ children }) {
                             href={item.href}
                             className={classNames(
                               item.current
-                                ? "bg-green-400 text-white hover:text-white"
-                                : "bg-gray-900 text-white hover:bg-green-400 hover:text-white",
+                                ? "bg-blue-400 text-white hover:text-white"
+                                : "bg-gray-900 text-white hover:bg-blue-400 hover:text-white",
                               "group w-full flex items-center pl-2 pr-2 py-2 text-sm font-medium rounded-md"
                             )}
                           >
@@ -389,8 +389,8 @@ export default function SideLayout({ children }) {
                                   <Disclosure.Button
                                     className={classNames(
                                       item.current
-                                        ? "bg-green-400 text-white"
-                                        : "bg-gray-900 text-white hover:bg-green-400 hover:text-white",
+                                        ? "bg-blue-400 text-white"
+                                        : "bg-gray-900 text-white hover:bg-blue-400 hover:text-white",
                                       "group w-full flex items-center pl-2 pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none"
                                     )}
                                   >
@@ -416,7 +416,7 @@ export default function SideLayout({ children }) {
                                       <Link href={`/queue/${subItem.name}`}>
                                         <Disclosure.Button
                                           key={subItem.name}
-                                          className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-green-400 focus:outline-none"
+                                          className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-blue-400 focus:outline-none"
                                         >
                                           {subItem.name}
                                         </Disclosure.Button>
@@ -440,7 +440,7 @@ export default function SideLayout({ children }) {
                     >
                       <Link
                         href="/admin"
-                        className="group flex items-center px-2 py-2 text-xs font-semibold text-white rounded-md hover:bg-green-400 hover:text-white uppercase tracking-wider"
+                        className="group flex items-center px-2 py-2 text-xs font-semibold text-white rounded-md hover:bg-blue-400 hover:text-white uppercase tracking-wider"
                       >
                         <span className="">ADMIN</span>
                         <div className="flex w-full justify-end float-right">
@@ -480,7 +480,7 @@ export default function SideLayout({ children }) {
                           {session.user.name} [{lang}/{session.user.language}]
                         </p>
                         <Link href="/settings">
-                          <p className="text-xs font-medium text-white group-hover:text-green-400">
+                          <p className="text-xs font-medium text-white group-hover:text-blue-400">
                             View profile
                           </p>
                         </Link>

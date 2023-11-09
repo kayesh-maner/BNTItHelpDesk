@@ -196,7 +196,7 @@ export default function Home() {
                       <dt className="sr-only">{t("account_status")}</dt>
                       <dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mr-6 sm:mt-0 capitalize">
                         <CheckCircleIcon
-                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
+                          className="flex-shrink-0 mr-1.5 h-5 w-5 text-blue-400"
                           aria-hidden="true"
                         />
                         {session.user.isAdmin ? "Admin" : "user"}
@@ -342,7 +342,7 @@ export default function Home() {
                               </span>
                             )}
                             {item.priority === "Normal" && (
-                              <span className="inline-flex items-center w-full justify-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                              <span className="inline-flex items-center w-full justify-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
                                 {item.priority}
                               </span>
                             )}
@@ -368,9 +368,9 @@ export default function Home() {
                               </div>
                             ) : (
                               <>
-                                <span className="inline-flex items-center gap-x-1.5 rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
+                                <span className="inline-flex items-center gap-x-1.5 rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
                                   <svg
-                                    className="h-1.5 w-1.5 fill-green-500"
+                                    className="h-1.5 w-1.5 fill-blue-500"
                                     viewBox="0 0 6 6"
                                     aria-hidden="true"
                                   >

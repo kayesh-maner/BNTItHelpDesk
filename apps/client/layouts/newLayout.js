@@ -256,8 +256,8 @@ export default function NewLayout({ children }) {
                                         <Disclosure.Button
                                           className={classNames(
                                             item.current
-                                              ? "bg-green-400 text-white"
-                                              : "bg-gray-900 text-white hover:bg-green-400 hover:text-white",
+                                              ? "bg-blue-400 text-white"
+                                              : "bg-gray-900 text-white hover:bg-blue-400 hover:text-white",
                                             "group w-full flex items-center pl-2 pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none"
                                           )}
                                         >
@@ -285,7 +285,7 @@ export default function NewLayout({ children }) {
                                             >
                                               <Disclosure.Button
                                                 key={subItem.name}
-                                                className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-green-400 focus:outline-none"
+                                                className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-blue-400 focus:outline-none"
                                               >
                                                 {subItem.name}
                                               </Disclosure.Button>
@@ -330,7 +330,7 @@ export default function NewLayout({ children }) {
           <div className="flex align-middle flex-row h-16 items-center">
             <img className="h-8 w-auto" src="/bnt.png" alt="Workflow" />
             <Link href="/">
-              <h1 className="text-4xl ml-2 mt-5 hover:text-green-600 font-extrabold text-white">
+              <h1 className="text-4xl ml-2 mt-5 hover:text-blue-600 font-extrabold text-white">
                 Helpdesk
               </h1>
             </Link>
@@ -346,8 +346,8 @@ export default function NewLayout({ children }) {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-green-400 text-white hover:text-white"
-                              : "text-white hover:text-white hover:bg-green-500",
+                              ? "bg-blue-400 text-white hover:text-white"
+                              : "text-white hover:text-white hover:bg-blue-500",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
@@ -379,8 +379,8 @@ export default function NewLayout({ children }) {
                                 <Disclosure.Button
                                   className={classNames(
                                     item.current
-                                      ? "bg-green-400 text-white"
-                                      : "bg-gray-900 text-white hover:bg-green-400 hover:text-white",
+                                      ? "bg-blue-400 text-white"
+                                      : "bg-gray-900 text-white hover:bg-blue-400 hover:text-white",
                                     "group w-full flex items-center pl-2 pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none"
                                   )}
                                 >
@@ -406,7 +406,7 @@ export default function NewLayout({ children }) {
                                     <Link href={`/queue/${subItem.name}`}>
                                       <Disclosure.Button
                                         key={subItem.name}
-                                        className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-green-400 focus:outline-none"
+                                        className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-white rounded-md hover:text-white hover:bg-blue-400 focus:outline-none"
                                       >
                                         {subItem.name}
                                       </Disclosure.Button>
@@ -437,8 +437,8 @@ export default function NewLayout({ children }) {
                     href="/admin"
                     className={classNames(
                       location.pathname.includes("/admin")
-                        ? "bg-green-400 text-white"
-                        : "text-white hover:bg-green-500 hover:text-white",
+                        ? "bg-blue-400 text-white"
+                        : "text-white hover:bg-blue-500 hover:text-white",
                       "group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                     )}
                   >

@@ -284,7 +284,7 @@ export default function CreateTicketModal() {
   <Listbox value={engineer} onChange={setEngineer}>
     {({ open }) => (
       <div className="relative">
-        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           <span className="block truncate">
             {engineer ? engineer.name : "Select an Engineer"}
           </span>
@@ -345,7 +345,7 @@ export default function CreateTicketModal() {
   <Listbox value={categoryList} onChange={setCategory}>
     {({ open }) => (
       <div className="relative">
-        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           <span className="block truncate">
             {category ? category : "Select Category"}
           </span>
@@ -399,7 +399,7 @@ export default function CreateTicketModal() {
     />
     <label
       htmlFor="fileInput"
-      className="bg-white min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-3 py-1 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+      className="bg-white min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-3 py-1 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
     >
       Select File
     </label>
@@ -418,7 +418,7 @@ export default function CreateTicketModal() {
                 createTicket();
               }}
               type="button"
-              className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none "
+              className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-blue-600 font-medium text-white hover:bg-blue-700 focus:outline-none "
             >
               Create Ticket
             </button>

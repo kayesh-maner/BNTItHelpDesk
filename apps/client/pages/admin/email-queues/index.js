@@ -54,7 +54,7 @@ export default function EmailQueues() {
                 <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                   <Link
                     href="/admin/email-queues/new"
-                    className="block rounded-md bg-green-600 py-1.5 px-3 text-center text-sm font-semibold leading-6 text-white hover:text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                    className="block rounded-md bg-blue-600 py-1.5 px-3 text-center text-sm font-semibold leading-6 text-white hover:text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                   >
                     New Queue
                   </Link>

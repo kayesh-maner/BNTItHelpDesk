@@ -39,6 +39,8 @@ export default function CreateTicketModal() {
 
   // Get session data
   const { data: session} = useSession()
+ 
+  // setName(!session.user.isAdmin ? session.user.name : name)
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -127,7 +129,7 @@ export default function CreateTicketModal() {
 
 
   async function createTicket() {
-    if (!name || !title || !engineer || !category) {
+    if (!name || !title || !engineer || !category || !email) {
       notifications.show({
         title: "Error",
         message: "Please fill in all mandatory fields",
@@ -180,6 +182,9 @@ export default function CreateTicketModal() {
   useEffect(() => {
     fetchClients();
     fetchUsers();
+    setName(!session.user.isAdmin ? session.user.name : name)
+    setEmail(!session.user.isAdmin ? session.user.email : email)
+    setCcEmail(!session.user.isAdmin ? session.user.reporting : '')
   }, []);
 
   return (
@@ -209,6 +214,7 @@ export default function CreateTicketModal() {
           autocomplete="off"
           onChange={(e) => setName(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+          value={!session.user.isAdmin ? session.user.name : name}
         />
 
         <input
@@ -226,6 +232,7 @@ export default function CreateTicketModal() {
           placeholder={t("ticket_email_cc")}
           onChange={(e) => setCcEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+          value={!session.user.isAdmin ? session.user.reporting : ''}
         />
 
         <RichTextEditor editor={editor}>

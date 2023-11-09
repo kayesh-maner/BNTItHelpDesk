@@ -85,17 +85,14 @@ const options = {
       const check_user = await prisma.user.findUnique({
         where: { email: user !== undefined ? user.email : token.email },
       });
-
+      console.log('\n\n\n check_user', check_user);
       if (!check_user) throw new Error("No user found");
-
-      // ("TOKEN: ", token);
-      // ("SESSION: ", session);
-      // ("USER: ", user);
 
       if (!user) {
         session.user = token;
         session.user.id = check_user.id;
         session.user.isAdmin = check_user.isAdmin
+        session.user.reporting = check_user.reporting
         return Promise.resolve(session);
       } else {
         session.user = user;

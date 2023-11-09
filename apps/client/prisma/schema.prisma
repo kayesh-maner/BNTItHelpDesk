@@ -70,6 +70,7 @@ model User {
   Account                      Account[]
   Session                      Session[]
   TimeTracking                 TimeTracking[]
+  reporting                    String?
 }
 
 model VerificationToken {

@@ -69,6 +69,7 @@ model User {
   Comment                      Comment[]
   Account                      Account[]
   Session                      Session[]
+  reporting                    String?
 }
 
 model VerificationToken {

@@ -15,7 +15,7 @@ export default function Document() {
           content="Ticket management system selfhosted open source"
         />
         <meta name="keywords" content="Keywords" />
-        <title>BNT</title>
+        <title>BNT IT HELPDESK</title>
 
         <link href="/favicon/bntfavicon.ico" rel="icon" />
         <link

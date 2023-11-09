@@ -13,6 +13,7 @@ import {
   TrashIcon,
   UserPlusIcon,
   CheckCircleIcon,
+  PaperClipIcon
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 
@@ -259,6 +260,12 @@ export default function Home() {
                         scope="col"
                         className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                       >
+                        Attachment
+                      </th>
+                      <th
+                        scope="col"
+                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                      >
                         Email
                       </th>
                       <th
@@ -310,6 +317,14 @@ export default function Home() {
                                 {item.email}
                               </dd>
                             </dl>
+                          </td>
+                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                            {item.filePath && (
+                              <PaperClipIcon 
+                              fontSize='10px'
+                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-black-400"
+                              />
+                            )}
                           </td>
                           <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             {item.email}

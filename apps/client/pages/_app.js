@@ -90,7 +90,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     //   icon: <img className="h-7 ml-1 w-auto" src="/github.svg" alt="Workflow" />,
     // },
     {
-      title: "BNT",
+      title: "BNT IT HELPDESK",
       description: "",
       onTrigger: () => router.push('#'),
       icon: <img className="h-7 ml-1 w-auto" src="/bnt.png" alt="Workflow" />,

@@ -26,6 +26,7 @@ model User {
   notes                        Notes[]
   Team                         Team?      @relation(fields: [teamId], references: [id])
   teamId                       String?
+  reporting                    String?
 }
 
 model Team {

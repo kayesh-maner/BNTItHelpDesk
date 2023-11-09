@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { useRouter } from "next/router";
-import { notifications } from '@mantine/notifications';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateUser() {
   const [open, setOpen] = useState(false);
@@ -10,9 +11,40 @@ export default function CreateUser() {
   const [name, setName] = useState("");
   const [admin, setAdmin] = useState(false);
 
+ // State for validation errors
+ const [emailError, setEmailError] = useState("");
+ const [passwordError, setPasswordError] = useState("");
+
   const router = useRouter();
 
   async function createUser() {
+
+    setEmailError("");
+    setPasswordError("");
+
+    if (!name || !email || !password) {
+      toast.error("Please fill in all required fields", { autoClose: 5000 });
+      return;
+    }
+    
+     // Validate email format
+     const atSymbolPattern = /@/;
+
+     if (!atSymbolPattern.test(email)) {
+       toast.error("Please enter a valid email address ", { autoClose: 5000 });
+       return;
+     }
+
+     //validate passworf
+     const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    if (!passwordPattern.test(password)) {
+      toast.error(
+        "Password must be at least 8 characters long and contain at least one number and one special character",
+        { autoClose: 6000 }
+      );
+      return;
+    }
+
     await fetch("/api/v1/admin/user/create", {
       method: "POST",
       headers: {
@@ -27,17 +59,16 @@ export default function CreateUser() {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.sucess === true) {
-          router.push("/admin/internal/users");
-          notifications.show({
-            title: "User created sucessfully",
-            message: "The action was processed correctly! 💚",
+        if (res.success === true) {
+          toast.success("The action was processed correctly!", {
+            autoClose: 5000,
           });
+        setTimeout(() => {
+          router.push("/admin/users/internal");
+        }, 2000);
         } else {
-          notifications.show({
-            title: "There has been an error ",
-            message: "Whoops! please wait and try again! 🤥",
-            color: 'red'
+          toast.error("There has been an error. Whoops! Please wait and try again!", {
+            autoClose: 5000,
           });
         }
       });
@@ -50,6 +81,7 @@ export default function CreateUser() {
 
   return (
     <div>
+    <ToastContainer />
       <div className="sm:flex sm:items-start">
         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
           <h3 p className="text-lg leading-6 font-medium text-gray-900">
@@ -59,7 +91,7 @@ export default function CreateUser() {
             <input
               type="text"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-1/2 sm:text-sm border-gray-300 rounded-md"
-              placeholder="Enter first name here..."
+              placeholder="Enter name here..."
               name="name"
               onChange={(e) => setName(e.target.value)}
             />
@@ -70,14 +102,18 @@ export default function CreateUser() {
               placeholder="Enter email here...."
               onChange={(e) => setEmail(e.target.value)}
             />
-
+            {emailError && (
+              <div className="text-red-500">{emailError}</div>
+            )}
             <input
               type="password"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               placeholder="Enter password here..."
               onChange={(e) => setPassword(e.target.value)}
             />
-
+            {passwordError && (
+              <div className="text-red-500">{passwordError}</div>
+            )}
             <label className="text-base font-medium text-gray-900 mt-2">
               User Type
             </label>

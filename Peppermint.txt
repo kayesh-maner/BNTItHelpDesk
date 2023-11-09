@@ -40,7 +40,6 @@ After making changes in Prisma Schema
 npx prisma generate
 npx prisma migrate dev --name <migration_name>
 npx prisma migrate deploy
-
 npx prisma db seed
 
 ______________

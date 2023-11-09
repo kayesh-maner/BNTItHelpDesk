@@ -70,6 +70,7 @@ model User {
   Account                      Account[]
   Session                      Session[]
   TimeTracking                 TimeTracking[]
+  reporting                    String?
 }
 
 model VerificationToken {
@@ -108,7 +109,6 @@ model Ticket {
   creator    String?  
   category   String?  
   filePath   String?  
-  category   String? 
   cc         String?
 
   TicketFile   TicketFile[]

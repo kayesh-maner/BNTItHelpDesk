@@ -28,16 +28,35 @@ const ticketsCreatedToday = await prisma.ticket.findMany({
   return ticketsCreatedToday.length
 }
 
+// Find userId by using email
+const uidFromEmail = async(email) => {
+  const findEmail = await prisma.user.findMany({
+    where: { email: email },
+  });
+  return findEmail[0].id
+}
+
+
+
 export default async function createTicket(req, res) {
   const session = await getSession({ req });
   const { name, company, detail, title, priority, email, issue, engineer, category, ccemail, fileAttached } =
     req.body;
+
+    console.log('\n\n\n req.body', req.body);
   try {
     // generate unique id for the Ticket
     let uid = await unique();
     uid = uid + 1 
     const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
 
+    let creator
+    if(session.user.isAdmin){
+      creator = await uidFromEmail(email)
+    }else{
+        creator = session.user.id
+    }
+ 
     const ticket = await prisma.ticket
       .create({
         data: {
@@ -48,7 +67,7 @@ export default async function createTicket(req, res) {
           priority: priority ? priority : "low",
           issue,
           email,
-          creator : session.user.id,
+          creator : creator,
           category,
           cc : ccemail,
           client:
@@ -68,10 +87,10 @@ export default async function createTicket(req, res) {
           filePath:fileAttached
         },
       })
-      .then((ticket) => {
-        sendTicketCreate(ticket, session);
-      });
-
+     
+      if(ticket){
+              sendTicketCreate(ticket, session);
+      }
     const webhook = await prisma.webhooks.findMany({
       where: {
         type: "ticket_created",
@@ -98,7 +117,7 @@ export default async function createTicket(req, res) {
       .status(200)
       .json({ message: "Ticket created correctly", success: true, ticket: ticket });
   } catch (error) {
-    (error);
+   console.log('\n\n',error);
     res.status(500).json({ error, success: false });
   }
 }

@@ -319,6 +319,14 @@ export default function Home() {
                             </dl>
                           </td>
                           <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                            {item.filePath && (
+                              <PaperClipIcon 
+                              fontSize='10px'
+                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-black-400"
+                              />
+                            )}
+                          </td>
+                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             {item.email}
                             {/* <dl className="font-normal lg:hidden">
                               <dt className="sr-only sm:hidden">Email</dt>
@@ -326,14 +334,6 @@ export default function Home() {
                                 {item.email}
                               </dd>
                             </dl> */}
-                          </td>
-                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                            {item.filePath && (
-                              <PaperClipIcon 
-                              fontSize='10px'
-                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-black-400"
-                              />
-                            )}
                           </td>
                           <td className="hidden px-3 py-1 text-sm text-gray-500 lg:table-cell w-[64px]">
                             {item.priority === "Low" && (

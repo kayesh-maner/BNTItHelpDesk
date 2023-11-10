@@ -28,11 +28,6 @@ node version = 16.13.0
 	
 	npm run dev 
 
-
-
-
-
-
 ______________________
 
 After making changes in Prisma Schema 
@@ -45,3 +40,8 @@ npx prisma db seed
 ______________
 
 DROP SCHEMA public CASCADE;
+
+
+INSERT INTO public."Email"
+(id, "createdAt", "updatedAt", active, "user", pass, secure, host, reply, port)
+VALUES('', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, 'noreply@bnt-soft.com', 'Pad05029', false, 'smtp.office365.com', 'noreply@bnt-soft.com', '587');

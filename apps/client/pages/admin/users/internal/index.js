@@ -9,6 +9,8 @@ import {
 import ResetPassword from "../../../../components/ResetPassword";
 import UpdateUserModal from "../../../../components/UpdateUserModal";
 import Link from "next/link";
+import { Popconfirm, message } from 'antd';
+
 
 const fetchUsers = async () => {
   const res = await fetch("/api/v1/users/all");
@@ -31,10 +33,6 @@ function DefaultColumnFilter({ column: { filterValue, setFilter } }) {
 function Table({ columns, data }) {
   const filterTypes = React.useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-      // fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
-      // "startWith"
       text: (rows, id, filterValue) =>
         rows.filter((row) => {
           const rowValue = row.values[id];
@@ -50,7 +48,6 @@ function Table({ columns, data }) {
 
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
@@ -134,57 +131,6 @@ function Table({ columns, data }) {
               })}
             </tbody>
           </table>
-
-          {data.legnth > 10 && (
-            <nav
-              className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-              aria-label="Pagination"
-            >
-              <div className="hidden sm:block">
-                <div className="flex flex-row flex-nowrap w-full space-x-2">
-                  <p
-                    htmlFor="location"
-                    className="block text-sm font-medium text-gray-700 mt-4"
-                  >
-                    Show
-                  </p>
-                  <select
-                    id="location"
-                    name="location"
-                    className="block w-full pl-3 pr-10 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                    value={pageSize}
-                    onChange={(e) => {
-                      setPageSize(Number(e.target.value));
-                    }}
-                  >
-                    {[10, 20, 30, 40, 50].map((pageSize) => (
-                      <option key={pageSize} value={pageSize}>
-                        {pageSize}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="flex-1 flex justify-between sm:justify-end">
-                <button
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                  type="button"
-                  onClick={() => previousPage()}
-                  disabled={!canPreviousPage}
-                >
-                  Previous
-                </button>
-                <button
-                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                  type="button"
-                  onClick={() => nextPage()}
-                  disabled={!canNextPage}
-                >
-                  Next
-                </button>
-              </div>
-            </nav>
-          )}
         </div>
       </div>
     </div>
@@ -193,6 +139,8 @@ function Table({ columns, data }) {
 
 export default function Auth() {
   const { data, status, refetch } = useQuery("fetchAuthUsers", fetchUsers);
+
+console.log('users >>', data)
 
   async function deleteClient(client) {
     const id = client.id;
@@ -232,7 +180,7 @@ export default function Auth() {
           <div className="space-x-4 flex flex-row">
             <UpdateUserModal user={row.original} />
             <ResetPassword user={row.original} />
-            {/* <Popconfirm
+            <Popconfirm
               title="Are you sure you want to delete?"
               onConfirm={() => deleteClient(row.cells[0].value)}
             >
@@ -242,7 +190,7 @@ export default function Auth() {
               >
                 Delete
               </button>
-            </Popconfirm> */}
+            </Popconfirm>
           </div>
         );
       },
@@ -258,7 +206,7 @@ export default function Auth() {
         <div className="py-6">
           <div className="flex flex-row max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">
-              Internal Users
+                Helpdesk  Users
             </h1>
             <div className="ml-4">
               <Link
@@ -269,6 +217,7 @@ export default function Auth() {
               </Link>
             </div>
           </div>
+          
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <div className="py-4">
               {status === "loading" && (
@@ -287,10 +236,11 @@ export default function Auth() {
               )}
 
               {status === "success" && (
-                <div>
+                <div style={{ maxHeight: '400px', overflowY: 'auto', overflowX: 'hidden' }}>
                   <div className="hidden sm:block">
                     <Table columns={columns} data={data.users} />
                   </div>
+                 
                   <div className="sm:hidden">
                     {data.users.map((user) => (
                       <div
@@ -319,7 +269,7 @@ export default function Auth() {
                             refetch={() => handleRefresh}
                           />
                           <ResetPassword user={user} />
-                          {/* <Popconfirm
+                          <Popconfirm
                             title="Are you sure you want to delete?"
                             onConfirm={() => deleteClient(user.id)}
                           >
@@ -329,7 +279,7 @@ export default function Auth() {
                             >
                               Delete
                             </button>
-                          </Popconfirm> */}
+                          </Popconfirm>
                         </div>
                       </div>
                     ))}

@@ -184,7 +184,7 @@ export default function CreateTicketModal() {
     fetchUsers();
     setName(!session.user.isAdmin ? session.user.name : name)
     setEmail(!session.user.isAdmin ? session.user.email : email)
-    setCcEmail(!session.user.isAdmin ? session.user.reporting : '')
+    setCcEmail(!session.user.isAdmin ? session.user.reporting : ccemail)
   }, []);
 
   return (
@@ -232,7 +232,7 @@ export default function CreateTicketModal() {
           placeholder={t("ticket_email_cc")}
           onChange={(e) => setCcEmail(e.target.value)}
           className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-          value={!session.user.isAdmin ? session.user.reporting : ''}
+          value={!session.user.isAdmin ? session.user.reporting : ccemail}
         />
 
 

@@ -3,23 +3,21 @@ import { sendTicketCreate } from "../../../../lib/nodemailer/ticket/create";
 import { getSession } from "next-auth/react";
 const moment = require('moment'); 
 
-// Fetch Todays tickets here
 const unique = async() => {
-// Fetch Todays Total Ticket Count
 const today = new Date();
-today.setHours(0, 0, 0, 0); // Set the time to the start of the day
+today.setHours(0, 0, 0, 0); 
 
 const ticketsCreatedToday = await prisma.ticket.findMany({
   where: {
     AND: [
       {
         createdAt: {
-          gte: today, // Greater than or equal to the start of today
+          gte: today, 
         },
       },
       {
         createdAt: {
-          lt: new Date(), // Less than the current time, to ensure only today's tickets
+          lt: new Date(), 
         },
       },
     ],
@@ -36,6 +34,12 @@ const uidFromEmail = async(email) => {
   return findEmail[0].id
 }
 
+const countUser = async (email) => {
+  const userCount = await prisma.user.count({
+    where: { email: email },
+  });
+  return userCount;
+}
 
 
 export default async function createTicket(req, res) {
@@ -48,6 +52,15 @@ export default async function createTicket(req, res) {
     let uid = await unique();
     uid = uid + 1 
     const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
+  
+   // Check if email is exist in DB or not 
+    const countU = await countUser(email)
+    console.log('count User >>>', countU)
+    if(countU == 0){
+      let error = 'User does not exist with this Email. Please create user first'
+      res.status(400).json({ error, success: false });
+      return false
+    } 
 
     let creator
     if(session.user.isAdmin){
@@ -55,7 +68,7 @@ export default async function createTicket(req, res) {
     }else{
         creator = session.user.id
     }
- 
+   
     const ticket = await prisma.ticket
       .create({
         data: {
@@ -88,8 +101,9 @@ export default async function createTicket(req, res) {
       })
      
       if(ticket){
-              sendTicketCreate(ticket, session);
-      }
+          sendTicketCreate(ticket, session);
+        }
+
     const webhook = await prisma.webhooks.findMany({
       where: {
         type: "ticket_created",
@@ -112,9 +126,10 @@ export default async function createTicket(req, res) {
       }
     }
 
-    res
-      .status(200)
-      .json({ message: "Ticket created correctly", success: true, ticket: ticket });
+    res.status(200).json(
+      { message: "Ticket created correctly", success: true, ticket: ticket }
+    )
+
   } catch (error) {
     res.status(500).json({ error, success: false });
   }

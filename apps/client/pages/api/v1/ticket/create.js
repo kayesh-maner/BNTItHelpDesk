@@ -43,7 +43,6 @@ export default async function createTicket(req, res) {
   const { name, company, detail, title, priority, email, issue, engineer, category, ccemail, fileAttached } =
     req.body;
 
-    console.log('\n\n\n req.body', req.body);
   try {
     // generate unique id for the Ticket
     let uid = await unique();
@@ -117,7 +116,6 @@ export default async function createTicket(req, res) {
       .status(200)
       .json({ message: "Ticket created correctly", success: true, ticket: ticket });
   } catch (error) {
-   console.log('\n\n',error);
     res.status(500).json({ error, success: false });
   }
 }

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import moment from "moment";
 
 import TicketsMobileList from "../../components/TicketsMobileList";
+import { PaperClipIcon } from "@heroicons/react/20/solid";
 
 function Table({ columns, data }) {
 
@@ -217,6 +218,22 @@ export default function ClosedTickets() {
         return (
           <>
             <span className="max-w-[240px] truncate">{value}</span>
+          </>
+        );
+      },
+    },
+    {
+      Header: "Attachment",
+      accessor: "filePath",
+      id: "fileLocation",
+      Cell: ({ row, value }) => {
+        (row);
+        return (
+          <>
+            <span className="max-w-[240px] truncate">{value &&(<PaperClipIcon 
+                              fontSize='10px'
+                              className="flex-shrink-0 mr-1.5 h-5 w-5 text-black-400 flex justify-center"
+                              />)}</span>
           </>
         );
       },

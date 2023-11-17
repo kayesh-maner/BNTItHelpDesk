@@ -2,26 +2,31 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import { Listbox } from "@headlessui/react";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateUser() {
   //const [open, setOpen] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [admin, setAdmin] = useState(false);
   const [empType, setEmployeeType] = useState('Employee');
-
-
- // State for validation errors
- const [emailError, setEmailError] = useState("");
- const [passwordError, setPasswordError] = useState("");
-
+  
+  
+  // State for validation errors
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
   const router = useRouter();
-
+  
   async function createUser() {
-
+    
     setEmailError("");
     setPasswordError("");
 
@@ -111,12 +116,27 @@ export default function CreateUser() {
             {emailError && (
               <div className="text-red-500">{emailError}</div>
             )}
-            <input
-              type="password"
+            <div className="mt-1 relative"><input
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="password"
+              required
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               placeholder="Enter password here..."
               onChange={(e) => setPassword(e.target.value)}
             />
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    {showPassword ? (
+                      <FaEyeSlash
+                        className="h-5 w-5 text-gray-500 cursor-pointer"
+                        onClick={togglePasswordVisibility}
+                      />
+                    ) : (
+                      <FaEye
+                        className="h-5 w-5 text-gray-500 cursor-pointer"
+                        onClick={togglePasswordVisibility}
+                      />
+                    )}
+                  </div></div>
             {passwordError && (
               <div className="text-red-500">{passwordError}</div>
             )}

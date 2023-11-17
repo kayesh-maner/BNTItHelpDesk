@@ -13,6 +13,9 @@ import SubScript from "@tiptap/extension-subscript";
 import { notifications } from "@mantine/notifications";
 import { useSession } from 'next-auth/react'
 import { useRouter } from "next/router";
+import Select from 'react-select';
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -22,6 +25,7 @@ export default function CreateTicketModal() {
 
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
+  const [goal, setGoal] = useState("");
   const [company, setCompany] = useState();
   const [engineer, setEngineer] = useState();
   const [email, setEmail] = useState("");
@@ -85,9 +89,16 @@ export default function CreateTicketModal() {
       
           // Filter only Admins 
           const filteredUsers = res.users.filter(user => user.isAdmin === true);
-          if (res) {
+          if (filteredUsers) {
             setUsers(filteredUsers);
           }
+
+         // Filter only Users 
+         const filteredAdmins = res.users.filter(user => user.isAdmin === false);
+         if (filteredAdmins) {
+           setGoal(filteredAdmins);
+         }
+
         });
     } catch (error) {
       console.log(error);
@@ -153,8 +164,7 @@ export default function CreateTicketModal() {
         fileAttached,
         ccemail, // mail sending to cc
       })
-    })
-      .then((res) => res.json())
+    }).then((res) => res.json())
       .then((res) => {
         if (res.success === true) {
           notifications.show({
@@ -178,6 +188,11 @@ export default function CreateTicketModal() {
       
   }
 
+  const optionsContacts = Array.isArray(goal)
+  ? goal.map((item) => ({ value: item.name, label: item.name }))
+  : [];
+
+  
   useEffect(() => {
     fetchClients();
     fetchUsers();
@@ -204,35 +219,80 @@ export default function CreateTicketModal() {
         className="w-full pl-0 pr-0 sm:text-xl border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
       />
 
-      <div className="">
-        <input
-          type="text"
-          id="name"
-          placeholder={t("ticket_name_here")}
-          name="name"
-          autocomplete="off"
-          onChange={(e) => setName(e.target.value)}
-          className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-          value={!session.user.isAdmin ? session.user.name : name}
-        />
+<div className="">
 
-        <input
-          type="text"
-          name="email"
-          placeholder={t("ticket_email_manager")}
-          onChange={(e) => setEmail(e.target.value)}
-          className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-          value={!session.user.isAdmin ? session.user.email : email}
-        />
+{session.user.isAdmin ? (
+  <>
+    {/* Admin view */}
+    <Select
+      name="name"
+      autoComplete="off"
+      onChange={(selectedOption) => setName(selectedOption?.value)}
+      options={optionsContacts}
+      isSearchable={false}
+      placeholder="Please choose name"
+    />
+    <br />
+    <input
+      type="text"
+      name="email"
+      placeholder={t("ticket_email_manager")}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={!session.user.isAdmin ? session.user.email : email}
+    />
 
-       <input
-          type="text"
-          name="ccemail"
-          placeholder={t("ticket_email_cc")}
-          onChange={(e) => setCcEmail(e.target.value)}
-          className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-          value={!session.user.isAdmin ? session.user.reporting : ccemail}
-        />
+    <input
+      type="text"
+      name="ccemail"
+      placeholder={t("ticket_email_cc")}
+      onChange={(e) => setCcEmail(e.target.value)}
+      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={!session.user.isAdmin ? session.user.reporting : ccemail}
+    />
+
+  </>
+) : (
+  <>
+    {/* Non-admin view */}
+    <input
+      type="text"
+      id="name"
+      placeholder={t("ticket_name_here")}
+      name="name"
+      autocomplete="off"
+      onChange={(e) => setName(e.target.value)}
+      className=" w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={!session.user.isAdmin ? session.user.name : name}
+    /> 
+   
+    <input
+      type="text"
+      name="email"
+      placeholder={t("ticket_email_manager")}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={!session.user.isAdmin ? session.user.email : email}
+    />
+
+    <input
+      type="text"
+      name="ccemail"
+      placeholder={t("ticket_email_cc")}
+      onChange={(e) => setCcEmail(e.target.value)}
+      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={!session.user.isAdmin ? session.user.reporting : ccemail}
+    />
+  </>
+)}
+
+
+
+
+
+
+
+
 
 
 <div className="flex flex-row space-x-4 pb-2 mt-2" sx={{marginTop: '10px', marginBottom: '10px'}}>

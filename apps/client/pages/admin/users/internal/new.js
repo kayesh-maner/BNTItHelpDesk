@@ -1,15 +1,18 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
+import { Listbox } from "@headlessui/react";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateUser() {
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [admin, setAdmin] = useState(false);
+  const [empType, setEmployeeType] = useState('Employee');
+
 
  // State for validation errors
  const [emailError, setEmailError] = useState("");
@@ -26,7 +29,7 @@ export default function CreateUser() {
       toast.error("Please fill in all required fields", { autoClose: 5000 });
       return;
     }
-    
+   
      // Validate email format
      const atSymbolPattern = /@/;
 
@@ -35,7 +38,7 @@ export default function CreateUser() {
        return;
      }
 
-     //validate passworf
+     //validate password
      const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
     if (!passwordPattern.test(password)) {
       toast.error(
@@ -55,12 +58,13 @@ export default function CreateUser() {
         email,
         name,
         admin,
+        empType
       }),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.success === true) {
-          toast.success("The action was processed correctly!", {
+          toast.success("The action was processed successfully!", {
             autoClose: 5000,
           });
         setTimeout(() => {
@@ -78,6 +82,8 @@ export default function CreateUser() {
     { id: "user", title: "user" },
     { id: "admin", title: "admin" },
   ];
+
+  const employeeType = ['Employee','Contractual', 'Consultant',]
 
   return (
     <div>
@@ -114,6 +120,7 @@ export default function CreateUser() {
             {passwordError && (
               <div className="text-red-500">{passwordError}</div>
             )}
+<br></br>
             <label className="text-base font-medium text-gray-900 mt-2">
               User Type
             </label>
@@ -141,8 +148,55 @@ export default function CreateUser() {
                   </label>
                 </div>
               ))}
+              
             </div>
-          </div>
+
+
+            {!admin && (
+              <Listbox value={employeeType} onChange={setEmployeeType}>
+              <div className="relative">
+                <Listbox.Button className="bg-white relative min-w-[154px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <span className="block truncate">
+                    {empType ? empType : 'select employee type'}
+                  </span>
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <svg
+                      className="h-5 w-5 text-gray-500"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </span>
+                </Listbox.Button>
+                <Listbox.Options className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg sm:text-sm">
+                  {employeeType.map((empType) => (
+                    <Listbox.Option
+                      key={empType}
+                      value={empType}
+                      className={({ active, selected }) =>
+                        `cursor-pointer select-none relative px-4 py-2 ${
+                          active ? 'bg-gray-100' : ''
+                        } ${selected ? 'bg-blue-500 text-white' : 'text-gray-900'}`
+                      }
+                    >
+                      {({ selected }) => (
+                        <span className={`${selected ? 'font-semibold' : 'font-normal'}`}>
+                          {empType}
+                        </span>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+            </Listbox>
+        
+            )}
+           </div>
         </div>
       </div>
       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
@@ -153,7 +207,7 @@ export default function CreateUser() {
             createUser();
           }}
         >
-          Save
+          Create
         </button>
       </div>
     </div>

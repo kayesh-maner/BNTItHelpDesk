@@ -53,6 +53,7 @@ model User {
   password                     String?
   email                        String         @unique
   image                        String?
+  employeeType                 String?        @default("Employee")
   emailVerified                Boolean?
   isAdmin                      Boolean        @default(false)
   language                     String?        @default("en")

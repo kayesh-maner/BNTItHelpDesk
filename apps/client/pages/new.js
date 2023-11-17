@@ -298,7 +298,7 @@ export default function CreateTicketModal() {
   
     {/* <Listbox value={engineer} onChange={setEngineer}>
       <div className="relative">
-        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           <span className="block truncate">
             {engineer ? engineer.name : 'Select an Engineer'}
           </span>
@@ -324,7 +324,7 @@ export default function CreateTicketModal() {
               className={({ active, selected }) =>
                 `cursor-pointer select-none relative px-4 py-2 ${
                   active ? 'bg-gray-100' : ''
-                } ${selected ? 'bg-green-500 text-white' : 'text-gray-900'}`
+                } ${selected ? 'bg-blue-500 text-white' : 'text-gray-900'}`
               }
             >
               {({ selected }) => (
@@ -340,7 +340,7 @@ export default function CreateTicketModal() {
 
     <Listbox value={categoryList} onChange={setCategory}>
       <div className="relative">
-        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
           <span className="block truncate">
             {category ? category : 'Select a Category'}
           </span>
@@ -366,7 +366,7 @@ export default function CreateTicketModal() {
               className={({ active, selected }) =>
                 `cursor-pointer select-none relative px-4 py-2 ${
                   active ? 'bg-gray-100' : ''
-                } ${selected ? 'bg-green-500 text-white' : 'text-gray-900'}`
+                } ${selected ? 'bg-blue-500 text-white' : 'text-gray-900'}`
               }
             >
               {({ selected }) => (
@@ -391,7 +391,7 @@ export default function CreateTicketModal() {
   />
   <label
     htmlFor="fileInput"
-    className="bg-blue-500 text-white min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-3 py-1 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+    className="bg-blue-500 text-white min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-3 py-1 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
   >
     Select File
   </label>
@@ -452,7 +452,7 @@ export default function CreateTicketModal() {
                 createTicket();
               }}
               type="button"
-              className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none "
+              className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-blue-600 font-medium text-white hover:bg-blue-700 focus:outline-none "
             >
               Create Ticket
             </button>

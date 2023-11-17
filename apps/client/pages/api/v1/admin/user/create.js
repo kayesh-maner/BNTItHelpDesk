@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 export default async function createUser(req, res) {
   const session = await getSession({ req });
-  const { email, password, name, admin } = req.body;
+  const { email, password, name, admin, empType } = req.body;
   const e = email.toLowerCase();
 
   try {
@@ -17,6 +17,7 @@ export default async function createUser(req, res) {
           email: e,
           password: hash,
           isAdmin: admin,
+          employeeType:empType
         },
       });
 

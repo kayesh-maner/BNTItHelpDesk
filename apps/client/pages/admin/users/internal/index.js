@@ -209,7 +209,7 @@ export default function Auth() {
             <div className="ml-4">
               <Link
                 href="/admin/users/internal/new"
-                className="inline-flex items-center p-1 border border-transparent rounded-md shadow-sm text-white bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="inline-flex items-center p-1 border border-transparent rounded-md shadow-sm text-white bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 New User
               </Link>
@@ -255,7 +255,7 @@ export default function Auth() {
                             </dd>
                             <dt className="sr-only">Role</dt>
                             <dd className="mt-3">
-                              <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">
+                              <span className="px-2 py-1 text-blue-800 text-xs font-medium bg-blue-100 rounded-full">
                                 {user.isAdmin ? "admin" : "user"}
                               </span>
                             </dd>

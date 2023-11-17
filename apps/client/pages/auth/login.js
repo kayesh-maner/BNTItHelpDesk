@@ -4,7 +4,9 @@ import {
   signIn,
   useSession,
 } from "next-auth/react";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Link from "next/link";
+import { useState } from "react";
 
 export async function getServerSideProps(context) {
   const providers = await getProviders();
@@ -17,9 +19,15 @@ export async function getServerSideProps(context) {
 }
 
 export default function Login({ csrfToken, providers }) {
+
+  const [showPassword, setShowPassword] = useState(false);
   const { status } = useSession({
     required: false,
   });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   (providers);
 
@@ -79,18 +87,30 @@ export default function Login({ csrfToken, providers }) {
                 >
                   Password
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
                   <input
                     id="password"
                     name="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     autoComplete="password"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm pr-10"
                   />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    {showPassword ? (
+                      <FaEyeSlash
+                        className="h-5 w-5 text-gray-500 cursor-pointer"
+                        onClick={togglePasswordVisibility}
+                      />
+                    ) : (
+                      <FaEye
+                        className="h-5 w-5 text-gray-500 cursor-pointer"
+                        onClick={togglePasswordVisibility}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input

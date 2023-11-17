@@ -22,16 +22,12 @@ export default async function getAllClients(req, res) {
         },
         select: {
           email: true,
-          // name: true,
           id: true,
-          // isAdmin: false,
-          // language: true,
         },
         orderBy: [{
           createdAt: 'desc'
         }],
       });
-console.log('users-email>>>', users);
       res.json({ users, failed: false });
     } else {
       res.status(403).json({ message: "unauthenticated", failed: true });

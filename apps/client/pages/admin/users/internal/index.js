@@ -140,8 +140,6 @@ function Table({ columns, data }) {
 export default function Auth() {
   const { data, status, refetch } = useQuery("fetchAuthUsers", fetchUsers);
 
-console.log('users >>', data)
-
   async function deleteClient(client) {
     const id = client.id;
     try {

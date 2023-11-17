@@ -97,7 +97,6 @@ export default function CreateTicketModal() {
   const handleFileUpload = async (e) => {
     // Handle file upload logic here
     const selectedFile = e.target.files[0];
-    console.log('selectedFile>>>> \n\n\n', selectedFile);
     if (e.target.files.length > 0) {
       // const fileName = e.target.files[0].name;
       setFileAttached(e.target.files[0].name)
@@ -117,7 +116,6 @@ export default function CreateTicketModal() {
 
       if (response.status === 200) {
         const result = await response.json();
-        console.log('File path:', result.filePath);
         // You can do something with the file path, like storing it in your database or using it in your form.
       } else {
         console.error('File upload failed');
@@ -177,6 +175,7 @@ export default function CreateTicketModal() {
           });
         }
       });
+      
   }
 
   useEffect(() => {
@@ -237,113 +236,90 @@ export default function CreateTicketModal() {
 
 
 <div className="flex flex-row space-x-4 pb-2 mt-2" sx={{marginTop: '10px', marginBottom: '10px'}}>
-  <Listbox value={engineer} onChange={setEngineer}>
-    {({ open }) => (
+  
+    <Listbox value={engineer} onChange={setEngineer}>
       <div className="relative">
         <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
           <span className="block truncate">
-            {engineer ? engineer.name : "Select an Engineer"}
+            {engineer ? engineer.name : 'Select an Engineer'}
           </span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"></span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <svg
+              className="h-5 w-5 text-gray-500"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </span>
         </Listbox.Button>
-
-        <Transition
-          show={open}
-          as={Fragment}
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {users !== undefined &&
-              users.map((team) => (
-                <Listbox.Option
-                  key={team.id}
-                  className={({ active }) =>
-                    classNames(
-                      active ? "text-gray-900 bg-gray-100" : "text-gray-900",
-                      "cursor-default select-none relative py-2 pl-3 pr-9"
-                    )
-                  }
-                  value={team}
-                >
-                  {({ engineer, active }) => (
-                    <>
-                      <span
-                        className={classNames(
-                          engineer ? "font-semibold" : "font-normal",
-                          "block truncate"
-                        )}
-                      >
-                        {team.name}
-                      </span>
-
-                      {engineer ? (
-                        <span
-                          className={classNames(
-                            active ? "text-white" : "text-indigo-600",
-                            "absolute inset-y-0 right-0 flex items-center pr-4"
-                          )}
-                        >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-              ))}
-          </Listbox.Options>
-        </Transition>
+        <Listbox.Options className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+          {users !== undefined && users.map((user) => (
+            <Listbox.Option
+              key={user.id}
+              value={user}
+              className={({ active, selected }) =>
+                `cursor-pointer select-none relative px-4 py-2 ${
+                  active ? 'bg-gray-100' : ''
+                } ${selected ? 'bg-green-500 text-white' : 'text-gray-900'}`
+              }
+            >
+              {({ selected }) => (
+                <span className={`${selected ? 'font-semibold' : 'font-normal'}`}>
+                  {user.name}
+                </span>
+              )}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
       </div>
-    )}
-  </Listbox>
+    </Listbox>
 
-  <Listbox value={categoryList} onChange={setCategory}>
-    {({ open }) => (
+    <Listbox value={categoryList} onChange={setCategory}>
       <div className="relative">
         <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
           <span className="block truncate">
-            {category ? category : "Select Category"}
+            {category ? category : 'Select a Category'}
           </span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"></span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <svg
+              className="h-5 w-5 text-gray-500"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </span>
         </Listbox.Button>
-
-        <Transition
-          show={open}
-          as={Fragment}
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Listbox.Options className="absolute bottom-6 2xl:top-0 z-30 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {categoryList.map((category) => (
-              <Listbox.Option
-                key={category}
-                className={({ active }) =>
-                  classNames(
-                    active ? "text-gray-900 bg-gray-100" : "text-gray-900",
-                    "cursor-default select-none relative py-2 pl-3 pr-9"
-                  )
-                }
-                value={category}
-              >
-                <>
-                  <span
-                    className={classNames(
-                      "font-normal",
-                      "block truncate"
-                    )}
-                  >
-                    {category}
-                  </span>
-                </>
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
-        </Transition>
+        <Listbox.Options className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+          {categoryList.map((category) => (
+            <Listbox.Option
+              key={category}
+              value={category}
+              className={({ active, selected }) =>
+                `cursor-pointer select-none relative px-4 py-2 ${
+                  active ? 'bg-gray-100' : ''
+                } ${selected ? 'bg-green-500 text-white' : 'text-gray-900'}`
+              }
+            >
+              {({ selected }) => (
+                <span className={`${selected ? 'font-semibold' : 'font-normal'}`}>
+                  {category}
+                </span>
+              )}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
       </div>
-    )}
-  </Listbox>
+    </Listbox>
 
 
 <div className="relative">

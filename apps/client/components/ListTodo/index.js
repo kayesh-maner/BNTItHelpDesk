@@ -5,23 +5,23 @@ import { useQuery } from "react-query";
 
 async function getTodos() {
   const res = await fetch("/api/v1/todo/get");
+  
   return res.json();
 }
 
 export default function ListTodo() {
   const { status, data, refetch } = useQuery("repoData", getTodos);
-
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(12);
+  const [maxValue, setMaxValue] = useState(4);
   const [text, setText] = useState("");
 
   function handleChange(value) {
     if (value <= 1) {
       setMinValue(0);
-      setMaxValue(12);
+      setMaxValue(4);
     } else {
-      setMinValue(maxValue);
-      setMaxValue(value * 12);
+      setMinValue((value - 1) * 4);
+      setMaxValue(value * 4);
     }
   }
 
@@ -108,10 +108,11 @@ export default function ListTodo() {
               <p>None Found</p>
             )}
           </div>
-          <div  className={data.todos.length > 12 ? "mt-4" : "hidden"}>
+          <div  className={data.todos.length > 4 ? "mt-4" : "hidden"}>
             <Pagination
               defaultCurrent={1}
-              total={12}
+              total={data.todos.length}
+              pageSize={4}
               onChange={handleChange}
             />
           </div>

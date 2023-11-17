@@ -2730,7 +2730,7 @@
   "resolved" "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
   "version" "0.0.1"
 
-"client@file:E:\\ITHelpdesk\\BNTItHelpDesk\\apps\\client":
+"client@file:D:\\PRACTICE-PROJECT\\GIT-PROJECTS\\REACT JS\\XXX IT HELPDESK\\BNTItHelpDesk\\apps\\client":
   "resolved" "file:apps/client"
   "version" "1.0.0"
   dependencies:
@@ -5963,6 +5963,11 @@
   "version" "2.0.0"
   dependencies:
     "prop-types" "^15.6.1"
+
+"react-icons@^4.12.0":
+  "integrity" "sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw=="
+  "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.12.0.tgz"
+  "version" "4.12.0"
 
 "react-immutable-proptypes@2.2.0":
   "integrity" "sha512-Vf4gBsePlwdGvSZoLSBfd4HAP93HDauMY4fDjXhreg/vg6F3Fj/MXDNyTbltPC/xZKmZc+cjLu3598DdYK6sgQ=="

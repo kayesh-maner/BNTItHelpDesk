@@ -566,7 +566,7 @@ export default function Home() {
           </>
         )}
       </div>
-      <div className="flex-1 xl:ml-4 bg-white px-2 rounded-lg shadow-md pt-2 2xl:max-h-[53vh]">
+      <div className="flex-1 xl:ml-4 bg-white px-2 rounded-lg shadow-md pt-2 h-[48vh] 2xl:max-h-[53vh]">
         <span className="font-bold text-2xl">Reminders</span>
         <ListTodo />
       </div>

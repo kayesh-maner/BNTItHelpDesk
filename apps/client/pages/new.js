@@ -27,7 +27,7 @@ export default function CreateTicketModal() {
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
   const [company, setCompany] = useState();
-  const [engineer, setEngineer] = useState();
+  const [engineer, setEngineer] = useState("admin");
   const [email, setEmail] = useState("");
   const [ccemail, setCcEmail] = useState("");
   const [issue, setIssue] = useState(t("ticket_extra_details"));
@@ -148,6 +148,14 @@ export default function CreateTicketModal() {
       return; 
     }
 
+    let engineerDetails = {
+      "email": "admin@admin.com",
+      "name": engineer,
+      "id": "f9307e1e-d5ae-4e93-a6a6-cd259d47bcfa",
+      "isAdmin": true,
+      "language": "en"
+    }
+
     await fetch("/api/v1/ticket/create", {
       method: "POST",
       headers: {
@@ -159,7 +167,7 @@ export default function CreateTicketModal() {
         email: !session.user.isAdmin ? session.user.email : email,
         detail: issue,
         priority,
-        engineer,
+        engineer:engineerDetails,
         category,
         fileAttached,
         ccemail, // mail sending to cc
@@ -286,18 +294,9 @@ export default function CreateTicketModal() {
   </>
 )}
 
-
-
-
-
-
-
-
-
-
 <div className="flex flex-row space-x-4 pb-2 mt-2" sx={{marginTop: '10px', marginBottom: '10px'}}>
   
-    <Listbox value={engineer} onChange={setEngineer}>
+    {/* <Listbox value={engineer} onChange={setEngineer}>
       <div className="relative">
         <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
           <span className="block truncate">
@@ -337,7 +336,7 @@ export default function CreateTicketModal() {
           ))}
         </Listbox.Options>
       </div>
-    </Listbox>
+    </Listbox> */}
 
     <Listbox value={categoryList} onChange={setCategory}>
       <div className="relative">

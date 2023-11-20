@@ -29,7 +29,7 @@ export default function CreateTicketModal() {
   const [company, setCompany] = useState();
   const [engineer, setEngineer] = useState("admin");
   const [email, setEmail] = useState("");
-  const [ccemail, setCcEmail] = useState("");
+  const [ccEmail, setCcEmail] = useState("");
   const [issue, setIssue] = useState(t("ticket_extra_details"));
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Normal");
@@ -44,7 +44,6 @@ export default function CreateTicketModal() {
   // Get session data
   const { data: session} = useSession()
  
-  // setName(!session.user.isAdmin ? session.user.name : name)
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -53,7 +52,6 @@ export default function CreateTicketModal() {
       Superscript,
       SubScript,
       Highlight,
-      // TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content: issue,
     onUpdate({ editor }) {
@@ -106,16 +104,12 @@ export default function CreateTicketModal() {
   }
 
   const handleFileUpload = async (e) => {
-    // Handle file upload logic here
     const selectedFile = e.target.files[0];
     if (e.target.files.length > 0) {
-      // const fileName = e.target.files[0].name;
       setFileAttached(e.target.files[0].name)
-      // setSelectedFileName(fileName);
     } else {
       setSelectedFileName(null);
     }
-    // Do something with the selected file
     const formData = new FormData();
     formData.append('file', selectedFile);
 
@@ -126,8 +120,7 @@ export default function CreateTicketModal() {
       });
 
       if (response.status === 200) {
-        const result = await response.json();
-        // You can do something with the file path, like storing it in your database or using it in your form.
+         await response.json();
       } else {
         console.error('File upload failed');
       }
@@ -138,6 +131,8 @@ export default function CreateTicketModal() {
 
 
   async function createTicket() {
+    try{
+
     if (!name || !title || !engineer || !category || !email) {
       notifications.show({
         title: "Error",
@@ -147,7 +142,7 @@ export default function CreateTicketModal() {
       });
       return; 
     }
-
+  
     let engineerDetails = {
       "email": "admin@admin.com",
       "name": engineer,
@@ -170,7 +165,7 @@ export default function CreateTicketModal() {
         engineer:engineerDetails,
         category,
         fileAttached,
-        ccemail, // mail sending to cc
+        ccemail : ccEmail, 
       })
     }).then((res) => res.json())
       .then((res) => {
@@ -193,20 +188,29 @@ export default function CreateTicketModal() {
           });
         }
       });
-      
+    }catch(err){
+      console.log('Catch Error >>>', err)
+    }
   }
 
   const optionsContacts = Array.isArray(goal)
-  ? goal.map((item) => ({ value: item.name, label: item.name }))
+  ? goal.map((item) => {
+      return { value:item.name, label:item.name, uid:item.id, email:item.email, reporting:item.reporting };
+    })
   : [];
-
   
+  const handleNameChange = (selectedOption) => {
+    setName(selectedOption?.value);
+    setEmail(selectedOption?.email)
+    setCcEmail(selectedOption?.reporting)
+  }
+
   useEffect(() => {
     fetchClients();
     fetchUsers();
     setName(!session.user.isAdmin ? session.user.name : name)
     setEmail(!session.user.isAdmin ? session.user.email : email)
-    setCcEmail(!session.user.isAdmin ? session.user.reporting : ccemail)
+    setCcEmail(!session.user.isAdmin ? session.user.reporting : ccEmail)
   }, []);
 
   return (
@@ -235,28 +239,28 @@ export default function CreateTicketModal() {
     <Select
       name="name"
       autoComplete="off"
-      onChange={(selectedOption) => setName(selectedOption?.value)}
+      onChange={handleNameChange}
       options={optionsContacts}
       isSearchable={false}
-      placeholder="Please choose name"
-    />
-    <br />
-    <input
-      type="text"
-      name="email"
-      placeholder={t("ticket_email_manager")}
-      onChange={(e) => setEmail(e.target.value)}
-      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-      value={!session.user.isAdmin ? session.user.email : email}
+      placeholder="Select Employee Name"
     />
 
     <input
       type="text"
-      name="ccemail"
-      placeholder={t("ticket_email_cc")}
-      onChange={(e) => setCcEmail(e.target.value)}
+      name="email"
+      placeholder={t("ticket_email_manager")}
       className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-      value={!session.user.isAdmin ? session.user.reporting : ccemail}
+      value={email}
+      disabled
+    />
+
+    <input
+      type="text"
+      name="ccEmail"
+      placeholder={t("ticket_email_cc")}
+      className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
+      value={ccEmail}
+      disabled
     />
 
   </>
@@ -285,59 +289,16 @@ export default function CreateTicketModal() {
 
     <input
       type="text"
-      name="ccemail"
+      name="ccEmail"
       placeholder={t("ticket_email_cc")}
       onChange={(e) => setCcEmail(e.target.value)}
       className="w-full pl-0 pr-0 sm:text-sm border-none focus:outline-none focus:shadow-none focus:ring-0 focus:border-none"
-      value={!session.user.isAdmin ? session.user.reporting : ccemail}
+      value={!session.user.isAdmin ? session.user.reporting : ccEmail}
     />
   </>
 )}
 
 <div className="flex flex-row space-x-4 pb-2 mt-2" sx={{marginTop: '10px', marginBottom: '10px'}}>
-  
-    {/* <Listbox value={engineer} onChange={setEngineer}>
-      <div className="relative">
-        <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
-          <span className="block truncate">
-            {engineer ? engineer.name : 'Select an Engineer'}
-          </span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <svg
-              className="h-5 w-5 text-gray-500"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </span>
-        </Listbox.Button>
-        <Listbox.Options className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-          {users !== undefined && users.map((user) => (
-            <Listbox.Option
-              key={user.id}
-              value={user}
-              className={({ active, selected }) =>
-                `cursor-pointer select-none relative px-4 py-2 ${
-                  active ? 'bg-gray-100' : ''
-                } ${selected ? 'bg-blue-500 text-white' : 'text-gray-900'}`
-              }
-            >
-              {({ selected }) => (
-                <span className={`${selected ? 'font-semibold' : 'font-normal'}`}>
-                  {user.name}
-                </span>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </div>
-    </Listbox> */}
-
     <Listbox value={categoryList} onChange={setCategory}>
       <div className="relative">
         <Listbox.Button className="bg-white relative min-w-[164px] w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-1 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">

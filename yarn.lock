@@ -2800,8 +2800,10 @@ client-only@^0.0.1, client-only@0.0.1:
     react "18.2.0"
     react-dom "18.2.0"
     react-hotkeys "^2.0.0"
+    react-icons "^4.12.0"
     react-query "^3.34.7"
     react-render-html "^0.6.0"
+    react-select "^5.8.0"
     react-spinners "^0.11.0"
     react-table "^7.7.0"
     react-toastify "^9.1.3"
@@ -5986,10 +5988,15 @@ react-hotkeys@^2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-"react-immutable-proptypes@2.2.0":
-  "integrity" "sha512-Vf4gBsePlwdGvSZoLSBfd4HAP93HDauMY4fDjXhreg/vg6F3Fj/MXDNyTbltPC/xZKmZc+cjLu3598DdYK6sgQ=="
-  "resolved" "https://registry.npmjs.org/react-immutable-proptypes/-/react-immutable-proptypes-2.2.0.tgz"
-  "version" "2.2.0"
+react-icons@^4.12.0:
+  version "4.12.0"
+  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.12.0.tgz"
+  integrity sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==
+
+react-immutable-proptypes@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/react-immutable-proptypes/-/react-immutable-proptypes-2.2.0.tgz"
+  integrity sha512-Vf4gBsePlwdGvSZoLSBfd4HAP93HDauMY4fDjXhreg/vg6F3Fj/MXDNyTbltPC/xZKmZc+cjLu3598DdYK6sgQ==
   dependencies:
     invariant "^2.2.2"
 

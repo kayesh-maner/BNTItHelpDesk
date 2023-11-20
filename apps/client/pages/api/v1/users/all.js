@@ -24,6 +24,7 @@ export default async function getAllClients(req, res) {
           id: true,
           isAdmin: true,
           language: true,
+          reporting :true
         },
       });
 

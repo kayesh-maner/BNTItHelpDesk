@@ -29,11 +29,11 @@ const commentTicketTemplate = (session, comment, ticket) => {
                      <p style="font-size:20px;line-height:28px;margin:4px 0">
                      <p>Hello,
                      <br>
-                     ${(session.user.name).toUpperCase()} commented on your ticket
+                     A comment has been made on the ticket.
                      <br>
                      Title: <b> ${ticket.title} </b>
                      <br> 
-                     Description: <b> ${comment.text}</b>
+                     Description:  ${comment.text}
                      <br><br>
                      Please review the ticket commented here, TicketId: 
                      <b><a href="${process.env.BASE_URL}/tickets/${ticket.id}">

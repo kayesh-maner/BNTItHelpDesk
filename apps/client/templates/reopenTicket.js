@@ -1,4 +1,6 @@
 const reopenTicketTemplate = (ticket, session) => {
+  const withoutTags = (ticket.detail).replace(/<p\b[^>]*>|<\/p>|<br\s*\/?>/g, ' ');
+  const withoutSpaces = withoutTags.trim();
   const reopenTicket = {
     subject: `${(session.user.name).toUpperCase()} reopened ticket ${ticket.id} - ${ticket.title}`, // Subject line
     text: `Hello there, Ticket ID  ${ticket.id} is now Reopened`, // plain text body
@@ -26,9 +28,9 @@ const reopenTicketTemplate = (ticket, session) => {
                    <h1 style="color:#1d1c1d;font-size:16px;font-weight:700;margin:10px 0;padding:0;line-height:42px">Ticket Reopened</h1>
                    <p style="font-size:20px;line-height:28px;margin:4px 0">
                    <p>Hello, <br>
-                   Your ticket has been reopened.
+                   Your ticket has been reopened.<br>
                    <br>Title: <b>${ticket.title}</b><br>
-                    Description: ${ticket.detail} <br><br>
+                    Description: ${withoutSpaces} <br><br>
                       Please find the details of the ticket by clicking here:
                       <b>
                       <a href="${process.env.BASE_URL}/tickets/${ticket.id}">

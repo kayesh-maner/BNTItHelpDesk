@@ -1,5 +1,6 @@
 const closedTicketTemplate = (ticket, session) => {
-  console.log('\n\n  close ticket', ticket);
+    const withoutTags = (ticket.detail).replace(/<p\b[^>]*>|<\/p>|<br\s*\/?>/g, ' ');
+    const withoutSpaces = withoutTags.trim();
     const closedTicket = {
         subject: `${(session.user.name).toUpperCase()} closed ticket ${ticket.id} - ${ticket.title}`, // Subject line
         text: `Hello there, Ticket ${ticket.id} is now Closed`, // plain text body
@@ -30,7 +31,7 @@ const closedTicketTemplate = (ticket, session) => {
                        Your ticket has been closed.
                        <br> Title: <b> ${ticket.title}</b>
                        <br>
-                       Description: ${ticket.detail}
+                       Description: ${withoutSpaces}
                          <br><br>
                           Please find the details of the ticket by clicking here:
                           <b>

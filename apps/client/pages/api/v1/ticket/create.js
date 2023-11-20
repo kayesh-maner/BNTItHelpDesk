@@ -41,6 +41,27 @@ const countUser = async (email) => {
   return userCount;
 }
 
+const checkCustomId = async(customId) => {
+  const totalCount = await prisma.ticket.count({
+    where: { id: customId },
+  });
+  return totalCount
+}
+
+async function generateCustomId(uid) {
+  let customId;
+  let check;  
+  do {
+    customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
+    check = await checkCustomId(customId);
+    if (check !== 0) {
+      uid += 1; // Increment uid by 1 if customId exists
+    }
+  } while (check !== 0);
+
+  return customId;
+}
+
 
 export default async function createTicket(req, res) {
   const session = await getSession({ req });
@@ -50,12 +71,10 @@ export default async function createTicket(req, res) {
   try {
     // generate unique id for the Ticket
     let uid = await unique();
-    uid = uid + 1 
-    const customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
+    const customId = await generateCustomId(uid)
   
    // Check if email is exist in DB or not 
     const countU = await countUser(email)
-    console.log('count User >>>', countU)
     if(countU == 0){
       let error = 'User does not exist with this Email. Please create user first'
       res.status(400).json({ error, success: false });

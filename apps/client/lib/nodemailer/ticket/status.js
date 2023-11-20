@@ -28,9 +28,9 @@ export async function sendTicketStatus(ticket, session) {
 
     let info;
     if(ticket.isComplete){
-       info = await mail.sendMail({ ...mailData, ...closedTicketTemplate(ticket) });
+       info = await mail.sendMail({ ...mailData, ...closedTicketTemplate(ticket, session) });
     } else {
-      info = await mail.sendMail({ ...mailData, ...reopenTicketTemplate(ticket)});
+      info = await mail.sendMail({ ...mailData, ...reopenTicketTemplate(ticket, session)});
     }
   }
 }

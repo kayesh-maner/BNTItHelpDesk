@@ -1,11 +1,12 @@
 const { prisma } = require("../../../../../prisma/prisma");
+import { getSession } from "next-auth/react";
 import { sendTicketStatus } from "../../../../../lib/nodemailer/ticket/status";
 
 export default async function completeTicket(req, res) {
   const { id } = req.query;
 
   const { status } = req.body;
-
+  const session = await getSession({ req });
   try {
     await prisma.ticket
       .update({
@@ -15,7 +16,7 @@ export default async function completeTicket(req, res) {
         },
       })
       .then(async (ticket) => {
-        await sendTicketStatus(ticket);
+        await sendTicketStatus(ticket, session);
       });
 
     const webhook = await prisma.webhooks.findMany({

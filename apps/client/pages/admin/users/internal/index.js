@@ -182,12 +182,12 @@ export default function Auth() {
               title="Are you sure you want to delete?"
               onConfirm={() => deleteClient(row.cells[0].value)}
             >
-              <button
+              {/* <button
                 type="button"
                 className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Delete
-              </button>
+              </button> */}
             </Popconfirm>
           </div>
         );
@@ -261,6 +261,7 @@ export default function Auth() {
                             </dd>
                           </dl>
                         </div>
+                        
                         <div className="space-x-4 flex flex-row justify-center -mt-8 mb-4">
                           <UpdateUserModal
                             user={user}
@@ -279,6 +280,7 @@ export default function Auth() {
                             </button>
                           </Popconfirm>
                         </div>
+                        
                       </div>
                     ))}
                   </div>

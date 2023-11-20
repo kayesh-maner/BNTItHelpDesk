@@ -201,8 +201,14 @@ export default function CreateTicketModal() {
   
   const handleNameChange = (selectedOption) => {
     setName(selectedOption?.value);
-    setEmail(selectedOption?.email)
-    setCcEmail(selectedOption?.reporting)
+    setEmail(selectedOption?.email);
+    if (selectedOption?.reporting === null) {
+      // If it's null, set setCcEmail to null
+      setCcEmail("");
+    } else {
+      // If it's not null, set setCcEmail to the value present
+      setCcEmail(selectedOption?.reporting);
+    }
   }
 
   useEffect(() => {

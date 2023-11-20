@@ -309,11 +309,29 @@ export default function Home() {
                           className="hover:bg-gray-300 hover:cursor-pointer"
                           onClick={() => router.push(`/tickets/${item.id}`)}
                         >
-                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
+                              style={{
+                                maxWidth: "0.5%",
+                                minWidth: "3%",
+                                overflow: "hidden",
+                                textOverflow: "auto",
+                                wordWrap: "break-word",
+                                maxWidth: "30ch", // limit to 12 characters
+                              }}
+                          >
                             {item.title}
                             <dl className="font-normal lg:hidden">
                               <dt className="sr-only sm:hidden">Email</dt>
-                              <dd className="mt-1 truncate text-gray-500 sm:hidden">
+                              <dd className="mt-1 truncate text-gray-500 sm:hidden"
+                                style={{
+                                  maxWidth: "0.5%",
+                                  minWidth: "3%",
+                                  overflow: "hidden",
+                                  textOverflow: "auto",
+                                  wordWrap: "break-word",
+                                  maxWidth: "30ch", // limit to 25 characters
+                                }}
+                              >
                                 {item.email}
                               </dd>
                             </dl>

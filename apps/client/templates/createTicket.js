@@ -1,4 +1,6 @@
 const createTicketTemp = (ticket) => {
+ const withoutTags = (ticket.detail).replace(/<p\b[^>]*>|<\/p>|<br\s*\/?>/g, ' ');
+  const withoutSpaces = withoutTags.trim();
   const createTicket = {
     subject: `${(ticket.name).toUpperCase()} has just been created & logged ticket - ${ticket.id} -${ticket.title} `, // Subject line
     text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
@@ -29,7 +31,7 @@ const createTicketTemp = (ticket) => {
                    <p style="font-size:20px;line-height:28px;margin:4px 0">
                    <p>Hello, <br>Your ticket has now been created and logged.</p>
                    Title: <b>${ticket.title}</b><br>
-                   Description : ${ticket.detail} <br><br>
+                   Description : ${withoutSpaces} <br><br>
                    Here are the details of the ticket, please click here <b><a href="${process.env.BASE_URL}/tickets/${ticket.id}">   ${ticket.id}
                    </a></b>
                    <p style="font-size:14px;margin:16px 0;color:#000">

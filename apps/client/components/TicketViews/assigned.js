@@ -198,11 +198,23 @@ export default function AssignedTickets() {
   const normal = "bg-blue-100 text-blue-800";
 
   const columns = React.useMemo(() => [
+    // {
+    //   Header: "Type",
+    //   accessor: "type",
+    //   id: "type",
+    //   width: 50,
+    // },
     {
-      Header: "Type",
-      accessor: "type",
-      id: "type",
-      width: 50,
+      Header: "Sr No",
+      accessor: "summary",
+      id: "srno",
+      Cell: ({ row}) => {
+        return (
+          <>
+            <span className="max-w-[240px] truncate">{row.index + 1}</span>
+          </>
+        );
+      },
     },
     {
       Header: "Summary",
@@ -290,6 +302,19 @@ export default function AssignedTickets() {
       Header: "Created",
       accessor: "createdAt",
       id: "created",
+      Cell: ({ row, value }) => {
+        const now = moment(value).format("DD/MM/YYYY");
+        return (
+          <>
+            <span className="">{now}</span>
+          </>
+        );
+      },
+    },
+    {
+      Header: "Updated On",
+      accessor: "updatedAt",
+      id: "updated",
       Cell: ({ row, value }) => {
         const now = moment(value).format("DD/MM/YYYY");
         return (

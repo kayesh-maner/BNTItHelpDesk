@@ -58,7 +58,8 @@ function Table({ columns, data }) {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize, globalFilter},
+    setGlobalFilter
   } = useTable(
     {
       columns,
@@ -83,6 +84,22 @@ function Table({ columns, data }) {
             className="min-w-full divide-y divide-gray-200"
           >
             <thead className="bg-gray-50">
+              <tr>
+                <th colSpan={columns.length} className="text-right">
+                  <label htmlFor="search" className="sr-only">
+                    Search :
+                  </label>
+                  <input
+                    type="text"
+                    id="search"
+                    name="search"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value || undefined)}
+                    placeholder="Search..."
+                    className="p-2 px-2 m-2 border border-gray-300 rounded-md w-80"
+                  />
+                </th>
+              </tr>
               {headerGroups.map((headerGroup) => (
                 <tr
                   {...headerGroup.getHeaderGroupProps()}
@@ -204,11 +221,23 @@ export default function ClosedTickets() {
 
   const columns = React.useMemo(() => [
     {
-      Header: "Type",
-      accessor: "type",
-      id: "type",
-      width: 50,
+      Header: "Sr No",
+      accessor: "summary",
+      id: "srno",
+      Cell: ({ row}) => {
+        return (
+          <>
+            <span className="max-w-[240px] truncate">{row.index + 1}</span>
+          </>
+        );
+      },
     },
+    // {
+    //   Header: "Type",
+    //   accessor: "type",
+    //   id: "type",
+    //   width: 30,
+    // },
     {
       Header: "Summary",
       accessor: "title",
@@ -313,6 +342,19 @@ export default function ClosedTickets() {
       Header: "Created",
       accessor: "createdAt",
       id: "created",
+      Cell: ({ row, value }) => {
+        const now = moment(value).format("DD/MM/YYYY");
+        return (
+          <>
+            <span className="">{now}</span>
+          </>
+        );
+      },
+    },
+    {
+      Header: "Updated On",
+      accessor: "updatedAt",
+      id: "updated",
       Cell: ({ row, value }) => {
         const now = moment(value).format("DD/MM/YYYY");
         return (

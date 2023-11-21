@@ -15,7 +15,7 @@ export default async function allTickets(req, res) {
           ],
         },
         orderBy: [{
-          createdAt: 'desc'
+          updatedAt: 'desc'
         }],
         include: {
           client: {

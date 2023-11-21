@@ -325,7 +325,7 @@ export default function CreateTicketModal() {
             </svg>
           </span>
         </Listbox.Button>
-        <Listbox.Options className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+        <Listbox.Options className="absolute z-10 mt-2 w-full max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg">
           {categoryList.map((category) => (
             <Listbox.Option
               key={category}

@@ -297,7 +297,7 @@ export default function OpenTickets() {
         return (
           <>
             <span
-              className={`inline-flex items-center rounded-md justify-center w-1/2 px-2 py-1 text-xs font-medium ring-1 ring-inset ${badge}`}
+              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badge}`}
             >
               {value}
             </span>

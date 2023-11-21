@@ -14,7 +14,8 @@ export default async function updateTicket(req, res) {
         note,
         title,
         priority,
-        status
+        status,
+        updatedAt: new Date()
       },
     });
 

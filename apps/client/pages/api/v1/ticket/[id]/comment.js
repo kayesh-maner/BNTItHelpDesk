@@ -19,6 +19,15 @@ export default async function handler(req, res) {
         },
       });
 
+      await prisma.ticket.update({
+        where: {
+          id: id,
+        },
+        data: {
+          updatedAt: new Date(),
+        },
+      });
+
       // fetch ticket id data
       const ticketData = await prisma.ticket.findUnique({
         where: {

@@ -13,6 +13,7 @@ export default async function completeTicket(req, res) {
         where: { id: id },
         data: {
           isComplete: status,
+          updatedAt: new Date()
         },
       })
       .then(async (ticket) => {

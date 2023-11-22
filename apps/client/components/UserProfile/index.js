@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { message } from "antd";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
+import { notifications } from "@mantine/notifications";
 
 export function UserProfile() {
 
     const { data: session } = useSession();
-
     const router = useRouter();
 
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [language, setLanguage] = useState();
+    const [name, setName] = useState(session.user.name);
+    const [email, setEmail] = useState(session.user.email);
+    const [language, setLanguage] = useState(session.user.language);
 
     const success = () => {
       message.success("Information updated!");
@@ -37,10 +36,18 @@ export function UserProfile() {
           },
           body: JSON.stringify({
             'id': session.user.id,
-            'name': name ? name : session.user.name,
-            'email': email ? email : session.user.email,
-            'language': language ? language : session.user.language,
+            'name': name,
+            'email': email,
+            // 'language': language,
           }),
+        })
+        .then((res) => {
+          notifications.show({
+            title: "Information Updated",
+            message: "Profile Info updated succesfully",
+            color: "green",
+            autoClose: 1000,
+          });
         });
       }
 
@@ -95,7 +102,7 @@ export function UserProfile() {
                   />
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <label
                   for="language"
                   className="block text-sm font-medium text-gray-700"
@@ -115,7 +122,7 @@ export function UserProfile() {
                     <option value="se">SE</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

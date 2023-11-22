@@ -24,7 +24,7 @@ import { ThemeProvider } from "next-themes";
 import NewLayout from "../layouts/newLayout";
 import NoteBookLayout from "../layouts/notebook";
 import AdminLayout from "../layouts/adminLayout";
-import { DocumentArrowDownIcon } from "@heroicons/react/20/solid";
+import { DocumentArrowDownIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +63,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       description: "Get to home page",
       onTrigger: () => router.push('/'),
       icon: <HomeIcon className="h-8 w-8 text-gray-900" />,
+    },
+    {
+      title: "Create Ticket",
+      description: "Get to create ticket page",
+      onTrigger: () => router.push('/new'),
+      icon: <PlusIcon className="h-8 w-8 text-gray-900" />,
     },
     // {
     //   title: "Notebook",

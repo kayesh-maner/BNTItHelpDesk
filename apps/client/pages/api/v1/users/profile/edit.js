@@ -6,18 +6,20 @@ export default async function userProfile(req, res) {
 
   try {
     if (session) {
+      console.log('req.body>>> \n\n', req.body);
+      const { name, email, id } = req.body;
       await prisma.user.update({
-        where: { id: Number(req.body.id) },
+        where: { id: id },
         data: {
-          name: req.body.name,
-          email: req.body.email.toLowerCase(),
-          language: req.body.language,
+          name,
+          email,
+          // language,
         },
       });
 
       await prisma.user
         .findUnique({
-          where: { id: Number(req.body.id) },
+          where: { id: id },
         })
         .then((user) => {
           const { id, name, email, language } = user;
@@ -30,6 +32,7 @@ export default async function userProfile(req, res) {
     }
   } catch (error) {
     (error);
+    console.log('error>>> \n\n', error);
     res.status(500).json({ error });
   }
 }

@@ -39,7 +39,7 @@ export default function Ticket() {
   };
 
   const { data, status, refetch } = useQuery("fetchTickets", fetchTicketById);
-
+// console.log('data>> \n\n', data);
   useEffect(() => {
     refetch();
   }, [router]);
@@ -125,9 +125,12 @@ export default function Ticket() {
       }),
     })
       .then((res) => res.json())
-      .then(() => refetch());
+      .then(() => {
+        setComment("");
+        refetch();
+      })
   }
-
+  
   async function addTime() {
     ("hit");
     await fetch(`/api/v1/time/new`, {
@@ -754,6 +757,7 @@ export default function Ticket() {
                                       className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                                       placeholder="Leave a comment"
                                       defaultValue={""}
+                                      value={comment}
                                       onChange={(e) =>
                                         setComment(e.target.value)
                                       }
@@ -901,7 +905,7 @@ export default function Ticket() {
                                 <div className="mt-1 relative">
                                   <Listbox.Button className="bg-white z-50 relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <span className="block truncate">
-                                      {n ? n.name : "Please select new user"}
+                                      {n ? n.name : data.ticket.assignedTo.name}
                                     </span>
                                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                       {/* <SelectorIcon
@@ -1476,6 +1480,19 @@ export default function Ticket() {
                         </div>
                       )}
                       {editTime && (
+                        // <div>
+                        //   <div className="mt-2">
+                        //     <input
+                        //       type="number"
+                        //       name="number"
+                        //       id="timespent"
+                        //       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        //       placeholder="30"
+                        //       value={timeSpent}
+                        //       onChange={(e) => setTimeSpent(e.target.value)}
+                        //     />
+                        //   </div>
+                        // </div>
                         <div>
                           <div className="mt-2">
                             <input
@@ -1485,7 +1502,16 @@ export default function Ticket() {
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               placeholder="30"
                               value={timeSpent}
-                              onChange={(e) => setTimeSpent(e.target.value)}
+                              onChange={(e) => {
+                                // Ensure the entered value is within the range of 0 to 30
+                                let newValue = Math.min(Math.max(e.target.value, 0), 30);
+                                setTimeSpent(newValue);
+                              }}
+                              onBlur={() => {
+                                // Ensure the value is within the range when the input loses focus
+                                let newValue = Math.min(Math.max(timeSpent, 0), 30);
+                                setTimeSpent(newValue);
+                              }}
                             />
                           </div>
                         </div>

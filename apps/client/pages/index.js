@@ -293,12 +293,6 @@ export default function Home() {
                       >
                         Assigned
                       </th>
-                      {/* <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-0"
-                      >
-                        <span className="sr-only">Actions</span>
-                      </th> */}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -346,12 +340,6 @@ export default function Home() {
                           </td>
                           <td className="w-full sm:max-w-[280px] 2xl:max-w-[720px] truncate py-1 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                             {item.email}
-                            {/* <dl className="font-normal lg:hidden">
-                              <dt className="sr-only sm:hidden">Email</dt>
-                              <dd className="mt-1 truncate text-gray-500 sm:hidden">
-                                {item.email}
-                              </dd>
-                            </dl> */}
                           </td>
                           <td className="hidden px-3 py-1 text-sm text-gray-500 lg:table-cell w-[64px]">
                             {item.priority === "Low" && (
@@ -405,176 +393,6 @@ export default function Home() {
                           <td className="px-3 py-1 text-sm text-gray-500 w-[64px]">
                             {item.assignedTo ? item.assignedTo.name : "-"}
                           </td>
-                          {/* <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                          <Menu
-                            as="div"
-                            className="relative inline-block text-left"
-                          >
-                            <div>
-                              <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                Options
-                                <ChevronDownIcon
-                                  className="-mr-1 h-5 w-5 text-gray-400"
-                                  aria-hidden="true"
-                                />
-                              </Menu.Button>
-                            </div>
-
-                            <Transition
-                              as={Fragment}
-                              enter="transition ease-out duration-100"
-                              enterFrom="transform opacity-0 scale-95"
-                              enterTo="transform opacity-100 scale-100"
-                              leave="transition ease-in duration-75"
-                              leaveFrom="transform opacity-100 scale-100"
-                              leaveTo="transform opacity-0 scale-95"
-                            >
-                              <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="py-1">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <PencilSquareIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Edit
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <DocumentDuplicateIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Duplicate
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                </div>
-                                <div className="py-1">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <ArchiveBoxIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Archive
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <ArrowRightCircleIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Move
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                </div>
-                                <div className="py-1">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <UserPlusIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Share
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <HeartIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Add to favorites
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                </div>
-                                <div className="py-1">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "group flex items-center px-4 py-2 text-sm"
-                                        )}
-                                      >
-                                        <TrashIcon
-                                          className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                          aria-hidden="true"
-                                        />
-                                        Delete
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                </div>
-                              </Menu.Items>
-                            </Transition>
-                          </Menu>
-                        </td> */}
                         </tr>
                       ))}
                   </tbody>

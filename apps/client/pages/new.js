@@ -7,6 +7,7 @@ import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import Placeholder from '@tiptap/extension-placeholder';
 // import TextAlign from '@tiptap/extension-text-align';
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
@@ -37,6 +38,7 @@ export default function CreateTicketModal() {
   const [users, setUsers] = useState();
   const [category, setCategory] = useState();
   const [fileAttached, setFileAttached] = useState();
+  const [isPlaceholderVisible, setPlaceholderVisible] = useState(true);
   const router = useRouter();
 
   const categoryList = process.env.NEXT_PUBLIC_CATEGORYLIST.split(',');
@@ -47,6 +49,7 @@ export default function CreateTicketModal() {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Placeholder.configure({ placeholder: 'Type your text here...' }),
       Underline,
       Link,
       Superscript,
@@ -409,6 +412,7 @@ export default function CreateTicketModal() {
             </RichTextEditor.ControlsGroup>
           </RichTextEditor.Toolbar>
 
+          {/* <RichTextEditor.Content style={{ minHeight: 190 }} placeholder="Type your text here..." /> */}
           <RichTextEditor.Content style={{ minHeight: 190 }} />
         </RichTextEditor>
 

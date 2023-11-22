@@ -23,7 +23,7 @@
   "ticket_details": "Title",
   "ticket_select_client": "Select a client",
   "ticket_select_eng": "Select an engineer",
-  "ticket_extra_details": "Enter extra details here.... markdown is supported",
+  "ticket_extra_details": "",
   "cancel": "cancel",
   "create": "create",
   "low": "low",

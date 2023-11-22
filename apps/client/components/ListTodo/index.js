@@ -92,7 +92,7 @@ export default function ListTodo() {
                           : "text-sm font-semibold capitalize truncate"
                       }
                     >
-                      {todo.text}
+                      {todo.text.length > 30 ? `${todo.text.substring(0, 30)}...` : todo.text}
                     </span>
                     <button
                       onClick={() => deleteTodo(todo.id)}

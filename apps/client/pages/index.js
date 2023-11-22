@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
-import { Upload, message } from "antd";
+import { Tooltip, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -313,7 +313,13 @@ export default function Home() {
                                 maxWidth: "30ch", // limit to 12 characters
                               }}
                           >
-                            {item.title}
+                             {item.title && item.title.length > 20 ? (
+                              <Tooltip title={item.title}>
+                                {item.title}
+                              </Tooltip>
+                            ) : (
+                              <>{item.title}</>
+                            )}
                             <dl className="font-normal lg:hidden">
                               <dt className="sr-only sm:hidden">Email</dt>
                               <dd className="mt-1 truncate text-gray-500 sm:hidden"

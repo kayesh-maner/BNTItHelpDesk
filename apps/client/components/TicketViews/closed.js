@@ -10,6 +10,7 @@ import Link from "next/link";
 import Loader from "react-spinners/ClipLoader";
 import { useRouter } from "next/router";
 import moment from "moment";
+import { Tooltip } from "antd";
 
 import TicketsMobileList from "../../components/TicketsMobileList";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
@@ -246,8 +247,14 @@ export default function ClosedTickets() {
         (row);
         return (
           <>
+          {(value && value.length > 20) ? (
+            <Tooltip title={value}>
+              <span className="max-w-[240px] truncate">{value}</span>
+            </Tooltip>
+          ) : (
             <span className="max-w-[240px] truncate">{value}</span>
-          </>
+          )}
+        </>
         );
       },
     },

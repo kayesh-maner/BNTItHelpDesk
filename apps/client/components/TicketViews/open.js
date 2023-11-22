@@ -13,6 +13,7 @@ import moment from "moment";
 
 import TicketsMobileList from "../../components/TicketsMobileList";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
+import { Tooltip } from "antd";
 
 async function getUserTickets() {
   const res = await fetch("/api/v1/ticket/open");
@@ -242,8 +243,14 @@ export default function OpenTickets() {
         (row);
         return (
           <>
+          {(value && value.length > 20) ? (
+            <Tooltip title={value}>
+              <span className="max-w-[240px] truncate">{value}</span>
+            </Tooltip>
+          ) : (
             <span className="max-w-[240px] truncate">{value}</span>
-          </>
+          )}
+        </>
         );
       },
     },

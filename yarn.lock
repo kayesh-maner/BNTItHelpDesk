@@ -1966,6 +1966,11 @@
   resolved "https://registry.npmjs.org/@tiptap/extension-paragraph/-/extension-paragraph-2.0.3.tgz"
   integrity sha512-a+tKtmj4bU3GVCH1NE8VHWnhVexxX5boTVxsHIr4yGG3UoKo1c5AO7YMaeX2W5xB5iIA+BQqOPCDPEAx34dd2A==
 
+"@tiptap/extension-placeholder@^2.1.12":
+  version "2.1.12"
+  resolved "https://registry.npmjs.org/@tiptap/extension-placeholder/-/extension-placeholder-2.1.12.tgz"
+  integrity sha512-K52o7B1zkP4vaVy3z4ZwHn+tQy6KlXtedj1skLg+796ImwH2GYS5z6MFOTfKzBO2hLncUzLco/s0C5PLCD6SDw==
+
 "@tiptap/extension-strike@^2.0.3":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@tiptap/extension-strike/-/extension-strike-2.0.3.tgz"
@@ -2765,6 +2770,7 @@ client-only@^0.0.1, client-only@0.0.1:
     "@tailwindcss/forms" "^0.4.0"
     "@tiptap/extension-highlight" "^2.0.3"
     "@tiptap/extension-link" "^2.0.3"
+    "@tiptap/extension-placeholder" "^2.1.12"
     "@tiptap/extension-subscript" "^2.0.3"
     "@tiptap/extension-superscript" "^2.0.3"
     "@tiptap/extension-text-align" "^2.0.3"

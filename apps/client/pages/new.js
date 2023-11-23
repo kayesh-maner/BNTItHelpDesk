@@ -135,17 +135,41 @@ export default function CreateTicketModal() {
 
   async function createTicket() {
     try{
+    
+const errorMessages = [];
 
-    if (!name || !title || !engineer || !category || !email) {
-      notifications.show({
-        title: "Error",
-        message: "Please fill in all mandatory fields",
-        color: "red",
-        autoClose: 5000,
-      });
-      return; 
-    }
-  
+if (!name) {
+  errorMessages.push("Please enter a name");
+}
+
+if (!title) {
+  errorMessages.push("Please enter a title");
+}
+
+if (!engineer) {
+  errorMessages.push("Please enter an engineer");
+}
+
+if (!category) {
+  errorMessages.push("Please enter a category");
+}
+
+if (!email) {
+  errorMessages.push("Please enter an email");
+}
+
+if (errorMessages.length > 0) {
+  errorMessages.forEach((errorMessage) => {
+    notifications.show({
+      message: `❌ ${errorMessage}`, 
+      color: "red",
+      autoClose: 5000,
+    });
+  });
+  return;
+}
+      
+
     let engineerDetails = {
       "email": "admin@admin.com",
       "name": engineer,

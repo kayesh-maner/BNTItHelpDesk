@@ -259,7 +259,7 @@ export default function ClosedTickets() {
       },
     },
     {
-      Header: "Attachment",
+      Header: "File",
       accessor: "filePath",
       id: "fileLocation",
       Cell: ({ row, value }) => {

@@ -255,7 +255,7 @@ export default function OpenTickets() {
       },
     },
     {
-      Header: "Attachment",
+      Header: "File",
       accessor: "filePath",
       id: "fileLocation",
       Cell: ({ row, value }) => {

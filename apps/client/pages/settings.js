@@ -29,7 +29,7 @@ export default function Settings() {
   };
 
   const postData = async () => {
-    const id = session.id;
+    const id = session.user.id;
     if (check === password) {
       await fetch(`/api/v1/users/resetpassword`, {
         method: "POST",

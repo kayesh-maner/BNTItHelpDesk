@@ -647,18 +647,27 @@ export default function Ticket() {
                               {/* <span className="break-words">
                                 {data.ticket.filePath}
                               </span> */}
-                              <div>
-                                {/* <img src={`/uploads/${data.ticket.filePath}`} 
-                                alt="Ticket Image" 
-                                style={{ width: '200px', height: 'auto' }} /> */}
+                              {/* <div>
                                 {data.ticket.filePath ? (
                                   <img
                                     src={`/uploads/${data.ticket.filePath}`}
                                     alt="Ticket Image"
-                                    style={{ width: '200px', height: '140px' }}
+                                    style={{ width: '400px', height: '280px' }}
                                   />
                                 ) : null}
+                              </div> */}
+                              <div>
+                                {data.ticket.filePath ? (
+                                  <a href={`/uploads/${data.ticket.filePath}`} target="_blank" rel="noopener noreferrer">
+                                    <img
+                                      src={`/uploads/${data.ticket.filePath}`}
+                                      alt="Ticket Image"
+                                      style={{ width: '400px', height: '280px' }}
+                                    />
+                                  </a>
+                                ) : null}
                               </div>
+
                             </>
                           )}
                         </div>
@@ -715,7 +724,7 @@ export default function Ticket() {
                                                 : "Internally"}{" "}
                                               commented at{" "}
                                               {moment(item.createdAt).format(
-                                                "hh:mm DD-MM-YYYY"
+                                                "hh:mm A DD-MM-YYYY"
                                               )}
                                             </p>
                                           </div>

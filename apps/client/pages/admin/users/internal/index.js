@@ -133,6 +133,72 @@ function Table({ columns, data }) {
           </table>
         </div>
       </div>
+
+      {/* Pagination controls */}
+      <div className="pagination mt-4 flex items-center justify-between ml-10">
+        <div>
+          <button
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+            className="mx-1 px-2 py-1 border rounded-md"
+          >
+            {"<<"}
+          </button>{" "}
+          <button
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+            className="mx-1 px-2 py-1 border rounded-md"
+          >
+            {"<"}
+          </button>{" "}
+          <button
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+            className="mx-1 px-2 py-1 border rounded-md"
+          >
+            {">"}
+          </button>{" "}
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+            className="mx-1 px-2 py-1 border rounded-md"
+          >
+            {">>"}
+          </button>{" "}
+        </div>
+        <div className="mr-10">
+          <span className="mr-2">
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageCount}
+            </strong>{" "}
+          </span>
+          {/* <span>
+            | Go to page:{" "}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                gotoPage(page);
+              }}
+              className="w-16 mx-2 border rounded-md"
+            />
+          </span>{" "} */}
+          <select
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+            className="border rounded-md"
+          >
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
     </div>
   );
 }

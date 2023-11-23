@@ -26,7 +26,7 @@ export async function sendTicketCreate(ticket, session) {
         { from: 'noreply@bnt-soft.com', // sender address
          to: [ticket.email, process.env.ADMIN_EMAIL],
          cc: ticket.cc,
-         ...createTicketTemp(ticket)
+         ...createTicketTemp(ticket, session)
         });
 
     }

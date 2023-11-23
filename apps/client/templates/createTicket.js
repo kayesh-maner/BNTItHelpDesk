@@ -1,8 +1,8 @@
-const createTicketTemp = (ticket) => {
+const createTicketTemp = (ticket, session) => {
  const withoutTags = (ticket.detail).replace(/<p\b[^>]*>|<\/p>|<br\s*\/?>/g, ' ');
   const withoutSpaces = withoutTags.trim();
   const createTicket = {
-    subject: `${(ticket.name).toUpperCase()} has just been created & logged ticket - ${ticket.id} -${ticket.title} `, // Subject line
+    subject: `${(session.user.name).toUpperCase()} has just been created & logged ticket - ${ticket.id} -${ticket.title} `, // Subject line
     text: `Hello there, Ticket ${ticket.id}, which you reported on ${ticket.createdAt}, has now been created and logged`, // plain text body
     html: `
     <!DOCTYPE html>

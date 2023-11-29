@@ -271,12 +271,12 @@ export default function CreateTicketModal() {
                         <RichTextEditor.Unlink />
                       </RichTextEditor.ControlsGroup>
 
-                      <RichTextEditor.ControlsGroup>
+                      {/* <RichTextEditor.ControlsGroup>
                         <RichTextEditor.AlignLeft />
                         <RichTextEditor.AlignCenter />
                         <RichTextEditor.AlignJustify />
                         <RichTextEditor.AlignRight />
-                      </RichTextEditor.ControlsGroup>
+                      </RichTextEditor.ControlsGroup> */}
                     </RichTextEditor.Toolbar>
 
                     <RichTextEditor.Content style={{ minHeight: 320 }} />

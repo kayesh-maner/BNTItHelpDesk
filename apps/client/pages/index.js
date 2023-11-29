@@ -116,11 +116,11 @@ export default function Home() {
       stat: completedTickets,
       href: "/tickets?filter=closed",
     },
-    {
-      name: "Unassigned Tickets",
-      stat: unassigned,
-      href: "/tickets?filter=unassigned",
-    },
+    // {
+    //   name: "Unassigned Tickets",
+    //   stat: unassigned,
+    //   href: "/tickets?filter=unassigned",
+    // },
   ];
 
   const propsUpload = {

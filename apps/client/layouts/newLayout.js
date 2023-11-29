@@ -113,25 +113,25 @@ export default function NewLayout({ children }) {
       document.activeElement.tagName !== "TEXTAREA" &&
       !document.activeElement.className.includes("ProseMirror")
     ) {
-      switch (event.key) {
-        case "c":
-          location.push("/new");
-          break;
-        case "h":
-          location.push("/");
-          break;
-        case "n":
-          location.push("/notebook");
-          break;
-        case "t":
-          location.push("/tickets");
-          break;
-        case "a":
-          location.push("/admin");
-          break;
-        default:
-          break;
-      }
+      // switch (event.key) {
+      //   // case "c":
+      //   //   location.push("/new");
+      //   //   break;
+      //   case "h":
+      //     location.push("/");
+      //     break;
+      //   case "n":
+      //     location.push("/notebook");
+      //     break;
+      //   case "t":
+      //     location.push("/tickets");
+      //     break;
+      //   case "a":
+      //     location.push("/admin");
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
   }, []);
 

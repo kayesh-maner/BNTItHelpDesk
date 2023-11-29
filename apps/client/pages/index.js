@@ -52,6 +52,7 @@ export default function Home() {
     setHour(hour);
   }
 
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -164,6 +165,19 @@ export default function Home() {
     datafetch();
   }, []);
 
+let greeting;
+
+if (hour < 12 ) {
+  greeting = "Good Morning";
+} else if (hour < 17) {
+  greeting = "Good Afternoon";
+} else if(hour < 21) {
+  greeting = "Good Evening";
+} else if (hour < 24) {
+  greeting = "Good Night";
+} else {
+  greeting = "Hi";
+}
   const filteredTickets = tickets.filter((ticket) =>
     ticket.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     ticket.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -184,12 +198,9 @@ export default function Home() {
                     </span>
                   </span>
                   <div>
-                    <div className="flex items-center">
+                    <div className="flex items-center" style={{marginLeft:"15px"}}>
                       <span className="pt-4 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                        {t("hello_good")}
-                        {hour < 12
-                          ? t("hello_morning")
-                          : t("hello_afternoon")}, {session.user.name}!
+                        {greeting}, {session.user.name}!
                       </span>
                     </div>
                     <dl className="flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">

@@ -92,27 +92,28 @@ export default function SideLayout({ children }) {
     if (
       document.activeElement.tagName !== "INPUT" &&
       !document.activeElement.className.includes("ProseMirror")
-    ) {
-      switch (event.key) {
-        case "c":
-          var btn = document.getElementById("ticket_create");
-          btn.click();
-          break;
-        case "h":
-          location.push("/");
-          break;
-        case "n":
-          location.push("/notebook");
-          break;
-        case "t":
-          location.push("/tickets");
-          break;
-        case "a":
-          location.push("/admin");
-          break;
-        default:
-          break;
-      }
+    ) 
+    {
+      // switch (event.key) {
+      //   // case "c":
+      //   //   var btn = document.getElementById("ticket_create");
+      //   //   btn.click();
+      //   //   break;  
+      //   case "h":
+      //     location.push("/");
+      //     break;
+      //   case "n":
+      //     location.push("/notebook");
+      //     break;
+      //   case "t":
+      //     location.push("/tickets");
+      //     break;
+      //   case "a":
+      //     location.push("/admin");
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
   }, []);
 

@@ -407,7 +407,7 @@ export default function OpenTickets() {
                 </svg>
 
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
-                  You currently don't have any assigned tickets. :)
+                  You currently don't have any opened tickets.
                 </h3>
               </div>
             </>

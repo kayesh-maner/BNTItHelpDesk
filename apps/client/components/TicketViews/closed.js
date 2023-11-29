@@ -420,7 +420,7 @@ export default function ClosedTickets() {
                 </svg>
 
                 <h3 className="mt-2 text-sm font-medium text-gray-900">
-                  You currently don't have any assigned tickets that are closed. :)
+                  You currently don't have any closed tickets. 
                 </h3>
               </div>
             </>

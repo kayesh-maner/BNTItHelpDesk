@@ -378,7 +378,7 @@ export default function CreateTicketModal() {
 <div className="relative">
   <input
     type="file"
-    accept="*" // Define the accepted file types
+    accept="image/png, image/jpeg" 
     onChange={handleFileUpload}
     className="hidden"
     id="fileInput"

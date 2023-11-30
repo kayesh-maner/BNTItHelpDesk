@@ -45,6 +45,8 @@ export default function CreateTicketModal() {
 
   // Get session data
   const { data: session} = useSession()
+  const maxCharLimit = 667;
+  const [remainingChars, setRemainingChars] = useState(maxCharLimit -7);
  
   const editor = useEditor({
     extensions: [
@@ -59,6 +61,16 @@ export default function CreateTicketModal() {
     content: issue,
     onUpdate({ editor }) {
       setIssue(editor.getHTML());
+      const newContent = editor.getHTML();
+      const cleanedHTML = editor.getHTML().trim();
+
+      setRemainingChars(maxCharLimit - newContent.length);
+      // Check if the editor content is an empty paragraph with this 7 char unnecessary data (<p></p>)
+     // If true, set remainingChars to a specific value maxCharLimit and remove this unnecessary data length (<p></p>)
+
+      if (cleanedHTML === '<p></p>' ) {
+        setRemainingChars(maxCharLimit - 7);
+      }
     },
   });
 
@@ -135,7 +147,16 @@ export default function CreateTicketModal() {
 
   async function createTicket() {
     try{
-    
+
+      if (editor.getHTML().length > maxCharLimit) { 
+        notifications.show({
+          title: "Error",
+          message: `Exceeded maximum character limit`,
+          color: "red",
+          autoClose: 5000,
+        });
+        return; 
+      } 
       const errorMessages = [];
 
       if (!name) {
@@ -440,7 +461,10 @@ export default function CreateTicketModal() {
           <RichTextEditor.Content style={{ minHeight: 190 }} />
         </RichTextEditor>
 
-        <div className="border-t border-gray-300 ">
+      <span style={{ color: remainingChars < 0 ? 'red' : 'green', marginTop: '5px' }}>
+        {remainingChars < 0 ? 'Exceeded character limit!' : `${remainingChars} characters remaining`}
+      </span>
+        <div className="border-gray-300 ">
           <div className="mt-2 float-right">
             <button
               onClick={() => {

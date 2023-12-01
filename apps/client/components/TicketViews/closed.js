@@ -4,6 +4,7 @@ import {
   useTable,
   useFilters,
   useGlobalFilter,
+  useSortBy,
   usePagination,
 } from "react-table";
 import Link from "next/link";
@@ -15,7 +16,7 @@ import { Tooltip } from "antd";
 import TicketsMobileList from "../../components/TicketsMobileList";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 
-function Table({ columns, data }) {
+function Table({ columns, data, sortBy }) {
 
   const router = useRouter()
 
@@ -37,6 +38,18 @@ function Table({ columns, data }) {
     }),
     []
   );
+
+  const handleMultiSortBy = (column, setSortBy, meinSortBy) => {
+    meinSortBy = meinSortBy || []
+    //set sort desc, aesc or none?
+    const desc =
+      column.isSortedDesc === true
+        ? undefined
+        : column.isSortedDesc === false
+        ? true
+        : false;
+    setSortBy([{ id: column.id, desc }, ...meinSortBy]);
+  };
 
   const defaultColumn = React.useMemo(
     () => ({
@@ -60,7 +73,8 @@ function Table({ columns, data }) {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize, globalFilter},
-    setGlobalFilter
+    setGlobalFilter,
+    setSortBy,
   } = useTable(
     {
       columns,
@@ -73,6 +87,7 @@ function Table({ columns, data }) {
     },
     useFilters, // useFilters!
     useGlobalFilter,
+    useSortBy,
     usePagination
   );
 
@@ -110,6 +125,7 @@ function Table({ columns, data }) {
                     column.hideHeader === false ? null : (
                       <th
                         {...column.getHeaderProps()}
+                        onClick={() => handleMultiSortBy(column, setSortBy, sortBy)}
                         style={{ maxWidth: 10, overflow: "hidden" }}
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
@@ -247,14 +263,14 @@ export default function ClosedTickets() {
         (row);
         return (
           <>
-          {(value && value.length > 20) ? (
-            <Tooltip title={value}>
+            {(value && value.length > 20) ? (
+              <Tooltip title={value}>
+                <span className="max-w-[240px] truncate">{value.slice(0, 20)}..</span>
+              </Tooltip>
+            ) : (
               <span className="max-w-[240px] truncate">{value}</span>
-            </Tooltip>
-          ) : (
-            <span className="max-w-[240px] truncate">{value}</span>
-          )}
-        </>
+            )}
+          </>
         );
       },
     },
@@ -270,6 +286,25 @@ export default function ClosedTickets() {
                               fontSize='10px'
                               className="flex-shrink-0 mr-1.5 h-5 w-5 text-black-400 flex justify-center"
                               />)}</span>
+          </>
+        );
+      },
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+      id: "email",
+      Cell: ({ row, value }) => {
+        (row);
+        return (
+          <>
+            {(value && value.length > 12) ? (
+              <Tooltip title={value}>
+                <span className="max-w-[240px] truncate">{value.slice(0, 12)}..</span>
+              </Tooltip>
+            ) : (
+              <span className="max-w-[240px] truncate">{value}</span>
+            )}
           </>
         );
       },

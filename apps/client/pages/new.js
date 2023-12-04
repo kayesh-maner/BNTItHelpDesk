@@ -14,7 +14,8 @@ import SubScript from "@tiptap/extension-subscript";
 import { notifications } from "@mantine/notifications";
 import { useSession } from 'next-auth/react'
 import { useRouter } from "next/router";
-import Select from 'react-select';
+// import Select from 'react-select';
+import { Select } from '@mantine/core';
 
 
 function classNames(...classes) {
@@ -248,14 +249,13 @@ export default function CreateTicketModal() {
   : [];
   
   const handleNameChange = (selectedOption) => {
-    setName(selectedOption?.value);
-    setEmail(selectedOption?.email);
+    const filtered = optionsContacts.filter((f) => f.value ==  selectedOption)   
+    setName(filtered[0]?.value);
+    setEmail(filtered[0]?.email);
     if (selectedOption?.reporting === null) {
-      // If it's null, set setCcEmail to null
       setCcEmail("");
     } else {
-      // If it's not null, set setCcEmail to the value present
-      setCcEmail(selectedOption?.reporting);
+      setCcEmail(filtered[0]?.reporting);
     }
   }
 
@@ -290,13 +290,17 @@ export default function CreateTicketModal() {
 {session.user.isAdmin ? (
   <>
     {/* Admin view */}
+
     <Select
       name="name"
       autoComplete="off"
-      onChange={handleNameChange}
-      options={optionsContacts}
-      isSearchable={false}
-      placeholder="Select Employee Name"
+      placeholder="Select or search Employee Name"
+      onChange={handleNameChange} 
+      data={optionsContacts}
+      searchable
+      filterOption={(inputValue, option) =>
+        option.label.toLowerCase().includes(inputValue.toLowerCase())
+      }
     />
 
     <input

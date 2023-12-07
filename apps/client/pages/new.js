@@ -36,7 +36,7 @@ export default function CreateTicketModal() {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Normal");
   const [options, setOptions] = useState([]);
-  const [users, setUsers] = useState();
+  const [admin, setAdmin] = useState();
   const [category, setCategory] = useState();
   const [fileAttached, setFileAttached] = useState();
   const [isPlaceholderVisible, setPlaceholderVisible] = useState(true);
@@ -104,7 +104,7 @@ export default function CreateTicketModal() {
           // Filter only Admins 
           const filteredUsers = res.users.filter(user => user.isAdmin === true);
           if (filteredUsers) {
-            setUsers(filteredUsers);
+            setAdmin(filteredUsers);
           }
 
          // Filter only Users 
@@ -191,15 +191,6 @@ export default function CreateTicketModal() {
         return;
       }
       
-
-    let engineerDetails = {
-      "email": "admin@admin.com",
-      "name": engineer,
-      "id": "f9307e1e-d5ae-4e93-a6a6-cd259d47bcfa",
-      "isAdmin": true,
-      "language": "en"
-    }
-
     await fetch("/api/v1/ticket/create", {
       method: "POST",
       headers: {
@@ -211,7 +202,7 @@ export default function CreateTicketModal() {
         email: !session.user.isAdmin ? session.user.email : email,
         detail: issue,
         priority,
-        engineer:engineerDetails,
+        engineer:admin[0],
         category,
         fileAttached,
         ccemail : ccEmail, 

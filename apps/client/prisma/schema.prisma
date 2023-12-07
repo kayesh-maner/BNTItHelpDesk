@@ -111,6 +111,7 @@ model Ticket {
   category   String?  
   filePath   String?  
   cc         String?
+  closeAt    DateTime?       
 
   TicketFile   TicketFile[]
   Comment      Comment[]

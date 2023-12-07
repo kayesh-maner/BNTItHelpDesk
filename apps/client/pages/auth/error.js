@@ -1,5 +1,10 @@
 import { getCsrfToken } from "next-auth/react";
 import Link from "next/link";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState } from "react";
+
+
+
 
 export async function getServerSideProps(context) {
   return {
@@ -10,6 +15,12 @@ export async function getServerSideProps(context) {
 }
 
 export default function Login({ csrfToken }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  
   (csrfToken);
   return (
     <div>
@@ -59,27 +70,46 @@ export default function Login({ csrfToken }) {
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Password
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="password"
-                    required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                  <p class="text-red-500 text-xs italic">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <div className="mt-1 relative">
+                    <input
+                      id="password"
+                      name="password"
+                      type={showPassword ? 'text' : 'password'}
+                      autoComplete="password"
+                      required
+                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    />
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        right: '10px',
+                        transform: 'translateY(-50%)',
+                      }}
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash
+                          className="h-5 w-5 text-gray-500 cursor-pointer"
+                          onClick={togglePasswordVisibility}
+                        />
+                      ) : (
+                        <FaEye
+                          className="h-5 w-5 text-gray-500 cursor-pointer"
+                          onClick={togglePasswordVisibility}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-red-500 text-xs italic">
                     There was an error, please try again
                   </p>
                 </div>
-              </div>
-
               <div>
                 <button
                   type="submit"

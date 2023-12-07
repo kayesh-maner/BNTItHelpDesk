@@ -2,11 +2,18 @@ import React, { useState, Fragment } from "react";
 import { message } from "antd";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function ResetPassword({ user }) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   const success = () => {
     message.success("Password updated");
@@ -31,6 +38,7 @@ export default function ResetPassword({ user }) {
       })
         .then((res) => res.json())
         .then((res) => {
+          console.log('\n\n\n res=====>', res);
           if (res.failed === false) {
             success();
           } else {
@@ -46,6 +54,8 @@ export default function ResetPassword({ user }) {
     setOpen(false);
     await postData();
   };
+
+ 
 
   return (
     <div>
@@ -112,18 +122,42 @@ export default function ResetPassword({ user }) {
                     </Dialog.Title>
                     <div className="mt-2 space-y-4">
                       <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter users new password"
                       />
-
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '25%',
+                        right: '40px',
+                        transform: 'translateY(-50%)',
+                      }}
+                    >
+                      {showPassword ? (
+                        <FaEye
+                          className="h-5 w-5 text-gray-500 cursor-pointer"
+                       
+                          onMouseDown={togglePasswordVisibility}
+                          onMouseUp={() => clearInterval()}
+                        />
+                      ) : (
+                        <FaEyeSlash
+                          className="h-5 w-5 text-gray-500 cursor-pointer"
+                          onMouseDown={togglePasswordVisibility}
+                          onMouseUp={() => clearInterval()}
+                        />
+                      )}
+                    </div>
                       <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         onChange={(e) => setCheck(e.target.value)}
                         placeholder="Confirm users password"
                       />
+                  
+
                     </div>
                   </div>
                 </div>

@@ -72,6 +72,8 @@ model User {
   Session                      Session[]
   TimeTracking                 TimeTracking[]
   reporting                    String?
+  isactive                     Int?
+  reporting_name               String? 
 }
 
 model VerificationToken {

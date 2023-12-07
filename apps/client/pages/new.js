@@ -161,23 +161,23 @@ export default function CreateTicketModal() {
       const errorMessages = [];
 
       if (!name) {
-        errorMessages.push("Please enter a name");
+        errorMessages.push("Name is required");
       }
 
       if (!title) {
-        errorMessages.push("Please enter a title");
-      }
-
-      if (!engineer) {
-        errorMessages.push("Please enter an engineer");
+        errorMessages.push("Title is required");
       }
 
       if (!category) {
-        errorMessages.push("Please enter a category");
+        errorMessages.push("Please select a category");
       }
 
       if (!email) {
-        errorMessages.push("Please enter an email");
+        errorMessages.push("Email is required");
+      }
+
+      if (!issue) {
+        errorMessages.push("Please describe your issue");
       }
 
       if (errorMessages.length > 0) {

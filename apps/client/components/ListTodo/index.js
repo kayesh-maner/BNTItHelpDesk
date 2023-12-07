@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Pagination } from "antd";
 import { TrashIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import { useQuery } from "react-query";
+import { Tooltip, Upload, message } from "antd";
+
 
 async function getTodos() {
   const res = await fetch("/api/v1/todo/get");
@@ -43,12 +45,6 @@ export default function ListTodo() {
     }).then(() => refetch());
   }
 
-  // async function markDone(id) {
-  //   await fetch(`api/v1/todo/mark-done/${id}`, {
-  //     method: "POST",
-  //   }).then(() => refetch());
-  // }
-
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       onSubmit();
@@ -64,13 +60,15 @@ export default function ListTodo() {
             name="text"
             id="text"
             className="w-full shadow-sm text-gray-900 bg-gray-100 rounded-lg font-semibold border-none focus:outline-none "
-            placeholder="Enter todo here..."
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
+            placeholder="Enter To Do here..."
             onKeyDown={handleKeyDown}
             value={text}
             onSubmit={() => onSubmit()}
+            onChange={(e) => {
+              if (e.target.value.length <= 50) {
+                setText(e.target.value);
+              }
+            }}
           />
         </div>
       </div>
@@ -85,6 +83,8 @@ export default function ListTodo() {
                     className="flex row justify-between mt-1 bg-gray-100 p-2 rounded-lg"
                     key={todo.id}
                   >
+                    
+                  <Tooltip title={todo.text}>
                     <span
                       className={
                         todo.done
@@ -94,6 +94,8 @@ export default function ListTodo() {
                     >
                       {todo.text.length > 30 ? `${todo.text.substring(0, 30)}...` : todo.text}
                     </span>
+                  </Tooltip>
+
                     <button
                       onClick={() => deleteTodo(todo.id)}
                       type="button"
@@ -105,7 +107,7 @@ export default function ListTodo() {
                 );
               })
             ) : (
-              <p>None Found</p>
+              <p>Not Found</p>
             )}
           </div>
           <div  className={data.todos.length > 4 ? "mt-4" : "hidden"}>

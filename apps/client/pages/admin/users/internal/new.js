@@ -36,7 +36,7 @@ export default function CreateUser() {
     }
    
      // Validate email format
-     const atSymbolPattern = /@/;
+     const atSymbolPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
      if (!atSymbolPattern.test(email)) {
        toast.error("Please enter a valid email address ", { autoClose: 5000 });

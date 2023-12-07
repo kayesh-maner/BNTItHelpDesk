@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { message } from "antd";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { UserProfile } from "../components/UserProfile";
 import UserNotifications from "../components/UserNotifications";
@@ -14,7 +15,7 @@ export default function Settings() {
     inactive:
       "w-full border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group mt-1 border-l-4 px-3 py-2 flex items-center text-sm font-medium",
   };
-
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState("");
 
@@ -30,6 +31,20 @@ export default function Settings() {
 
   const postData = async () => {
     const id = session.user.id;
+
+    if (!password || !check) {
+      fail("password can not be empty");
+      return;
+    }
+   
+      //validate password
+      const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+      if (!passwordPattern.test(password)) {
+        fail("Password must be at least 8 characters long and contain at least one number and one special character");
+        return;
+      }
+
+      
     if (check === password) {
       await fetch(`/api/v1/users/resetpassword`, {
         method: "POST",
@@ -45,6 +60,9 @@ export default function Settings() {
         .then((res) => {
           if (res.failed === false) {
             success();
+            setTimeout(() => {
+              router.push("/");
+            }, 2000);
           } else {
             fail(res.message);
           }

@@ -45,7 +45,7 @@ export default function Ticket() {
   }, [router]);
 
   const [edit, setEdit] = useState(false);
-  const [editTime, setTimeEdit] = useState(false);
+  const [ editTime, setTimeEdit] = useState(false);
   const [assignedEdit, setAssignedEdit] = useState(false);
   const [labelEdit, setLabelEdit] = useState(false);
 
@@ -83,6 +83,24 @@ export default function Ticket() {
 
   let file = [];
 
+function calculateTime(ticketData) {
+
+  console.log("ticketData 2  >>",ticketData.isComplete)
+  // Check if the ticket is marked as complete
+  if (ticketData.isComplete) {
+    const createdAtTime = new Date(ticketData.createdAt).getTime();
+    const closeAtTime = new Date(ticketData.closeAt).getTime();
+    const timeDifference = closeAtTime - createdAtTime;
+    const minutes = Math.floor(timeDifference / (1000 * 60)) % 60;
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60)) % 24;
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    return `${days} days, ${hours} hours, ${minutes} minutes`;
+  } else {
+    // Ticket is not complete
+    return null;
+  }
+} 
   async function update() {
     await fetch(`/api/v1/ticket/${id}/update`, {
       method: "POST",
@@ -1455,39 +1473,18 @@ export default function Ticket() {
                         <span className="text-sm font-medium text-gray-500 ">
                           Time Tracking
                         </span>
-                        {!editTime ? (
-                          <button
-                            onClick={() => setTimeEdit(true)}
-                            className="text-sm font-medium text-gray-500 hover:underline"
-                          >
-                            add
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              setTimeEdit(false);
-                              addTime();
-                            }}
-                            className="text-sm font-medium text-gray-500 hover:underline"
-                          >
-                            save
-                          </button>
-                        )}
                       </div>
-                      {data.ticket.TimeTracking.length > 0 ? (
-                        data.ticket.TimeTracking.map((i) => (
-                          <div key={i.id} className="text-xs">
-                            <div className="flex flex-row space-x-1.5 items-center">
-                              <span>{i.user.name} / </span>
-                              <span>{i.time} minutes</span>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div>
-                          <span className="text-xs">No Time added</span>
-                        </div>
-                      )}
+                          <>
+                            {data.ticket.isComplete ? (
+                              <div>
+                               <span className="text-sm font-medium text-gray-900"> {calculateTime(data.ticket)} </span> 
+                              </div>
+                            ) : (
+                              <div>
+                                <span className="text-xs">No Time added</span>
+                              </div>
+                            )}
+                          </>
                       {editTime && (
                         // <div>
                         //   <div className="mt-2">

@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
-
+ 
 const prisma = new PrismaClient();
-
+ 
 async function main() {
   const admin = await prisma.user.upsert({
     where: { email: "admin@admin.com" },
@@ -15,7 +15,7 @@ async function main() {
       reporting:""
     },
   });
-
+ 
   const internal = await prisma.client.upsert({
     where: { email: `internal@admin.com` },
     update: {},
@@ -27,10 +27,36 @@ async function main() {
       active: true,
     },
   });
-
-  ({ admin, internal });
+ 
+  const team = await prisma.team.upsert({
+    where: { id: '100'},
+    update: {},
+    create: {
+      id: '100',
+      name: "BNT"
+    },
+  });
+ 
+  // const email = await prisma.team.upsert({
+  //   where: {id: '100'},
+  //   update: {},
+  //   create: {
+  //     id: '100',
+  //     active: 'true',
+  //    user : 'noreply@bnt-soft.com',
+  //    pass : 'Pad05029',
+  //    secure: false,
+  //    host: 'smtp.office365.com',
+  //    reply: 'noreply@bnt-soft.com',
+  //    port: '587',
+  //    name: 'bnt'
+  //   },
+  // });
+ 
+ 
+  ({ admin, internal, team });
 }
-
+ 
 main()
   .catch((e) => {
     console.error(e);

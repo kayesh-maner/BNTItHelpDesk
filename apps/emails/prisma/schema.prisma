@@ -114,6 +114,7 @@ model Ticket {
   client     Client? @relation(fields: [clientId], references: [id])
   clientId   String?
   userId     String?
+  closeAt    DateTime? 
 }
 
 model Comment {

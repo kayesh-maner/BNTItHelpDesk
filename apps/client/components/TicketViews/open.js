@@ -358,10 +358,10 @@ export default function OpenTickets() {
         return (
           <>
             <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-              {value === "needs_support" && <span>Needs Support</span>}
-              {value === "in_progress" && <span>In Progress</span>}
-              {value === "in_review" && <span>In Review</span>}
-              {value === "done" && <span>Done</span>}
+              {value === "needs_support" && <span>needs_support</span>}
+              {value === "in_progress" && <span>in_progress</span>}
+              {value === "in_review" && <span>in_review</span>}
+              {value === "done" && <span>done</span>}
             </span>
           </>
         );

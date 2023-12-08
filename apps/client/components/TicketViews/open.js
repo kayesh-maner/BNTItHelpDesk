@@ -252,7 +252,7 @@ export default function OpenTickets() {
     //   width: 50,
     // },
     {
-      Header: "Summary",
+      Header: "Title",
       accessor: "title",
       id: "summary",
       Cell: ({ row, value }) => {

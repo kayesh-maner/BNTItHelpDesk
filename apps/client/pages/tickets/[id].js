@@ -115,20 +115,30 @@ export default function Ticket() {
       .then(() => refetch());
   }
   async function addComment() {
-    await fetch(`/api/v1/ticket/${id}/comment`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: comment,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setComment("");
-        refetch();
+    if (!comment.trim()) {
+      notifications.show({
+        title: "Error",
+        message: `Please enter a comment!`,
+        color: "red",
+        autoClose: 3000,
+      });
+      return;
+    } else {
+      await fetch(`/api/v1/ticket/${id}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: comment,
+        }),
       })
+        .then((res) => res.json())
+        .then(() => {
+          setComment("");
+          refetch();
+        })
+    }
   }
   
   async function addTime() {
@@ -215,6 +225,8 @@ export default function Ticket() {
             refetch();
           }
         });
+    } else {
+      setAssignedEdit(false)
     }
   }
 

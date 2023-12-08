@@ -38,7 +38,6 @@ export default function ResetPassword({ user }) {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log('\n\n\n res=====>', res);
           if (res.failed === false) {
             success();
           } else {

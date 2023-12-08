@@ -256,7 +256,7 @@ export default function ClosedTickets() {
     //   width: 30,
     // },
     {
-      Header: "Summary",
+      Header: "Title",
       accessor: "title",
       id: "summary",
       Cell: ({ row, value }) => {

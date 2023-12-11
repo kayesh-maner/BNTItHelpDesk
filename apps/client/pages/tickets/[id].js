@@ -115,7 +115,7 @@ export default function Ticket() {
       .then(() => refetch());
   }
   async function addComment() {
-    if (!comment.trim()) {
+    if (!comment || /^\s*$/.test(comment)) {
       notifications.show({
         title: "Error",
         message: `Please enter a comment!`,

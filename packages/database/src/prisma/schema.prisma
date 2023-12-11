@@ -54,6 +54,7 @@ model Ticket {
   fromImap   Boolean
   Number     Int      @default(autoincrement())
   creator    String?  
+  closeAt    DateTime? 
 
 
   TicketFile TicketFile[]

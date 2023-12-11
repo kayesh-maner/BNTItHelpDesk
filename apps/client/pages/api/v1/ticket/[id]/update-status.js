@@ -7,14 +7,24 @@ export default async function completeTicket(req, res) {
 
   const { status } = req.body;
   const session = await getSession({ req });
+  let updateData = {
+    isComplete: status,
+    updatedAt: new Date(),
+  };
+
+  if (status === true) {
+    updateData = {
+      isComplete: status,
+      updatedAt: new Date(),
+      closeAt: new Date(),
+    };
+  }
+  
   try {
     await prisma.ticket
       .update({
         where: { id: id },
-        data: {
-          isComplete: status,
-          updatedAt: new Date()
-        },
+        data : updateData
       })
       .then(async (ticket) => {
         await sendTicketStatus(ticket, session);

@@ -111,7 +111,7 @@ export default function Login({ csrfToken, providers }) {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -126,7 +126,7 @@ export default function Login({ csrfToken, providers }) {
                     Remember me
                   </label>
                 </div> 
-              </div>
+              </div> */}
 
               <div>
                 <button

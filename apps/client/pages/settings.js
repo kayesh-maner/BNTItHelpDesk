@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { message } from 'antd'
-import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { signOut, useSession } from 'next-auth/react'
 
 import { UserProfile } from '../components/UserProfile'
 import UserNotifications from '../components/UserNotifications'
@@ -71,9 +71,7 @@ export default function Settings() {
           .then((res) => {
             if (res.failed === false) {
               success()
-              setTimeout(() => {
-                router.push('/')
-              }, 2000)
+              signOut()
             } else {
               fail(res.message)
             }
@@ -87,6 +85,7 @@ export default function Settings() {
       console.log('Error >>>', err)
     }
   }
+
   return (
     <div>
       <main className='relative'>

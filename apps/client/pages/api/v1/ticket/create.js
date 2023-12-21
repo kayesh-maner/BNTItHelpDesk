@@ -53,6 +53,9 @@ async function generateCustomId(uid) {
   let check;  
   do {
     customId = moment().format('YYYYMMMDD-').toUpperCase() + uid;
+    if (customId ==  moment().format('YYYYMMMDD-').toUpperCase() + 0){
+      customId = moment().format('YYYYMMMDD-').toUpperCase() + 1;
+    }
     check = await checkCustomId(customId);
     if (check !== 0) {
       uid += 1; // Increment uid by 1 if customId exists

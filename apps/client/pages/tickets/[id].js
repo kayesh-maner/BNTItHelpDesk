@@ -39,7 +39,6 @@ export default function Ticket() {
   };
 
   const { data, status, refetch } = useQuery("fetchTickets", fetchTicketById);
-// console.log('data>> \n\n', data);
   useEffect(() => {
     refetch();
   }, [router]);
@@ -85,17 +84,23 @@ export default function Ticket() {
 
 function calculateTime(ticketData) {
 
-  console.log("ticketData 2  >>",ticketData.isComplete)
   // Check if the ticket is marked as complete
   if (ticketData.isComplete) {
     const createdAtTime = new Date(ticketData.createdAt).getTime();
     const closeAtTime = new Date(ticketData.closeAt).getTime();
-    const timeDifference = closeAtTime - createdAtTime;
+    let timeDifference
+    if (closeAtTime == null || closeAtTime == 0 ){
+       timeDifference = `No Time Logged`
+       return timeDifference
+    } else{
+      timeDifference = closeAtTime - createdAtTime;
     const minutes = Math.floor(timeDifference / (1000 * 60)) % 60;
     const hours = Math.floor(timeDifference / (1000 * 60 * 60)) % 24;
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
     return `${days} days, ${hours} hours, ${minutes} minutes`;
+    }
+     
   } else {
     // Ticket is not complete
     return null;

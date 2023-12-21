@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { useRouter } from "next/router";
-import React, { useState, useEffect, Fragment } from "react";
-import { message, Upload, Divider } from "antd";
-import moment from "moment";
-import { Menu, Transition, Listbox } from "@headlessui/react";
+import { useQuery } from 'react-query'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect, Fragment } from 'react'
+import { message, Upload, Divider } from 'antd'
+import moment from 'moment'
+import { Menu, Transition, Listbox } from '@headlessui/react'
 import {
   PencilIcon,
   LockOpenIcon,
@@ -13,52 +13,53 @@ import {
   LockClosedIcon,
   CheckIcon,
   ChevronUpDownIcon,
-} from "@heroicons/react/20/solid";
-import renderHTML from "react-render-html";
-import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
-import Highlight from "@tiptap/extension-highlight";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
+} from '@heroicons/react/20/solid'
+import renderHTML from 'react-render-html'
+import { RichTextEditor, Link } from '@mantine/tiptap'
+import { useEditor } from '@tiptap/react'
+import Highlight from '@tiptap/extension-highlight'
+import StarterKit from '@tiptap/starter-kit'
+import Underline from '@tiptap/extension-underline'
 // import TextAlign from '@tiptap/extension-text-align';
-import Superscript from "@tiptap/extension-superscript";
-import SubScript from "@tiptap/extension-subscript";
-import { notifications } from "@mantine/notifications";
+import Superscript from '@tiptap/extension-superscript'
+import SubScript from '@tiptap/extension-subscript'
+import { notifications } from '@mantine/notifications'
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function Ticket() {
-  const router = useRouter();
+  const router = useRouter()
+  const [isButtonClicked, setIsButtonClicked] = useState(false)
 
   const fetchTicketById = async () => {
-    const id = router.query.id;
-    const res = await fetch(`/api/v1/ticket/${id}`);
-    return res.json();
-  };
+    const id = router.query.id
+    const res = await fetch(`/api/v1/ticket/${id}`)
+    return res.json()
+  }
 
   const { data, status, refetch } = useQuery("fetchTickets", fetchTicketById);
   useEffect(() => {
-    refetch();
-  }, [router]);
+    refetch()
+  }, [router])
 
-  const [edit, setEdit] = useState(false);
-  const [ editTime, setTimeEdit] = useState(false);
-  const [assignedEdit, setAssignedEdit] = useState(false);
-  const [labelEdit, setLabelEdit] = useState(false);
+  const [edit, setEdit] = useState(false)
+  const [editTime, setTimeEdit] = useState(false)
+  const [assignedEdit, setAssignedEdit] = useState(false)
+  const [labelEdit, setLabelEdit] = useState(false)
 
-  const [users, setUsers] = useState();
-  const [n, setN] = useState();
+  const [users, setUsers] = useState()
+  const [n, setN] = useState()
 
-  const [note, setNote] = useState();
-  const [issue, setIssue] = useState();
-  const [title, setTitle] = useState();
-  const [uploaded, setUploaded] = useState();
-  const [priority, setPriority] = useState();
-  const [ticketStatus, setTicketStatus] = useState();
-  const [comment, setComment] = useState();
-  const [timeSpent, setTimeSpent] = useState();
+  const [note, setNote] = useState()
+  const [issue, setIssue] = useState()
+  const [title, setTitle] = useState()
+  const [uploaded, setUploaded] = useState()
+  const [priority, setPriority] = useState()
+  const [ticketStatus, setTicketStatus] = useState()
+  const [comment, setComment] = useState()
+  const [timeSpent, setTimeSpent] = useState()
 
   const IssueEditor = useEditor({
     extensions: [
@@ -72,18 +73,19 @@ export default function Ticket() {
     ],
     content: issue,
     onUpdate({ editor }) {
-      setIssue(editor.getHTML());
+      setIssue(editor.getHTML())
     },
-  });
+  })
 
-  const history = useRouter();
+  const history = useRouter()
 
-  const { id } = history.query;
+  const { id } = history.query
 
-  let file = [];
+  let file = []
 
-function calculateTime(ticketData) {
-
+  function calculateTime(ticketData) {
+    console.log('ticketData 2  >>', ticketData.isComplete)
+  
   // Check if the ticket is marked as complete
   if (ticketData.isComplete) {
     const createdAtTime = new Date(ticketData.createdAt).getTime();
@@ -105,12 +107,13 @@ function calculateTime(ticketData) {
     // Ticket is not complete
     return null;
   }
-} 
+}
+
   async function update() {
     await fetch(`/api/v1/ticket/${id}/update`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         detail: issue,
@@ -121,36 +124,39 @@ function calculateTime(ticketData) {
       }),
     })
       .then((res) => res.json())
-      .then(() => refetch());
+      .then(() => refetch())
   }
 
   async function updateStatus() {
     await fetch(`/api/v1/ticket/${id}/update-status`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         status: !data.ticket.isComplete,
       }),
     })
       .then((res) => res.json())
-      .then(() => refetch());
+      .then(() => refetch())
   }
+
   async function addComment() {
     if (!comment || /^\s*$/.test(comment)) {
       notifications.show({
-        title: "Error",
+        title: 'Error',
         message: `Please enter a comment!`,
-        color: "red",
+        color: 'red',
         autoClose: 3000,
-      });
-      return;
+      })
+      return
     } else {
+      // Disable create Ticket button
+      setIsButtonClicked(true)
       await fetch(`/api/v1/ticket/${id}/comment`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           text: comment,
@@ -158,18 +164,19 @@ function calculateTime(ticketData) {
       })
         .then((res) => res.json())
         .then(() => {
-          setComment("");
-          refetch();
+          setIsButtonClicked(false)
+          setComment('')
+          refetch()
         })
     }
   }
-  
+
   async function addTime() {
-    ("hit");
+    ;('hit')
     await fetch(`/api/v1/time/new`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         time: timeSpent,
@@ -179,63 +186,63 @@ function calculateTime(ticketData) {
     })
       .then((res) => res.json())
       .then(() => {
-        setTimeEdit(false);
-        refetch();
-      });
+        setTimeEdit(false)
+        refetch()
+      })
   }
 
   const propsUpload = {
-    name: "file",
+    name: 'file',
     showUploadList: false,
     action: `/api/v1/ticket/${id}/file/upload`,
     data: () => {
-      let data = new FormData();
-      data.append("file", file);
-      data.append("filename", file.name);
-      data.append("ticket", ticket.id);
+      let data = new FormData()
+      data.append('file', file)
+      data.append('filename', file.name)
+      data.append('ticket', ticket.id)
     },
     onChange(info) {
-      if (info.file.status !== "uploading") {
-        (info.file, info.fileList);
+      if (info.file.status !== 'uploading') {
+        info.file, info.fileList
       }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-        setUploaded(true);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`)
+        setUploaded(true)
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`)
       }
     },
     progress: {
       strokeColor: {
-        "0%": "#108ee9",
-        "100%": "#87d068",
+        '0%': '#108ee9',
+        '100%': '#87d068',
       },
       strokeWidth: 3,
       format: (percent) => `${parseFloat(percent.toFixed(2))}%`,
     },
-  };
+  }
 
   const fetchUsers = async () => {
     await fetch(`/api/v1/users/all`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          setUsers(res.users);
+          setUsers(res.users)
         }
-      });
-  };
+      })
+  }
 
   async function postData() {
     if (n !== undefined) {
       await fetch(`/api/v1/ticket/${id}/transfer`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           user: n.id,
@@ -244,225 +251,192 @@ function calculateTime(ticketData) {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
-            setAssignedEdit(false);
-            refetch();
+            setAssignedEdit(false)
+            refetch()
           }
-        });
+        })
     } else {
       setAssignedEdit(false)
     }
   }
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    fetchUsers()
+  }, [])
 
   useEffect(() => {
-    if (status === "success") {
+    if (status === 'success') {
       if (IssueEditor) {
-        IssueEditor.commands.setContent(data.ticket.detail);
+        IssueEditor.commands.setContent(data.ticket.detail)
       }
     }
-  }, [data, IssueEditor]);
+  }, [data, IssueEditor])
 
   return (
     <div>
-      {status === "loading" && (
-        <div className="min-h-screen flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
+      {status === 'loading' && (
+        <div className='min-h-screen flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8'>
           <h2> Loading data ... </h2>
           {/* <Spin /> */}
         </div>
       )}
 
-      {status === "error" && (
-        <div className="min-h-screen flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold"> Error fetching data ... </h2>
+      {status === 'error' && (
+        <div className='min-h-screen flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8'>
+          <h2 className='text-2xl font-bold'> Error fetching data ... </h2>
           {/* <img src={server} className="h-96 w-96" alt="error" /> */}
         </div>
       )}
 
-      {status === "success" && (
+      {status === 'success' && (
         <div>
-          <main className="flex-1">
-            <div className="py-6">
-              <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-6xl xl:grid-cols-3">
-                <div className="xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8">
+          <main className='flex-1'>
+            <div className='py-6'>
+              <div className='mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 xl:grid xl:max-w-6xl xl:grid-cols-3'>
+                <div className='xl:col-span-2 xl:border-r xl:border-gray-200 xl:pr-8'>
                   <div>
                     <div>
-                      <div className="md:flex md:items-center md:justify-between md:space-x-4  xl:border-b xl:pb-6">
-                        <div className="w-1/2">
+                      <div className='md:flex md:items-center md:justify-between md:space-x-4  xl:border-b xl:pb-6'>
+                        <div className='w-1/2'>
                           {edit ? (
-                            <div className="">
+                            <div className=''>
                               <input
-                                type="text"
-                                name="title"
-                                id="title"
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                type='text'
+                                name='title'
+                                id='title'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                                 value={title}
                                 defaultValue={data.ticket.title}
                                 onChange={(e) => setTitle(e.target.value)}
                               />
                             </div>
                           ) : (
-                            <h1 className="text-2xl font-bold text-gray-900">
+                            <h1 className='text-2xl font-bold text-gray-900'>
                               {data.ticket.title}
                             </h1>
                           )}
-                          <p className="mt-2 text-sm text-gray-500">
-                            <span className="font-medium text-gray-900">
-                              {data.ticket.email}
-                            </span>{" "}
+                          <p className='mt-2 text-sm text-gray-500'>
+                            <span className='font-medium text-gray-900'>{data.ticket.email}</span>{' '}
                             via
-                            <a href="#" className="font-medium text-gray-900">
-                              {data.ticket.fromImap === true
-                                ? " Email - "
-                                : " Ticket Creation - "}
+                            <a href='#' className='font-medium text-gray-900'>
+                              {data.ticket.fromImap === true ? ' Email - ' : ' Ticket Creation - '}
                             </a>
                             #{data.ticket.Number}
                           </p>
                         </div>
-                        <div className="mt-4 flex space-x-3 md:mt-0">
+                        <div className='mt-4 flex space-x-3 md:mt-0'>
                           {!edit ? (
                             <button
-                              type="button"
+                              type='button'
                               onClick={() => setEdit(true)}
-                              className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                              className='inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                             >
                               <PencilIcon
-                                className="-ml-0.5 h-5 w-5 text-gray-400"
-                                aria-hidden="true"
+                                className='-ml-0.5 h-5 w-5 text-gray-400'
+                                aria-hidden='true'
                               />
                               Edit
                             </button>
                           ) : (
                             <button
-                              type="button"
+                              type='button'
                               onClick={() => {
-                                update();
-                                setEdit(false);
+                                update()
+                                setEdit(false)
                               }}
-                              className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                              className='inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                             >
                               <CheckIcon
-                                className="-ml-0.5 h-5 w-5 text-gray-400"
-                                aria-hidden="true"
+                                className='-ml-0.5 h-5 w-5 text-gray-400'
+                                aria-hidden='true'
                               />
                               Save
                             </button>
                           )}
                         </div>
                       </div>
-                      <aside className="mt-8 xl:hidden">
-                        <h2 className="sr-only">Details</h2>
-                        <div className="space-y-5">
+                      <aside className='mt-8 xl:hidden'>
+                        <h2 className='sr-only'>Details</h2>
+                        <div className='space-y-5'>
                           {!data.ticket.isComplete ? (
-                            <div className="flex items-center space-x-2">
-                              <LockOpenIcon
-                                className="h-5 w-5 text-blue-500"
-                                aria-hidden="true"
-                              />
-                              <span className="text-sm font-medium text-blue-700">
-                                Open Issue
-                              </span>
+                            <div className='flex items-center space-x-2'>
+                              <LockOpenIcon className='h-5 w-5 text-blue-500' aria-hidden='true' />
+                              <span className='text-sm font-medium text-blue-700'>Open Issue</span>
                             </div>
                           ) : (
-                            <div className="flex items-center space-x-2">
-                              <LockClosedIcon
-                                className="h-5 w-5 text-red-500"
-                                aria-hidden="true"
-                              />
-                              <span className="text-sm font-medium text-red-700">
-                                Closed Issue
-                              </span>
+                            <div className='flex items-center space-x-2'>
+                              <LockClosedIcon className='h-5 w-5 text-red-500' aria-hidden='true' />
+                              <span className='text-sm font-medium text-red-700'>Closed Issue</span>
                             </div>
                           )}
-                          <div className="flex items-center space-x-2">
+                          <div className='flex items-center space-x-2'>
                             <ChatBubbleLeftEllipsisIcon
-                              className="h-5 w-5 text-gray-400"
-                              aria-hidden="true"
+                              className='h-5 w-5 text-gray-400'
+                              aria-hidden='true'
                             />
-                            <span className="text-sm font-medium text-gray-900">
+                            <span className='text-sm font-medium text-gray-900'>
                               {data.ticket.comments.length} comments
                             </span>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <CalendarIcon
-                              className="h-5 w-5 text-gray-400"
-                              aria-hidden="true"
-                            />
-                            <span className="text-sm font-medium text-gray-900">
-                              Created on{" "}
-                              {moment(data.ticket.createdAt).format(
-                                "DD/MM/YYYY"
-                              )}
+                          <div className='flex items-center space-x-2'>
+                            <CalendarIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+                            <span className='text-sm font-medium text-gray-900'>
+                              Created on {moment(data.ticket.createdAt).format('DD/MM/YYYY')}
                             </span>
                           </div>
                         </div>
-                        <div className="mt-6 space-y-8 border-b border-t border-gray-200 py-6">
+                        <div className='mt-6 space-y-8 border-b border-t border-gray-200 py-6'>
                           <div>
-                            <div className="flex flex-row justify-between items-center">
-                              <span className="text-sm font-medium text-gray-500">
-                                Assignees
-                              </span>
+                            <div className='flex flex-row justify-between items-center'>
+                              <span className='text-sm font-medium text-gray-500'>Assignees</span>
                               {!assignedEdit ? (
                                 <button
                                   onClick={() => setAssignedEdit(true)}
-                                  className="text-sm font-medium text-gray-500 hover:underline"
+                                  className='text-sm font-medium text-gray-500 hover:underline'
                                 >
                                   edit
                                 </button>
                               ) : (
                                 <button
                                   onClick={() => {
-                                    postData();
+                                    postData()
                                   }}
-                                  className="text-sm font-medium text-gray-500 hover:underline"
+                                  className='text-sm font-medium text-gray-500 hover:underline'
                                 >
                                   save
                                 </button>
                               )}
                             </div>
                             {!assignedEdit ? (
-                              <ul role="list" className="mt-3 space-y-3">
-                                <li className="flex justify-start">
-                                  <a
-                                    href="#"
-                                    className="flex items-center space-x-3"
-                                  >
-                                    <div className="flex-shrink-0">
-                                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500">
-                                        <span className="text-xs font-medium leading-none text-white uppercase">
+                              <ul role='list' className='mt-3 space-y-3'>
+                                <li className='flex justify-start'>
+                                  <a href='#' className='flex items-center space-x-3'>
+                                    <div className='flex-shrink-0'>
+                                      <span className='inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500'>
+                                        <span className='text-xs font-medium leading-none text-white uppercase'>
                                           {data.ticket.assignedTo
                                             ? data.ticket.assignedTo.name[0]
-                                            : "-"}
+                                            : '-'}
                                         </span>
                                       </span>
                                     </div>
-                                    <div className="text-sm font-medium text-gray-900">
-                                      {data.ticket.assignedTo
-                                        ? data.ticket.assignedTo.name
-                                        : "-"}
+                                    <div className='text-sm font-medium text-gray-900'>
+                                      {data.ticket.assignedTo ? data.ticket.assignedTo.name : '-'}
                                     </div>
                                   </a>
                                 </li>
                               </ul>
                             ) : (
                               users && (
-                                <Listbox
-                                  value={n}
-                                  onChange={setN}
-                                  className="z-50"
-                                >
+                                <Listbox value={n} onChange={setN} className='z-50'>
                                   {({ open }) => (
                                     <>
-                                      <div className="mt-1 relative">
-                                        <Listbox.Button className="bg-white z-50 relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                          <span className="block truncate">
-                                            {n
-                                              ? n.name
-                                              : "Please select new user"}
+                                      <div className='mt-1 relative'>
+                                        <Listbox.Button className='bg-white z-50 relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
+                                          <span className='block truncate'>
+                                            {n ? n.name : 'Please select new user'}
                                           </span>
-                                          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                          <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                                             {/* <SelectorIcon
                                     className="h-5 w-5 text-gray-400"
                                     aria-hidden="true"
@@ -473,20 +447,20 @@ function calculateTime(ticketData) {
                                         <Transition
                                           show={open}
                                           as={Fragment}
-                                          leave="transition ease-in duration-100"
-                                          leaveFrom="opacity-100"
-                                          leaveTo="opacity-0"
+                                          leave='transition ease-in duration-100'
+                                          leaveFrom='opacity-100'
+                                          leaveTo='opacity-0'
                                         >
-                                          <Listbox.Options className="absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                          <Listbox.Options className='absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
                                             {users.map((user) => (
                                               <Listbox.Option
                                                 key={user.id}
                                                 className={({ active }) =>
                                                   classNames(
                                                     active
-                                                      ? "text-white bg-indigo-600"
-                                                      : "text-gray-900",
-                                                    "cursor-default select-none relative py-2 pl-3 pr-9"
+                                                      ? 'text-white bg-indigo-600'
+                                                      : 'text-gray-900',
+                                                    'cursor-default select-none relative py-2 pl-3 pr-9'
                                                   )
                                                 }
                                                 value={user}
@@ -495,10 +469,8 @@ function calculateTime(ticketData) {
                                                   <>
                                                     <span
                                                       className={classNames(
-                                                        n
-                                                          ? "font-semibold"
-                                                          : "font-normal",
-                                                        "block truncate"
+                                                        n ? 'font-semibold' : 'font-normal',
+                                                        'block truncate'
                                                       )}
                                                     >
                                                       {user.name}
@@ -507,15 +479,13 @@ function calculateTime(ticketData) {
                                                     {n ? (
                                                       <span
                                                         className={classNames(
-                                                          active
-                                                            ? "text-white"
-                                                            : "text-indigo-600",
-                                                          "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                          active ? 'text-white' : 'text-indigo-600',
+                                                          'absolute inset-y-0 right-0 flex items-center pr-4'
                                                         )}
                                                       >
                                                         <CheckIcon
-                                                          className="h-5 w-5"
-                                                          aria-hidden="true"
+                                                          className='h-5 w-5'
+                                                          aria-hidden='true'
                                                         />
                                                       </span>
                                                     ) : null}
@@ -532,102 +502,87 @@ function calculateTime(ticketData) {
                               )
                             )}
                           </div>
-                         
-                          <div className="border-t border-gray-200">
-                            <div className="flex flex-row items-center">
-                              <span className="text-sm font-medium text-gray-500 mt-2">
-                                Labels
-                              </span>
-                              <span className="text-sm font-medium text-gray-500 mt-2">
-                                edit
-                              </span>
+
+                          <div className='border-t border-gray-200'>
+                            <div className='flex flex-row items-center'>
+                              <span className='text-sm font-medium text-gray-500 mt-2'>Labels</span>
+                              <span className='text-sm font-medium text-gray-500 mt-2'>edit</span>
                             </div>
-                            <ul
-                              role="list"
-                              className="mt-2 leading-8 space-x-2"
-                            >
-                              {data.ticket.priority === "Low" && (
-                                <li className="inline">
-                                  <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                    <div className="absolute flex flex-shrink-0 items-center justify-center">
+                            <ul role='list' className='mt-2 leading-8 space-x-2'>
+                              {data.ticket.priority === 'Low' && (
+                                <li className='inline'>
+                                  <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                    <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                       <span
-                                        className="h-1.5 w-1.5 rounded-full bg-blue-500"
-                                        aria-hidden="true"
+                                        className='h-1.5 w-1.5 rounded-full bg-blue-500'
+                                        aria-hidden='true'
                                       />
                                     </div>
-                                    <div className="ml-3 text-xs font-semibold text-gray-900">
+                                    <div className='ml-3 text-xs font-semibold text-gray-900'>
                                       {data.ticket.priority} Priority
                                     </div>
                                   </div>
                                 </li>
                               )}
-                              {data.ticket.priority === "Normal" && (
-                                <li className="inline">
-                                  <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                    <div className="absolute flex flex-shrink-0 items-center justify-center">
+                              {data.ticket.priority === 'Normal' && (
+                                <li className='inline'>
+                                  <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                    <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                       <span
-                                        className="h-1.5 w-1.5 rounded-full bg-blue-500"
-                                        aria-hidden="true"
+                                        className='h-1.5 w-1.5 rounded-full bg-blue-500'
+                                        aria-hidden='true'
                                       />
                                     </div>
-                                    <div className="ml-3 text-xs font-semibold text-gray-900">
+                                    <div className='ml-3 text-xs font-semibold text-gray-900'>
                                       {data.ticket.priority} Priority
                                     </div>
                                   </div>
                                 </li>
                               )}
-                              {data.ticket.priority === "High" && (
-                                <li className="inline">
-                                  <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                    <div className="absolute flex flex-shrink-0 items-center justify-center">
+                              {data.ticket.priority === 'High' && (
+                                <li className='inline'>
+                                  <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                    <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                       <span
-                                        className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                        aria-hidden="true"
+                                        className='h-1.5 w-1.5 rounded-full bg-rose-500'
+                                        aria-hidden='true'
                                       />
                                     </div>
-                                    <div className="ml-3 text-xs font-semibold text-gray-900">
+                                    <div className='ml-3 text-xs font-semibold text-gray-900'>
                                       {data.ticket.priority} Priority
                                     </div>
                                   </div>
                                 </li>
                               )}
                               {data.ticket.status && (
-                                <li className="inline">
-                                  <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                    <div className="absolute flex flex-shrink-0 items-center justify-center">
+                                <li className='inline'>
+                                  <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                    <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                       <span
-                                        className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                        aria-hidden="true"
+                                        className='h-1.5 w-1.5 rounded-full bg-rose-500'
+                                        aria-hidden='true'
                                       />
                                     </div>
-                                    <div className="ml-3 text-xs font-semibold text-gray-900">
-                                      {data.ticket.status ===
-                                        "needs_support" && (
+                                    <div className='ml-3 text-xs font-semibold text-gray-900'>
+                                      {data.ticket.status === 'needs_support' && (
                                         <span>Needs Support</span>
                                       )}
-                                      {data.ticket.status === "in_progress" && (
+                                      {data.ticket.status === 'in_progress' && (
                                         <span>In Progress</span>
                                       )}
-                                      {data.ticket.status === "in_review" && (
-                                        <span>In Review</span>
-                                      )}
-                                      {data.ticket.status === "done" && (
-                                        <span>Done</span>
-                                      )}
+                                      {data.ticket.status === 'in_review' && <span>In Review</span>}
+                                      {data.ticket.status === 'done' && <span>Done</span>}
                                     </div>
                                   </div>
                                 </li>
                               )}
                             </ul>
                           </div>
-
-
-
                         </div>
                       </aside>
-                      <div className="py-3 xl:pb-0 xl:pt-2">
-                        <span className="text-sm font-bold">Description</span>
-                        <div className="prose max-w-none">
+                      <div className='py-3 xl:pb-0 xl:pt-2'>
+                        <span className='text-sm font-bold'>Description</span>
+                        <div className='prose max-w-none'>
                           {edit ? (
                             <RichTextEditor editor={IssueEditor}>
                               <RichTextEditor.Toolbar>
@@ -670,15 +625,11 @@ function calculateTime(ticketData) {
                                 </RichTextEditor.ControlsGroup>
                               </RichTextEditor.Toolbar>
 
-                              <RichTextEditor.Content
-                                style={{ minHeight: 320 }}
-                              />
+                              <RichTextEditor.Content style={{ minHeight: 320 }} />
                             </RichTextEditor>
                           ) : (
                             <>
-                              <span className="break-words">
-                                {renderHTML(data.ticket.detail)}
-                              </span>
+                              <span className='break-words'>{renderHTML(data.ticket.detail)}</span>
                               {/* <span className="break-words">
                                 {data.ticket.filePath}
                               </span> */}
@@ -693,77 +644,68 @@ function calculateTime(ticketData) {
                               </div> */}
                               <div>
                                 {data.ticket.filePath ? (
-                                  <a href={`/uploads/${data.ticket.filePath}`} target="_blank" rel="noopener noreferrer">
+                                  <a
+                                    href={`/uploads/${data.ticket.filePath}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                  >
                                     <img
                                       src={`/uploads/${data.ticket.filePath}`}
-                                      alt="Ticket Image"
+                                      alt='Ticket Image'
                                       style={{ width: '400px', height: '280px' }}
                                     />
                                   </a>
                                 ) : null}
                               </div>
-
                             </>
                           )}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <section
-                    aria-labelledby="activity-title"
-                    className="mt-8 xl:mt-10"
-                  >
+                  <section aria-labelledby='activity-title' className='mt-8 xl:mt-10'>
                     <div>
-                      <div className="divide-y divide-gray-200">
-                        <div className="pb-2">
-                          <span
-                            id="activity-title"
-                            className="text-lg font-medium text-gray-900"
-                          >
+                      <div className='divide-y divide-gray-200'>
+                        <div className='pb-2'>
+                          <span id='activity-title' className='text-lg font-medium text-gray-900'>
                             Comments
                           </span>
                         </div>
-                        <div className="pt-2">
+                        <div className='pt-2'>
                           {/* Activity feed*/}
-                          <div className="flow-root">
-                            <ul role="list" className="-mb-8">
+                          <div className='flow-root'>
+                            <ul role='list' className='-mb-8'>
                               {data.ticket.comments.length > 0 &&
                                 data.ticket.comments.map((item, itemIdx) => (
                                   <li key={item.id}>
-                                    <div className="relative pb-8">
-                                      {itemIdx !==
-                                      data.ticket.comments.length - 1 ? (
+                                    <div className='relative pb-8'>
+                                      {itemIdx !== data.ticket.comments.length - 1 ? (
                                         <span
-                                          className="absolute left-3 top-5 -ml-px h-full w-0.5 bg-gray-200"
-                                          aria-hidden="true"
+                                          className='absolute left-3 top-5 -ml-px h-full w-0.5 bg-gray-200'
+                                          aria-hidden='true'
                                         />
                                       ) : null}
-                                      <div className="relative flex items-start space-x-3">
-                                        <div className="relative">
-                                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500">
-                                            <span className="font-medium leading-none text-xs text-white uppercase">
+                                      <div className='relative flex items-start space-x-3'>
+                                        <div className='relative'>
+                                          <span className='inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500'>
+                                            <span className='font-medium leading-none text-xs text-white uppercase'>
                                               {item.user.name[0]}
                                             </span>
                                           </span>
                                         </div>
-                                        <div className="min-w-0 flex-1">
+                                        <div className='min-w-0 flex-1'>
                                           <div>
-                                            <div className="text-sm">
-                                              <span className="font-medium text-gray-900 ">
+                                            <div className='text-sm'>
+                                              <span className='font-medium text-gray-900 '>
                                                 {item.user.name}
                                               </span>
                                             </div>
-                                            <p className="text-xs text-gray-500">
-                                              {item.public
-                                                ? "Publicly"
-                                                : "Internally"}{" "}
-                                              commented at{" "}
-                                              {moment(item.createdAt).format(
-                                                "hh:mm A DD-MM-YYYY"
-                                              )}
+                                            <p className='text-xs text-gray-500'>
+                                              {item.public ? 'Publicly' : 'Internally'} commented at{' '}
+                                              {moment(item.createdAt).format('hh:mm A DD-MM-YYYY')}
                                             </p>
                                           </div>
-                                          <div className="text-sm  text-gray-900">
+                                          <div className='text-sm  text-gray-900'>
                                             <span>{item.text}</span>
                                           </div>
                                         </div>
@@ -773,72 +715,66 @@ function calculateTime(ticketData) {
                                 ))}
                             </ul>
                           </div>
-                          <div className="mt-12">
-                            <div className="flex space-x-3">
-                              <div className="flex-shrink-0">
-                                <div className="relative">
-                                  <span className="absolute -bottom-0.5 -right-1 rounded-t px-0.5 py-px">
+                          <div className='mt-12'>
+                            <div className='flex space-x-3'>
+                              <div className='flex-shrink-0'>
+                                <div className='relative'>
+                                  <span className='absolute -bottom-0.5 -right-1 rounded-t px-0.5 py-px'>
                                     <ChatBubbleLeftEllipsisIcon
-                                      className="h-5 w-5 text-gray-400"
-                                      aria-hidden="true"
+                                      className='h-5 w-5 text-gray-400'
+                                      aria-hidden='true'
                                     />
                                   </span>
                                 </div>
                               </div>
-                              <div className="min-w-0 flex-1">
+                              <div className='min-w-0 flex-1'>
                                 <div>
                                   <div>
-                                    <label
-                                      htmlFor="comment"
-                                      className="sr-only"
-                                    >
+                                    <label htmlFor='comment' className='sr-only'>
                                       Comment
                                     </label>
                                     <textarea
-                                      id="comment"
-                                      name="comment"
+                                      id='comment'
+                                      name='comment'
                                       rows={3}
-                                      className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
-                                      placeholder="Leave a comment"
-                                      defaultValue={""}
+                                      className='block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6'
+                                      placeholder='Leave a comment'
+                                      defaultValue={''}
                                       value={comment}
-                                      onChange={(e) =>
-                                        setComment(e.target.value)
-                                      }
+                                      onChange={(e) => setComment(e.target.value)}
                                     />
                                   </div>
-                                  <div className="mt-6 flex items-center justify-end space-x-4">
+                                  <div className='mt-6 flex items-center justify-end space-x-4'>
                                     {data.ticket.isComplete ? (
                                       <button
-                                        type="button"
+                                        type='button'
                                         onClick={() => updateStatus()}
-                                        className="inline-flex justify-center items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        className='inline-flex justify-center items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                                       >
                                         <CheckCircleIcon
-                                          className="-ml-0.5 h-5 w-5 text-red-500"
-                                          aria-hidden="true"
+                                          className='-ml-0.5 h-5 w-5 text-red-500'
+                                          aria-hidden='true'
                                         />
-                                        <span className="pt-1">
-                                          Re-Open issue
-                                        </span>
+                                        <span className='pt-1'>Re-Open issue</span>
                                       </button>
                                     ) : (
                                       <button
-                                        type="button"
+                                        type='button'
                                         onClick={() => updateStatus()}
-                                        className="inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        className='inline-flex justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
                                       >
                                         <CheckCircleIcon
-                                          className="-ml-0.5 h-5 w-5 text-blue-500"
-                                          aria-hidden="true"
+                                          className='-ml-0.5 h-5 w-5 text-blue-500'
+                                          aria-hidden='true'
                                         />
                                         Close issue
                                       </button>
                                     )}
                                     <button
                                       onClick={() => addComment()}
-                                      type="submit"
-                                      className="inline-flex items-center justify-center rounded-md bg-gray-900 px-3 py-[7px] text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                                      type='submit'
+                                      className='inline-flex items-center justify-center rounded-md bg-gray-900 px-3 py-[7px] text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900'
+                                      disabled={isButtonClicked}
                                     >
                                       Comment
                                     </button>
@@ -852,106 +788,86 @@ function calculateTime(ticketData) {
                     </div>
                   </section>
                 </div>
-                <aside className="hidden xl:block xl:pl-8">
-                  <h2 className="sr-only">Details</h2>
-                  <div className="space-y-5">
+                <aside className='hidden xl:block xl:pl-8'>
+                  <h2 className='sr-only'>Details</h2>
+                  <div className='space-y-5'>
                     {!data.ticket.isComplete ? (
-                      <div className="flex items-center space-x-2">
-                        <LockOpenIcon
-                          className="h-5 w-5 text-blue-500"
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm font-medium text-blue-700">
-                          Open Issue
-                        </span>
+                      <div className='flex items-center space-x-2'>
+                        <LockOpenIcon className='h-5 w-5 text-blue-500' aria-hidden='true' />
+                        <span className='text-sm font-medium text-blue-700'>Open Issue</span>
                       </div>
                     ) : (
-                      <div className="flex items-center space-x-2">
-                        <LockClosedIcon
-                          className="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                        <span className="text-sm font-medium text-red-700">
-                          Closed Issue
-                        </span>
+                      <div className='flex items-center space-x-2'>
+                        <LockClosedIcon className='h-5 w-5 text-red-500' aria-hidden='true' />
+                        <span className='text-sm font-medium text-red-700'>Closed Issue</span>
                       </div>
                     )}
-                    <div className="flex items-center space-x-2">
+                    <div className='flex items-center space-x-2'>
                       <ChatBubbleLeftEllipsisIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
+                        className='h-5 w-5 text-gray-400'
+                        aria-hidden='true'
                       />
-                      <span className="text-sm font-medium text-gray-900">
+                      <span className='text-sm font-medium text-gray-900'>
                         {data.ticket.comments.length} comments
                       </span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <CalendarIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                      <span className="text-sm font-medium text-gray-900">
-                        Created created on{" "}
-                        {moment(data.ticket.createdAt).format("DD/MM/YYYY")}
+                    <div className='flex items-center space-x-2'>
+                      <CalendarIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+                      <span className='text-sm font-medium text-gray-900'>
+                        Created created on {moment(data.ticket.createdAt).format('DD/MM/YYYY')}
                       </span>
                     </div>
                   </div>
-                  <div className="mt-2 space-y-8 border-t border-gray-200 py-2">
+                  <div className='mt-2 space-y-8 border-t border-gray-200 py-2'>
                     <div>
-                      <div className="flex flex-row justify-between items-center">
-                        <span className="text-sm font-medium text-gray-500">
-                          Assignees
-                        </span>
+                      <div className='flex flex-row justify-between items-center'>
+                        <span className='text-sm font-medium text-gray-500'>Assignees</span>
                         {!assignedEdit ? (
                           <button
                             onClick={() => setAssignedEdit(true)}
-                            className="text-sm font-medium text-gray-500 hover:underline"
+                            className='text-sm font-medium text-gray-500 hover:underline'
                           >
                             edit
                           </button>
                         ) : (
                           <button
                             onClick={() => {
-                              postData();
+                              postData()
                             }}
-                            className="text-sm font-medium text-gray-500 hover:underline"
+                            className='text-sm font-medium text-gray-500 hover:underline'
                           >
                             save
                           </button>
                         )}
                       </div>
                       {!assignedEdit ? (
-                        <ul role="list" className="mt-3 space-y-3">
-                          <li className="flex justify-start">
-                            <a href="#" className="flex items-center space-x-3">
-                              <div className="flex-shrink-0">
-                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500">
-                                  <span className="text-xs font-medium leading-none text-white uppercase">
-                                    {data.ticket.assignedTo
-                                      ? data.ticket.assignedTo.name[0]
-                                      : "-"}
+                        <ul role='list' className='mt-3 space-y-3'>
+                          <li className='flex justify-start'>
+                            <a href='#' className='flex items-center space-x-3'>
+                              <div className='flex-shrink-0'>
+                                <span className='inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-500'>
+                                  <span className='text-xs font-medium leading-none text-white uppercase'>
+                                    {data.ticket.assignedTo ? data.ticket.assignedTo.name[0] : '-'}
                                   </span>
                                 </span>
                               </div>
-                              <div className="text-sm font-medium text-gray-900">
-                                {data.ticket.assignedTo
-                                  ? data.ticket.assignedTo.name
-                                  : "-"}
+                              <div className='text-sm font-medium text-gray-900'>
+                                {data.ticket.assignedTo ? data.ticket.assignedTo.name : '-'}
                               </div>
                             </a>
                           </li>
                         </ul>
                       ) : (
                         users && (
-                          <Listbox value={n} onChange={setN} className="z-50">
+                          <Listbox value={n} onChange={setN} className='z-50'>
                             {({ open }) => (
                               <>
-                                <div className="mt-1 relative">
-                                  <Listbox.Button className="bg-white z-50 relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <span className="block truncate">
+                                <div className='mt-1 relative'>
+                                  <Listbox.Button className='bg-white z-50 relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
+                                    <span className='block truncate'>
                                       {n ? n.name : data.ticket.assignedTo.name}
                                     </span>
-                                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
                                       {/* <SelectorIcon
                                     className="h-5 w-5 text-gray-400"
                                     aria-hidden="true"
@@ -962,20 +878,18 @@ function calculateTime(ticketData) {
                                   <Transition
                                     show={open}
                                     as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
+                                    leave='transition ease-in duration-100'
+                                    leaveFrom='opacity-100'
+                                    leaveTo='opacity-0'
                                   >
-                                    <Listbox.Options className="absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                    <Listbox.Options className='absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
                                       {users.map((user) => (
                                         <Listbox.Option
                                           key={user.id}
                                           className={({ active }) =>
                                             classNames(
-                                              active
-                                                ? "text-white bg-indigo-600"
-                                                : "text-gray-900",
-                                              "cursor-default select-none relative py-2 pl-3 pr-9"
+                                              active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                              'cursor-default select-none relative py-2 pl-3 pr-9'
                                             )
                                           }
                                           value={user}
@@ -984,10 +898,8 @@ function calculateTime(ticketData) {
                                             <>
                                               <span
                                                 className={classNames(
-                                                  n
-                                                    ? "font-semibold"
-                                                    : "font-normal",
-                                                  "block truncate"
+                                                  n ? 'font-semibold' : 'font-normal',
+                                                  'block truncate'
                                                 )}
                                               >
                                                 {user.name}
@@ -996,15 +908,13 @@ function calculateTime(ticketData) {
                                               {n ? (
                                                 <span
                                                   className={classNames(
-                                                    active
-                                                      ? "text-white"
-                                                      : "text-indigo-600",
-                                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                    active ? 'text-white' : 'text-indigo-600',
+                                                    'absolute inset-y-0 right-0 flex items-center pr-4'
                                                   )}
                                                 >
                                                   <CheckIcon
-                                                    className="h-5 w-5"
-                                                    aria-hidden="true"
+                                                    className='h-5 w-5'
+                                                    aria-hidden='true'
                                                   />
                                                 </span>
                                               ) : null}
@@ -1021,99 +931,91 @@ function calculateTime(ticketData) {
                         )
                       )}
                     </div>
-                    <div className="border-t border-gray-200">
-                      <div className="flex flex-row items-center justify-between mt-2">
-                        <span className="text-sm font-medium text-gray-500 ">
-                          Labels
-                        </span>
+                    <div className='border-t border-gray-200'>
+                      <div className='flex flex-row items-center justify-between mt-2'>
+                        <span className='text-sm font-medium text-gray-500 '>Labels</span>
                         {!labelEdit ? (
                           <button
                             onClick={() => setLabelEdit(true)}
-                            className="text-sm font-medium text-gray-500 hover:underline"
+                            className='text-sm font-medium text-gray-500 hover:underline'
                           >
                             edit
                           </button>
                         ) : (
                           <button
                             onClick={() => {
-                              setLabelEdit(false);
-                              update();
+                              setLabelEdit(false)
+                              update()
                             }}
-                            className="text-sm font-medium text-gray-500 hover:underline"
+                            className='text-sm font-medium text-gray-500 hover:underline'
                           >
                             save
                           </button>
                         )}
                       </div>
                       {!labelEdit ? (
-                        <ul role="list" className="mt-2 leading-8 space-x-2">
-                          {data.ticket.priority === "Low" && (
-                            <li className="inline">
-                              <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
+                        <ul role='list' className='mt-2 leading-8 space-x-2'>
+                          {data.ticket.priority === 'Low' && (
+                            <li className='inline'>
+                              <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-blue-500"
-                                    aria-hidden="true"
+                                    className='h-1.5 w-1.5 rounded-full bg-blue-500'
+                                    aria-hidden='true'
                                   />
                                 </div>
-                                <div className="ml-3 text-xs font-semibold text-gray-900">
+                                <div className='ml-3 text-xs font-semibold text-gray-900'>
                                   {data.ticket.priority} Priority
                                 </div>
                               </div>
                             </li>
                           )}
-                          {data.ticket.priority === "Normal" && (
-                            <li className="inline">
-                              <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
+                          {data.ticket.priority === 'Normal' && (
+                            <li className='inline'>
+                              <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-blue-500"
-                                    aria-hidden="true"
+                                    className='h-1.5 w-1.5 rounded-full bg-blue-500'
+                                    aria-hidden='true'
                                   />
                                 </div>
-                                <div className="ml-3 text-xs font-semibold text-gray-900">
+                                <div className='ml-3 text-xs font-semibold text-gray-900'>
                                   {data.ticket.priority} Priority
                                 </div>
                               </div>
                             </li>
                           )}
-                          {data.ticket.priority === "High" && (
-                            <li className="inline">
-                              <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
+                          {data.ticket.priority === 'High' && (
+                            <li className='inline'>
+                              <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                    aria-hidden="true"
+                                    className='h-1.5 w-1.5 rounded-full bg-rose-500'
+                                    aria-hidden='true'
                                   />
                                 </div>
-                                <div className="ml-3 text-xs font-semibold text-gray-900">
+                                <div className='ml-3 text-xs font-semibold text-gray-900'>
                                   {data.ticket.priority} Priority
                                 </div>
                               </div>
                             </li>
                           )}
                           {data.ticket.status && (
-                            <li className="inline">
-                              <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                                <div className="absolute flex flex-shrink-0 items-center justify-center">
+                            <li className='inline'>
+                              <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                                <div className='absolute flex flex-shrink-0 items-center justify-center'>
                                   <span
-                                    className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                                    aria-hidden="true"
+                                    className='h-1.5 w-1.5 rounded-full bg-rose-500'
+                                    aria-hidden='true'
                                   />
                                 </div>
-                                <div className="ml-3 text-xs font-semibold text-gray-900">
-                                  {data.ticket.status === "needs_support" && (
+                                <div className='ml-3 text-xs font-semibold text-gray-900'>
+                                  {data.ticket.status === 'needs_support' && (
                                     <span>Needs Support</span>
                                   )}
-                                  {data.ticket.status === "in_progress" && (
-                                    <span>In Progress</span>
-                                  )}
-                                  {data.ticket.status === "in_review" && (
-                                    <span>In Review</span>
-                                  )}
-                                  {data.ticket.status === "done" && (
-                                    <span>Done</span>
-                                  )}
+                                  {data.ticket.status === 'in_progress' && <span>In Progress</span>}
+                                  {data.ticket.status === 'in_review' && <span>In Review</span>}
+                                  {data.ticket.status === 'done' && <span>Done</span>}
                                 </div>
                               </div>
                             </li>
@@ -1124,17 +1026,15 @@ function calculateTime(ticketData) {
                           <Listbox value={priority} onChange={setPriority}>
                             {({ open }) => (
                               <>
-                                <div className="relative mt-2">
-                                  <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    <span className="block truncate">
-                                      {priority
-                                        ? priority
-                                        : data.ticket.priority}
+                                <div className='relative mt-2'>
+                                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+                                    <span className='block truncate'>
+                                      {priority ? priority : data.ticket.priority}
                                     </span>
-                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                                       <ChevronUpDownIcon
-                                        className="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
+                                        className='h-5 w-5 text-gray-400'
+                                        aria-hidden='true'
                                       />
                                     </span>
                                   </Listbox.Button>
@@ -1142,30 +1042,26 @@ function calculateTime(ticketData) {
                                   <Transition
                                     show={open}
                                     as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
+                                    leave='transition ease-in duration-100'
+                                    leaveFrom='opacity-100'
+                                    leaveTo='opacity-0'
                                   >
-                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    <Listbox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="Low"
+                                        value='Low'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               Low
@@ -1174,16 +1070,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1192,22 +1083,18 @@ function calculateTime(ticketData) {
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="Normal"
+                                        value='Normal'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               Normal
@@ -1216,16 +1103,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1234,22 +1116,18 @@ function calculateTime(ticketData) {
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="High"
+                                        value='High'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               High
@@ -1258,16 +1136,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1279,23 +1152,18 @@ function calculateTime(ticketData) {
                               </>
                             )}
                           </Listbox>
-                          <Listbox
-                            value={ticketStatus}
-                            onChange={setTicketStatus}
-                          >
+                          <Listbox value={ticketStatus} onChange={setTicketStatus}>
                             {({ open }) => (
                               <>
-                                <div className="relative mt-2">
-                                  <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    <div className="block truncate">
-                                      {ticketStatus
-                                        ? ticketStatus
-                                        : data.ticket.status}
+                                <div className='relative mt-2'>
+                                  <Listbox.Button className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'>
+                                    <div className='block truncate'>
+                                      {ticketStatus ? ticketStatus : data.ticket.status}
                                     </div>
-                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                                       <ChevronUpDownIcon
-                                        className="h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
+                                        className='h-5 w-5 text-gray-400'
+                                        aria-hidden='true'
                                       />
                                     </span>
                                   </Listbox.Button>
@@ -1303,30 +1171,26 @@ function calculateTime(ticketData) {
                                   <Transition
                                     show={open}
                                     as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
+                                    leave='transition ease-in duration-100'
+                                    leaveFrom='opacity-100'
+                                    leaveTo='opacity-0'
                                   >
-                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                    <Listbox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="needs_support"
+                                        value='needs_support'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               Needs Support
@@ -1335,16 +1199,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1353,22 +1212,18 @@ function calculateTime(ticketData) {
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="in_progress"
+                                        value='in_progress'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               In Progress
@@ -1377,16 +1232,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1395,22 +1245,18 @@ function calculateTime(ticketData) {
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="in_review"
+                                        value='in_review'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               In Review
@@ -1419,16 +1265,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1437,22 +1278,18 @@ function calculateTime(ticketData) {
                                       <Listbox.Option
                                         className={({ active }) =>
                                           classNames(
-                                            active
-                                              ? "bg-indigo-600 text-white"
-                                              : "text-gray-900",
-                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                            'relative cursor-default select-none py-2 pl-3 pr-9'
                                           )
                                         }
-                                        value="done"
+                                        value='done'
                                       >
                                         {({ selected, active }) => (
                                           <>
                                             <span
                                               className={classNames(
-                                                selected
-                                                  ? "font-semibold"
-                                                  : "font-normal",
-                                                "block truncate"
+                                                selected ? 'font-semibold' : 'font-normal',
+                                                'block truncate'
                                               )}
                                             >
                                               Done
@@ -1461,16 +1298,11 @@ function calculateTime(ticketData) {
                                             {selected ? (
                                               <span
                                                 className={classNames(
-                                                  active
-                                                    ? "text-white"
-                                                    : "text-indigo-600",
-                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                  active ? 'text-white' : 'text-indigo-600',
+                                                  'absolute inset-y-0 right-0 flex items-center pr-4'
                                                 )}
                                               >
-                                                <CheckIcon
-                                                  className="h-5 w-5"
-                                                  aria-hidden="true"
-                                                />
+                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
                                               </span>
                                             ) : null}
                                           </>
@@ -1485,23 +1317,24 @@ function calculateTime(ticketData) {
                         </>
                       )}
                     </div>
-                    <div className="border-t border-gray-200">
-                      <div className="flex flex-row items-center justify-between mt-2">
-                        <span className="text-sm font-medium text-gray-500 ">
-                          Time Tracking
-                        </span>
+                    <div className='border-t border-gray-200'>
+                      <div className='flex flex-row items-center justify-between mt-2'>
+                        <span className='text-sm font-medium text-gray-500 '>Time Tracking</span>
                       </div>
-                          <>
-                            {data.ticket.isComplete ? (
-                              <div>
-                               <span className="text-sm font-medium text-gray-900"> {calculateTime(data.ticket)} </span> 
-                              </div>
-                            ) : (
-                              <div>
-                                <span className="text-xs">No Time added</span>
-                              </div>
-                            )}
-                          </>
+                      <>
+                        {data.ticket.isComplete ? (
+                          <div>
+                            <span className='text-sm font-medium text-gray-900'>
+                              {' '}
+                              {calculateTime(data.ticket)}{' '}
+                            </span>
+                          </div>
+                        ) : (
+                          <div>
+                            <span className='text-xs'>No Time added</span>
+                          </div>
+                        )}
+                      </>
                       {editTime && (
                         // <div>
                         //   <div className="mt-2">
@@ -1517,23 +1350,23 @@ function calculateTime(ticketData) {
                         //   </div>
                         // </div>
                         <div>
-                          <div className="mt-2">
+                          <div className='mt-2'>
                             <input
-                              type="number"
-                              name="number"
-                              id="timespent"
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                              placeholder="30"
+                              type='number'
+                              name='number'
+                              id='timespent'
+                              className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                              placeholder='30'
                               value={timeSpent}
                               onChange={(e) => {
                                 // Ensure the entered value is within the range of 0 to 30
-                                let newValue = Math.min(Math.max(e.target.value, 0), 30);
-                                setTimeSpent(newValue);
+                                let newValue = Math.min(Math.max(e.target.value, 0), 30)
+                                setTimeSpent(newValue)
                               }}
                               onBlur={() => {
                                 // Ensure the value is within the range when the input loses focus
-                                let newValue = Math.min(Math.max(timeSpent, 0), 30);
-                                setTimeSpent(newValue);
+                                let newValue = Math.min(Math.max(timeSpent, 0), 30)
+                                setTimeSpent(newValue)
                               }}
                             />
                           </div>
@@ -1541,34 +1374,27 @@ function calculateTime(ticketData) {
                       )}
                     </div>
 
-
-            {/* Category  */}
-                  <div className="border-t border-gray-200">
-                    <div className="flex flex-row items-center">
-                      <span className="text-sm font-medium text-gray-500 mt-2">
-                        Category
-                      </span>
-                    </div>
-                    <ul
-                      role="list"
-                      className="mt-2 leading-8 space-x-2"
-                    >
-                        <li className="inline">
-                          <div className="relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                            <div className="absolute flex flex-shrink-0 items-center justify-center">
+                    {/* Category  */}
+                    <div className='border-t border-gray-200'>
+                      <div className='flex flex-row items-center'>
+                        <span className='text-sm font-medium text-gray-500 mt-2'>Category</span>
+                      </div>
+                      <ul role='list' className='mt-2 leading-8 space-x-2'>
+                        <li className='inline'>
+                          <div className='relative inline-flex items-center rounded-full px-2.5 py-1 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'>
+                            <div className='absolute flex flex-shrink-0 items-center justify-center'>
                               <span
-                                className="h-1.5 w-1.5 rounded-full bg-blue-500"
-                                aria-hidden="true"
+                                className='h-1.5 w-1.5 rounded-full bg-blue-500'
+                                aria-hidden='true'
                               />
                             </div>
-                            <div className="ml-3 text-xs font-semibold text-gray-900">
-                                {data.ticket.category}
+                            <div className='ml-3 text-xs font-semibold text-gray-900'>
+                              {data.ticket.category}
                             </div>
                           </div>
                         </li>
-                    </ul>
-                  </div>
-          
+                      </ul>
+                    </div>
                   </div>
                 </aside>
               </div>
@@ -1577,5 +1403,5 @@ function calculateTime(ticketData) {
         </div>
       )}
     </div>
-  );
+  )
 }
